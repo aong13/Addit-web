@@ -1,0 +1,37 @@
+
+  /* 기본 폰트 설정 */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 16px; 
+    line-height: 1.5;
+  }
+  
+  /* 반응형 */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      font-size: 14px; 
+    }
+  
+    .container {
+      padding: 0 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    body {
+      font-size: 12px;
+    }
+  
+    .container {
+      padding: 0 5px;
+    }
+  }
