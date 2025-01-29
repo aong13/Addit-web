@@ -14,8 +14,9 @@ function App() {
 const AppContainer = styled.div`
   width: 100%;
   max-width: 480px; /* 최대 화면 크기 */
+  box-sizing: border-box;
   margin: 0 auto;
-  background-color: #f9f9f9;
+  padding: 0px 20px;
   min-height: 100vh;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
