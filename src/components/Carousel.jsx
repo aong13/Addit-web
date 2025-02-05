@@ -5,8 +5,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
-  const [focusIndex, setFocusIndex] = useState(0);
-
   const settings = {
     infinite: true,
     speed: 500,
@@ -16,7 +14,6 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
     centerPadding: "0px",
     focusOnSelect: true,
     beforeChange: (current, next) => {
-      setFocusIndex(next);
       onFocusChange(data[next]?.relayId); // 부모에게 포커스된 relayId 전달
     },
   };
