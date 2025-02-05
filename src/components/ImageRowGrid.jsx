@@ -16,7 +16,6 @@ export default ImageRowGrid;
 const FlatListWrapper = styled.div`
   display: flex;
   margin-top: 10px;
-  margin: 0 10px;
 `;
 
 const TouchableImage = styled.div`

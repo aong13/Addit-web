@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Collaborators = ({ images, count }) => {
+  console.log(images);
   return (
     <Container>
       <Wrapper>
-        {images.slice(0, 3).map((image, index) => (
+        {images.map((image, index) => (
           <EllipseIcon key={index} imageUrl={image} />
         ))}
       </Wrapper>
@@ -18,7 +19,6 @@ const Collaborators = ({ images, count }) => {
 };
 
 const EllipseIcon = ({ imageUrl }) => {
-  console.log(imageUrl);
   return <Image src={imageUrl} alt="Collaborator" />;
 };
 
@@ -40,6 +40,7 @@ const Image = styled.img`
   border-radius: 50%;
   margin-left: -12px;
   border: 1.2px solid #fff;
+  object-fit: cover;
 `;
 
 const TextBold = styled.span`
