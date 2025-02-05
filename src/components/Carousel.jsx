@@ -4,7 +4,7 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Carousel = ({ data }) => {
+const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
   const settings = {
     infinite: true,
     speed: 500,
@@ -13,24 +13,38 @@ const Carousel = ({ data }) => {
     centerMode: true,
     centerPadding: "0px",
     focusOnSelect: true,
+    beforeChange: (_, next) => {
+      // 중앙 아이템의 relayId를 찾아서 전달
+      let allTickles = data.flatMap((relay) => relay.tickles);
+      let focusedTickle = allTickles[next];
+
+      if (focusedTickle) {
+        let parentRelay = data.find((relay) =>
+          relay.tickles.some((t) => t.tickleId === focusedTickle.tickleId)
+        );
+        if (parentRelay) {
+          onFocusChange(parentRelay.relayId);
+        }
+      }
+    },
   };
 
   return (
     <CarouselContainer>
       <Slider {...settings}>
         {data.flatMap((relay) =>
-          relay.tickles.map((tickle, index) => (
-            <ImageWrapper key={tickle.tickleId || `tickle-${index}`}>
+          relay.tickles.map((selectedTickle, index) => (
+            <ImageWrapper key={selectedTickle.relayId}>
               <ProfileWrapper>
                 <ProfileImage
-                  src={tickle.profileImage || "/default-profile.jpg"}
-                  alt={`Profile ${tickle.tickleId || index}`}
+                  src={selectedTickle.profileImage || "/default-profile.jpg"}
+                  alt={`Profile ${selectedTickle.tickleId || index}`}
                 />
-                <Nickname>{tickle.nickname || "No Name"}</Nickname>
+                <Nickname>{selectedTickle.nickname || "No Name"}</Nickname>
               </ProfileWrapper>
               <Image
-                src={tickle.thumbnail}
-                alt={`Slide ${tickle.tickleId || index}`}
+                src={selectedTickle.thumbnail}
+                alt={`Slide ${selectedTickle.tickleId || index}`}
               />
             </ImageWrapper>
           ))
@@ -51,7 +65,7 @@ const ImageWrapper = styled.div`
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  padding: 10px 0px; // 그림자 보이도록
+  padding: 10px 0px;
 
   .slick-center & {
     opacity: 1;
@@ -96,5 +110,5 @@ const Nickname = styled.span`
   font-size: 0.625rem;
   font-weight: 600;
   color: #eeeeee;
-  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5); /* 그림자 추가 */
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
 `;
