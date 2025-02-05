@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
+  const [focusIndex, setFocusIndex] = useState(0);
+
   const settings = {
     infinite: true,
     speed: 500,
@@ -13,42 +15,40 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
     centerMode: true,
     centerPadding: "0px",
     focusOnSelect: true,
-    beforeChange: (_, next) => {
-      // 중앙 아이템의 relayId를 찾아서 전달
-      let allTickles = data.flatMap((relay) => relay.tickles);
-      let focusedTickle = allTickles[next];
-
-      if (focusedTickle) {
-        let parentRelay = data.find((relay) =>
-          relay.tickles.some((t) => t.tickleId === focusedTickle.tickleId)
-        );
-        if (parentRelay) {
-          onFocusChange(parentRelay.relayId);
-        }
-      }
+    beforeChange: (current, next) => {
+      setFocusIndex(next);
+      onFocusChange(data[next]?.relayId); // 부모에게 포커스된 relayId 전달
     },
   };
 
+  const renderItem = (item, index) => {
+    // 선택된 티클의 데이터
+    const selectedTickle =
+      item.tickles.find((tickle) => tickle.tickleId === selectedTickleId) ||
+      item.tickles[0]; // 기본 첫번째
+
+    return (
+      <ImageWrapper key={selectedTickle.tickleId || `tickle-${index}`}>
+        <ImageContainer>
+          <Image
+            src={selectedTickle.thumbnail}
+            alt={`Slide ${selectedTickle.tickleId || index}`}
+          />
+          <Overlay>
+            <ProfileImage
+              src={selectedTickle.profileImage || "/default-profile.jpg"}
+              alt={`Profile ${selectedTickle.tickleId || index}`}
+            />
+            <Nickname>{selectedTickle.nickname || "No Name"}</Nickname>
+          </Overlay>
+        </ImageContainer>
+      </ImageWrapper>
+    );
+  };
   return (
     <CarouselContainer>
       <Slider {...settings}>
-        {data.flatMap((relay) =>
-          relay.tickles.map((selectedTickle, index) => (
-            <ImageWrapper key={selectedTickle.relayId}>
-              <ProfileWrapper>
-                <ProfileImage
-                  src={selectedTickle.profileImage || "/default-profile.jpg"}
-                  alt={`Profile ${selectedTickle.tickleId || index}`}
-                />
-                <Nickname>{selectedTickle.nickname || "No Name"}</Nickname>
-              </ProfileWrapper>
-              <Image
-                src={selectedTickle.thumbnail}
-                alt={`Slide ${selectedTickle.tickleId || index}`}
-              />
-            </ImageWrapper>
-          ))
-        )}
+        {data.map((relay, index) => renderItem(relay, index))}
       </Slider>
     </CarouselContainer>
   );
@@ -77,20 +77,24 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const ProfileWrapper = styled.div`
+const ImageContainer = styled.div`
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+`;
+const Overlay = styled.div`
   position: absolute;
   bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 10px;
+  right: 10px;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 10px;
-  z-index: 1;
+  justify-content: center;
 `;
 
 const Image = styled.img`
-  max-height: 400px;
   object-fit: contain;
   border-radius: 15px;
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);

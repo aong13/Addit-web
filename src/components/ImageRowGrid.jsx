@@ -2,17 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const ImageRowGrid = ({ data, onImageSelect }) => {
-  const numColumns = 5;
-
-  const imageWidth = (window.innerWidth - 24 - 16 * 2) / numColumns; // gap 6px, layoutPadding 16px
-  const imageHeight = imageWidth * (16 / 9);
-
   const renderItem = (item) => (
     <TouchableImage onClick={() => onImageSelect(item.tickleId)}>
-      <Image
-        src={item.thumbnail}
-        style={{ width: imageWidth, height: imageHeight }}
-      />
+      <Image src={item.thumbnail} />
     </TouchableImage>
   );
 
