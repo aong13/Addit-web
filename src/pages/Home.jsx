@@ -22,6 +22,12 @@ const Home = () => {
   const [focusedRelayId, setFocusedRelayId] = useState(null);
   const [selectedTickleId, setSelectedTickleId] = useState(null);
 
+  const [isVisible, setIsVisible] = useState(false); // div의 보임 여부 상태
+
+  const handleCarouselClick = () => {
+    setIsVisible(true); // 클릭 시 div의 보임 상태 변경
+  };
+
   const handleImageSelect = (tickleId) => {
     setSelectedTickleId(tickleId);
   };
@@ -41,7 +47,7 @@ const Home = () => {
     : null;
 
   if (!currentRelay) {
-    return <div>Loading...</div>;
+    return <div>Loading</div>;
   }
 
   return (
@@ -60,6 +66,7 @@ const Home = () => {
       </Title>
 
       <Carousel
+        onClick={handleCarouselClick}
         data={data}
         onFocusChange={setFocusedRelayId}
         selectedTickleId={selectedTickleId}
@@ -72,21 +79,27 @@ const Home = () => {
 
       <ContentTitle>{currentRelay.relayTitle}</ContentTitle>
 
-      <BottomContainer>
-        <ImageRowGrid
-          data={currentRelay?.tickles}
-          onImageSelect={handleImageSelect}
-        />
-        <Text1>현재 릴레이 참여중인 컨텐츠</Text1>
-        <Text2>더 많은 컨텐츠를 확인하려면?</Text2>
+      <BottomSection>
+        {isVisible && (
+          <BottomSection>
+            <div>
+              <ImageRowGrid
+                data={currentRelay?.tickles}
+                onImageSelect={handleImageSelect}
+              />
+              <Text1>현재 릴레이 참여중인 컨텐츠</Text1>
+              <Text2>더 많은 컨텐츠를 확인하려면?</Text2>
 
-        <ButtonContainer>
-          <Button text="릴레이 보러가기" icon={goIcon} />
-          <Button text="릴레이 만들기" icon={plusIcon} />
-        </ButtonContainer>
+              <ButtonContainer>
+                <Button text="릴레이 보러가기" icon={goIcon} />
+                <Button text="릴레이 만들기" icon={plusIcon} />
+              </ButtonContainer>
+            </div>
+          </BottomSection>
+        )}
 
         <CopyRight>copyright 2025. Addit. All rights reserved Pozzle</CopyRight>
-      </BottomContainer>
+      </BottomSection>
     </Container>
   );
 };
@@ -98,8 +111,20 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 80px;
+  width: 100%;
+  min-height: 100vh;
 `;
 
+const BottomSection = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #e7edff;
+  padding: 40px 10px; // 화면 가장자리 패딩
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 1;
+`;
 const Logo = styled.div`
   img {
     height: 26px;
@@ -153,11 +178,6 @@ const Text2 = styled.p`
   font-size: 10px;
   font-weight: 400;
   text-align: center;
-`;
-
-const BottomContainer = styled.div`
-  background-color: #e7edff;
-  padding: 40px 10px; //화면 가장자리 패딩
 `;
 
 const ButtonContainer = styled.div`

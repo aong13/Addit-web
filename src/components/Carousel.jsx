@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import defaultProfileImg from "../assets/default_profile_temp.png";
 
-const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
+const Carousel = ({ data, onFocusChange, selectedTickleId, onClick }) => {
   const settings = {
     infinite: true,
     speed: 500,
@@ -19,6 +19,10 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
     },
   };
 
+  const handleItemClick = (relayId) => {
+    onClick && onClick(relayId);
+  };
+
   const renderItem = (item, index) => {
     // 선택된 티클의 데이터
     const selectedTickle =
@@ -26,7 +30,10 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
       item.tickles[0]; // 기본 첫번째
 
     return (
-      <ImageWrapper key={selectedTickle.tickleId || `tickle-${index}`}>
+      <ImageWrapper
+        key={selectedTickle.tickleId || `tickle-${index}`}
+        onClick={() => handleItemClick(item.relayId)}
+      >
         <Thumbnail
           src={selectedTickle.thumbnail}
           alt={`Slide ${selectedTickle.tickleId || index}`}
@@ -65,6 +72,7 @@ const ImageWrapper = styled.div`
   align-items: center;
   transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0.8;
+  outline: none;
 
   .slick-center & {
     opacity: 1;
