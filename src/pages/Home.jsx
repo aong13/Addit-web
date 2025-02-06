@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Carousel from "../components/Carousel";
 import { response_hot } from "../assets/DummyData_home";
 import Collaborators from "../components/Collaborators";
-import logo from "../assets/logo_temp.png";
+import logo from "../assets/logo.svg";
 import ImageRowGrid from "../components/ImageRowGrid";
 import goIcon from "../assets/arrow_go.svg";
 import plusIcon from "../assets/plus.svg";
