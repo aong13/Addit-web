@@ -5,6 +5,7 @@ import Search from "./pages/Search";
 import Upload from "./pages/Upload";
 import Alarm from "./pages/Alarm";
 import MyPage from "./pages/MyPage";
+import Relay from "./pages/Relay";
 const AppRouter = () => {
   return (
     <Router>
@@ -14,6 +15,7 @@ const AppRouter = () => {
         <Route path="/upload" element={<Upload />} />
         <Route path="/alarm" element={<Alarm />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/relay" element={<Relay />} />
       </Routes>
     </Router>
   );
