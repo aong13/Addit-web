@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import defaultProfileImg from "../assets/default_profile_temp.png";
 
-const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
+const Carousel = ({ data, onFocusChange, selectedTickleId, onClick }) => {
+  const [isSliding, setIsSliding] = useState(false);
+
   const settings = {
     infinite: true,
     speed: 500,
@@ -15,8 +17,19 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
     centerPadding: "0px",
     focusOnSelect: true,
     beforeChange: (current, next) => {
+      setIsSliding(true); // 슬라이드 시작
       onFocusChange(data[next]?.relayId); // 부모에게 포커스된 relayId 전달
     },
+    afterChange: () => {
+      setIsSliding(false); // 슬라이드 끝
+    },
+  };
+
+  const handleItemClick = (relayId) => {
+    if (!isSliding) {
+      //슬라이드 아닐 때만 click event
+      onClick(relayId);
+    }
   };
 
   const renderItem = (item, index) => {
@@ -26,7 +39,10 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
       item.tickles[0]; // 기본 첫번째
 
     return (
-      <ImageWrapper key={selectedTickle.tickleId || `tickle-${index}`}>
+      <ImageWrapper
+        key={selectedTickle.tickleId || `tickle-${index}`}
+        onClick={() => handleItemClick(item.relayId)}
+      >
         <Thumbnail
           src={selectedTickle.thumbnail}
           alt={`Slide ${selectedTickle.tickleId || index}`}
@@ -65,6 +81,7 @@ const ImageWrapper = styled.div`
   align-items: center;
   transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0.8;
+  outline: none;
 
   .slick-center & {
     opacity: 1;
