@@ -1,29 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 
-const ImageRowGrid = ({ data, onImageSelect }) => {
+const SelectableImageGrid = ({ data, onImageSelect }) => {
   const renderItem = (item) => (
-    <TouchableImage onClick={() => onImageSelect(item.tickleId)}>
-      <Image src={item.thumbnail} />
-    </TouchableImage>
+    <ImageItem onClick={() => onImageSelect(item.tickleId)}>
+      <img src={item.thumbnail} alt="relayImg" />
+    </ImageItem>
   );
 
-  return <FlatListWrapper>{data.map(renderItem)}</FlatListWrapper>;
+  return <GridWrapper>{data.map(renderItem)}</GridWrapper>;
 };
 
-export default ImageRowGrid;
+export default SelectableImageGrid;
 
-const FlatListWrapper = styled.div`
+const GridWrapper = styled.div`
   display: flex;
-  margin-top: 10px;
+  justify-content: center;
+  gap: 6px;
 `;
 
-const TouchableImage = styled.div`
-  margin-right: 6px;
-  margin-bottom: 6px;
+const ImageItem = styled.div`
   cursor: pointer;
-`;
-
-const Image = styled.img`
-  border-radius: 8px;
+  width: calc(20% - 6px); /* 최대 5개*/
+  img {
+    border-radius: 8px;
+    aspect-ratio: 9 / 16; /* 이미지 비율 유지 */
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+  }
 `;
