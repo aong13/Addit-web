@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { relayData } from "../assets/dummy_relay";
 import RelayHeader from "../components/relay/RelayHeader";
 import BottomBar from "../components/relay/BottomBar";
+import { useParams } from "react-router-dom";
 
 const Relay = () => {
   const [relay, setRelay] = useState([]); // 릴레이 데이터
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 릴레이 인덱스
   const [loading, setLoading] = useState(false); // 로딩 상태
   const [loadedIndex, setLoadedIndex] = useState(0); // 이미 로드된 릴레이 데이터 인덱스
-
+  const { id } = useParams();
   useEffect(() => {
     loadMoreData();
   }, []);

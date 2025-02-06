@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import backIcon from "../../assets/icons/arrow_back.svg";
 
 const RelayHeader = ({ title }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const RelayHeader = ({ title }) => {
   return (
     <HeaderContainer>
       <BackButton onClick={handleBack}>
-        <BackText>{"<"}</BackText>
+        <img src={backIcon} alt="backIcon" />
       </BackButton>
       <Title>{title}</Title>
     </HeaderContainer>
@@ -34,11 +35,10 @@ const BackButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
-`;
-
-const BackText = styled.span`
-  color: white;
-  font-size: 24px;
+  img {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const Title = styled.h1`

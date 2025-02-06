@@ -1,19 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-
+import HeartBtn from "./HeartBtn";
+import askIcon from "../../assets/icons/bubble.svg";
+import plusIcon from "../../assets/icons/plus.svg";
 const BottomBar = ({ relayData }) => {
   return (
     <BottomContainer>
-      <IconContainer>
-        <Text> 좋아요 </Text>
-        <Text> {relayData?.like} </Text>
-      </IconContainer>
-      <Button>
-        <ButtonText> + </ButtonText>
-      </Button>
-      <IconContainer>
-        <Text> 댓글 </Text>
-      </IconContainer>
+      <HeartBtn likeCount={relayData?.like} />
+
+      <PlusBtn>
+        <img src={plusIcon} alt="plusIcon" />
+      </PlusBtn>
+
+      <AskBtn>
+        <img src={askIcon} alt="askIcon" />
+      </AskBtn>
     </BottomContainer>
   );
 };
@@ -27,30 +28,38 @@ const BottomContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 10;
 `;
 
-const IconContainer = styled.div`
-  background-color: red;
+const AskBtn = styled.div`
+  display: flex;
+  background: #eaeaea;
+  width: 42px;
+  height: 42px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  img {
+    width: 26px;
+    height: 26px;
+  }
+`;
+const PlusBtn = styled.div`
+  display: flex;
+  background: #7fa3ff;
   width: 50px;
   height: 50px;
   justify-content: center;
   align-items: center;
-`;
-
-const Button = styled.button`
-  background-color: #ffffff80;
-  padding: 16px;
-  border-radius: 30px;
-  border: none;
   cursor: pointer;
-`;
-
-const ButtonText = styled.span`
-  font-weight: 800;
-`;
-
-const Text = styled.span`
-  font-size: 16px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  img {
+    width: 26px;
+    height: 26px;
+  }
 `;
 
 export default BottomBar;
