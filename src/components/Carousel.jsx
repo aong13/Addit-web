@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
@@ -6,6 +6,8 @@ import "slick-carousel/slick/slick-theme.css";
 import defaultProfileImg from "../assets/default_profile_temp.png";
 
 const Carousel = ({ data, onFocusChange, selectedTickleId, onClick }) => {
+  const [isSliding, setIsSliding] = useState(false);
+
   const settings = {
     infinite: true,
     speed: 500,
@@ -15,12 +17,19 @@ const Carousel = ({ data, onFocusChange, selectedTickleId, onClick }) => {
     centerPadding: "0px",
     focusOnSelect: true,
     beforeChange: (current, next) => {
+      setIsSliding(true); // 슬라이드 시작
       onFocusChange(data[next]?.relayId); // 부모에게 포커스된 relayId 전달
+    },
+    afterChange: () => {
+      setIsSliding(false); // 슬라이드 끝
     },
   };
 
   const handleItemClick = (relayId) => {
-    onClick && onClick(relayId);
+    if (!isSliding) {
+      //슬라이드 아닐 때만 click event
+      onClick(relayId);
+    }
   };
 
   const renderItem = (item, index) => {
