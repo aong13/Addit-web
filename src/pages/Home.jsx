@@ -54,7 +54,7 @@ const Home = () => {
 
       <Title>
         인기 태그
-        <Highlight> #기숙사</Highlight>
+        <Highlight> #{currentRelay.tag}</Highlight>
         <br />
         릴레이에 동참해보세요
       </Title>
