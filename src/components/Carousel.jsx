@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // useNavigate import
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import defaultProfileImg from "../assets/default_profile_temp.png";
 
-const Carousel = ({ data, onFocusChange, selectedTickleId, onClick }) => {
+const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
   const [isSliding, setIsSliding] = useState(false);
+  const [focusedRelayId, setFocusedRelayId] = useState(null);
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   const settings = {
     infinite: true,
@@ -20,15 +23,18 @@ const Carousel = ({ data, onFocusChange, selectedTickleId, onClick }) => {
       setIsSliding(true); // 슬라이드 시작
       onFocusChange(data[next]?.relayId); // 부모에게 포커스된 relayId 전달
     },
-    afterChange: () => {
+    afterChange: (current) => {
       setIsSliding(false); // 슬라이드 끝
+      setFocusedRelayId(data[current]?.relayId); // 현재 중앙 아이템의 relayId 저장
     },
   };
 
   const handleItemClick = (relayId) => {
     if (!isSliding) {
       //슬라이드 아닐 때만 click event
-      onClick(relayId);
+      if (relayId === focusedRelayId) {
+        navigate(`/relay/${relayId}`); // 클릭한 항목의 relayId로 이동
+      }
     }
   };
 
@@ -90,6 +96,10 @@ const ImageWrapper = styled.div`
 
   .slick-slide:not(.slick-center) & {
     transform: scale(0.8);
+  }
+  &:hover img {
+    filter: brightness(0.9);
+    transition: filter 0.3s ease;
   }
 `;
 

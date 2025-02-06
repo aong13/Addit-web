@@ -5,8 +5,8 @@ import { response_hot } from "../assets/DummyData_home";
 import Collaborators from "../components/Collaborators";
 import logo from "../assets/logo.svg";
 import ImageRowGrid from "../components/ImageRowGrid";
-import goIcon from "../assets/arrow_go.svg";
-import plusIcon from "../assets/plus.svg";
+
+import plusIcon from "../assets/icons/plus_blue.svg";
 
 const Button = ({ text, icon }) => {
   return (
@@ -21,13 +21,6 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [focusedRelayId, setFocusedRelayId] = useState(null);
   const [selectedTickleId, setSelectedTickleId] = useState(null);
-
-  const [isVisible, setIsVisible] = useState(false); // div의 보임 여부 상태
-
-  const handleCarouselClick = () => {
-    setIsVisible(true); // 클릭 시 div의 보임 상태 변경
-  };
-
   const handleImageSelect = (tickleId) => {
     setSelectedTickleId(tickleId);
   };
@@ -55,48 +48,34 @@ const Home = () => {
       <Logo>
         <img src={logo} alt="Logo" />
       </Logo>
-
       <Tabbar>실시간</Tabbar>
-
       <Title>
         인기 태그
         <Highlight> #{currentRelay.tag}</Highlight>
         <br />
         릴레이에 동참해보세요
       </Title>
-
       <Carousel
-        onClick={handleCarouselClick}
         data={data}
         onFocusChange={setFocusedRelayId}
         selectedTickleId={selectedTickleId}
       />
-      <div style={{ height: "20px" }} />
+      <ContentTitle>{currentRelay.relayTitle}</ContentTitle>
       <Collaborators
         count={currentRelay.memberCount}
         images={currentRelay.memberImages}
       />
-
-      <ContentTitle>{currentRelay.relayTitle}</ContentTitle>
-
       <BottomSection>
-        {isVisible && (
-          <BottomSection>
-            <div>
-              <ImageRowGrid
-                data={currentRelay?.tickles}
-                onImageSelect={handleImageSelect}
-              />
-              <Text1>현재 릴레이 참여중인 컨텐츠</Text1>
-              <Text2>더 많은 컨텐츠를 확인하려면?</Text2>
+        <BottomSection>
+          <ImageRowGrid
+            data={currentRelay?.tickles}
+            onImageSelect={handleImageSelect}
+          />
+          <Text1>현재 릴레이 참여중인 컨텐츠</Text1>
+          <Text2>더 많은 컨텐츠를 확인하려면?</Text2>
 
-              <ButtonContainer>
-                <Button text="릴레이 보러가기" icon={goIcon} />
-                <Button text="릴레이 만들기" icon={plusIcon} />
-              </ButtonContainer>
-            </div>
-          </BottomSection>
-        )}
+          <Button text="릴레이 만들기" icon={plusIcon} />
+        </BottomSection>
 
         <CopyRight>copyright 2025. Addit. All rights reserved Pozzle</CopyRight>
       </BottomSection>
@@ -110,19 +89,20 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 80px;
+  padding-top: 30px;
   width: 100%;
   min-height: 100vh;
 `;
 
 const BottomSection = styled.div`
+  margin-top: 20px;
   box-sizing: border-box;
   width: 100%;
   background-color: #e7edff;
-  padding: 40px 10px; // 화면 가장자리 패딩
+  padding: 0px 10px; // 화면 가장자리 패딩
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
   flex-grow: 1;
 `;
 const Logo = styled.div`
@@ -147,7 +127,7 @@ const Title = styled.span`
   font-size: 16px;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 20px;
+  margin: 16px 0 30px;
 `;
 
 const Highlight = styled.span`
@@ -161,7 +141,7 @@ const ContentTitle = styled.p`
   font-size: 16px;
   font-weight: 600;
   text-align: center;
-  margin: 14px 0 30px;
+  margin: 14px 0;
 `;
 
 const Text1 = styled.p`
@@ -180,14 +160,6 @@ const Text2 = styled.p`
   text-align: center;
 `;
 
-const ButtonContainer = styled.div`
-  gap: 10px;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  padding: 0 20px;
-`;
-
 const CopyRight = styled.p`
   color: #7fa3ff;
   font-size: 10px;
@@ -197,24 +169,25 @@ const CopyRight = styled.p`
 `;
 
 const StyledButton = styled.button`
+  margin-top: 20px;
   display: flex;
-  color: white;
+  color: #7fa3ff;
   font-size: 12px;
   font-weight: 600;
   padding: 10px 0;
-  background-color: #7fa3ff;
-  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid #7fa3ff;
+  border-radius: 24px;
 
   justify-content: center;
   align-items: center;
-  border: transparent;
+
   cursor: pointer;
-  transition: background-color 0.3s;
   width: 100%;
   max-width: 200px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+
   &:hover {
-    background-color: #5e8cde;
+    background-color: #ffffff20;
   }
 `;
 
