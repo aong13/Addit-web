@@ -35,16 +35,14 @@ const Relay = () => {
       ),
     ]);
 
-    setLoadedIndex(loadedIndex + nextData.length); // 로드된 데이터 인덱스 업데이트
+    setLoadedIndex(loadedIndex + nextData.length);
     setLoading(false);
   };
 
-  // 이전 버튼 클릭
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
   };
 
-  // 다음 버튼 클릭
   const handleNext = () => {
     if (currentIndex < relay.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
@@ -81,6 +79,7 @@ const Relay = () => {
 
 const SliderContainer = styled.div`
   position: relative;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
 `;
@@ -89,6 +88,7 @@ const SliderWrapper = styled.div`
   display: flex;
   transition: transform 0.5s ease-in-out;
   height: 100%;
+  width: 100%;
   transform: ${(props) => `translateX(-${props.currentIndex * 100}%)`};
 `;
 
@@ -119,7 +119,6 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
   transition: opacity 0.3s ease;
 
   &:focus {
