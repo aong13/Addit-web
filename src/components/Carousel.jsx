@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import defaultProfileImg from "../assets/default_profile_temp.png";
 
 const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
   const settings = {
@@ -26,22 +27,21 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
 
     return (
       <ImageWrapper key={selectedTickle.tickleId || `tickle-${index}`}>
-        <ImageContainer>
-          <Image
-            src={selectedTickle.thumbnail}
-            alt={`Slide ${selectedTickle.tickleId || index}`}
+        <Thumbnail
+          src={selectedTickle.thumbnail}
+          alt={`Slide ${selectedTickle.tickleId || index}`}
+        />
+        <Overlay>
+          <ProfileImg
+            src={selectedTickle?.profileImage || defaultProfileImg}
+            alt="Profile Img"
           />
-          <Overlay>
-            <ProfileImage
-              src={selectedTickle.profileImage || "/default-profile.jpg"}
-              alt={`Profile ${selectedTickle.tickleId || index}`}
-            />
-            <Nickname>{selectedTickle.nickname || "No Name"}</Nickname>
-          </Overlay>
-        </ImageContainer>
+          <Nickname>{selectedTickle.nickname || "No Name"}</Nickname>
+        </Overlay>
       </ImageWrapper>
     );
   };
+
   return (
     <CarouselContainer>
       <Slider {...settings}>
@@ -54,62 +54,59 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
 export default Carousel;
 
 const CarouselContainer = styled.div`
-  box-sizing: border-box;
+  width: 100%;
 `;
 
 const ImageWrapper = styled.div`
+  cursor: pointer;
   position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  padding: 10px 0px;
+  opacity: 0.8;
 
   .slick-center & {
     opacity: 1;
+    transform: scale(1);
   }
 
   .slick-slide:not(.slick-center) & {
     transform: scale(0.8);
-    opacity: 0.8;
   }
 `;
 
-const ImageContainer = styled.div`
-  width: 100%;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-`;
 const Overlay = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: 16px;
   left: 10px;
   right: 10px;
-  align-items: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
 `;
 
-const Image = styled.img`
+const Thumbnail = styled.img`
+  width: 100%;
   object-fit: contain;
   border-radius: 15px;
-  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
-  width: 100%;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  margin: 8px 0px; //그림자 잘림 방지
 `;
 
-const ProfileImage = styled.img`
+const ProfileImg = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #ffffff;
+  border: 2px solid #fff;
 `;
 
 const Nickname = styled.span`
-  margin-top: 8px;
-  font-size: 0.625rem;
+  margin-top: 6px;
+  font-size: 12px;
   font-weight: 600;
-  color: #eeeeee;
+  color: #eee;
   text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
 `;

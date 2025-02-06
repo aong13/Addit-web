@@ -22,11 +22,18 @@ const GridWrapper = styled.div`
 const ImageItem = styled.div`
   cursor: pointer;
   width: calc(20% - 6px); /* 최대 5개*/
+  position: relative;
+
   img {
     border-radius: 8px;
     aspect-ratio: 9 / 16; /* 이미지 비율 유지 */
     object-fit: cover;
     width: 100%;
     height: auto;
+    transition: filter 0.3s ease;
+  }
+
+  &:hover img {
+    filter: brightness(0.8);
   }
 `;

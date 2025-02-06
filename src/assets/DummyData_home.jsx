@@ -11,7 +11,6 @@ export const response_hot = {
         memberImages: [
           "https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVEJTk0JTg0JUVCJUExJTlDJUVEJTk1JTg0JTIwJUVDJTlEJUI0JUVCJUFGJUI4JUVDJUE3JTgwfGVufDB8fDB8fHww",
           "https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVEJTk0JTg0JUVCJUExJTlDJUVEJTk1JTg0JTIwJUVDJTlEJUI0JUVCJUFGJUI4JUVDJUE3JTgwfGVufDB8fDB8fHww",
-          "https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVEJTk0JTg0JUVCJUExJTlDJUVEJTk1JTg0JTIwJUVDJTlEJUI0JUVCJUFGJUI4JUVDJUE3JTgwfGVufDB8fDB8fHww",
         ],
         tickles: [
           {
@@ -82,20 +81,6 @@ export const response_hot = {
             userId: 1008,
             profileImage: "https://fakeimg.pl/360x640/ccff33/000000",
             nickname: "책상천재",
-          },
-          {
-            tickleId: "209",
-            thumbnail: "https://fakeimg.pl/360x640/33aaff/ffffff",
-            userId: 1009,
-            profileImage: "https://fakeimg.pl/360x640/ff2233/ffffff",
-            nickname: "책상마스터",
-          },
-          {
-            tickleId: "210",
-            thumbnail: "https://fakeimg.pl/360x640/113322/ffffff",
-            userId: 1010,
-            profileImage: "https://fakeimg.pl/360x640/332211/000000",
-            nickname: "디자인러버",
           },
         ],
       },

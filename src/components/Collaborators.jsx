@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import defaultProfileImg from "../assets/default_profile_temp.png";
 
 const Collaborators = ({ images, count }) => {
   console.log(images);
@@ -7,7 +8,7 @@ const Collaborators = ({ images, count }) => {
     <Container>
       <Wrapper>
         {images.map((image, index) => (
-          <EllipseIcon key={index} imageUrl={image} />
+          <ProfileCircle key={index} imageUrl={image} />
         ))}
       </Wrapper>
       <Text>
@@ -18,8 +19,20 @@ const Collaborators = ({ images, count }) => {
   );
 };
 
-const EllipseIcon = ({ imageUrl }) => {
-  return <Image src={imageUrl} alt="Collaborator" />;
+const ProfileCircle = ({ imageUrl }) => {
+  const [imgSrc, setImgSrc] = useState(imageUrl || defaultProfileImg);
+
+  useEffect(() => {
+    setImgSrc(imageUrl || defaultProfileImg);
+  }, [imageUrl]);
+
+  return (
+    <Image
+      src={imgSrc}
+      alt="Collaborator"
+      onError={() => setImgSrc(defaultProfileImg)}
+    />
+  );
 };
 
 const Container = styled.div`

@@ -12,11 +12,10 @@ function App() {
 }
 
 const AppContainer = styled.div`
-  width: 100%;
-  max-width: 480px; /* 최대 화면 크기 */
-  box-sizing: border-box;
-  margin: 0 auto;
+  width: 100vw;
   min-height: 100vh;
+  max-width: 480px; /* 최대 크기 */
+  margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
