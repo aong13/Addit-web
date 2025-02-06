@@ -57,7 +57,7 @@ const Btn = styled.div`
   align-items: center;
   cursor: pointer;
   border-radius: 50%;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
   transform: ${(props) => (props.isActive ? "scale(1.1)" : "scale(1)")};
 `;
 
