@@ -8,7 +8,6 @@ export const relayData = {
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo4AQOUitqLbtcEvdfbB9cFryEQCES3TQf6w&s",
       isMine: true,
       like: 50,
-      isLiked: true,
     },
     {
       relayId: 12346,
@@ -18,7 +17,6 @@ export const relayData = {
         "https://blog.kakaocdn.net/dn/tEMUl/btrDc6957nj/NwJoDw0EOapJNDSNRNZK8K/img.jpg",
       isMine: false,
       like: 35,
-      isLiked: false,
     },
     {
       relayId: 12347,
@@ -28,7 +26,6 @@ export const relayData = {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/300px-Cat_November_2010-1a.jpg",
       isMine: true,
       like: 60,
-      isLiked: true,
     },
     {
       relayId: 12348,
@@ -48,7 +45,6 @@ export const relayData = {
         "https://i.namu.wiki/i/xSUf6OgzL08m1tN0AFsgl5rjPtZkR2yHtU5PMc9RFYLaUSmtr2E9KDeaBKnA3TdbgvN99oMQ_oHmk89y4FNVOQ.webp",
       isMine: true,
       like: 100,
-      isLiked: true,
     },
   ],
 };

@@ -1,18 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import HeartBtn from "./HeartBtn";
 import askIcon from "../../assets/icons/bubble.svg";
 import plusIcon from "../../assets/icons/plus.svg";
+
 const BottomBar = ({ relayData }) => {
+  const [isPlusBtnActive, setIsPlusBtnActive] = useState(false);
+  const [isAskBtnActive, setIsAskBtnActive] = useState(false);
+
+  const handlePlusClick = () => {};
+
+  const handleAskClick = () => {};
+
   return (
     <BottomContainer>
       <HeartBtn likeCount={relayData?.like} />
 
-      <PlusBtn>
+      <PlusBtn
+        onClick={handlePlusClick}
+        isActive={isPlusBtnActive}
+        onMouseDown={() => setIsPlusBtnActive(true)}
+        onMouseUp={() => setIsPlusBtnActive(false)}
+        onMouseLeave={() => setIsPlusBtnActive(false)}
+      >
         <img src={plusIcon} alt="plusIcon" />
       </PlusBtn>
 
-      <AskBtn>
+      <AskBtn
+        onClick={handleAskClick}
+        isActive={isAskBtnActive}
+        onMouseDown={() => setIsAskBtnActive(true)}
+        onMouseUp={() => setIsAskBtnActive(false)}
+        onMouseLeave={() => setIsAskBtnActive(false)}
+      >
         <img src={askIcon} alt="askIcon" />
       </AskBtn>
     </BottomContainer>
@@ -31,31 +51,32 @@ const BottomContainer = styled.div`
   z-index: 10;
 `;
 
-const AskBtn = styled.div`
+const Btn = styled.div`
   display: flex;
-  background: #eaeaea;
-  width: 42px;
-  height: 42px;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   border-radius: 50%;
+  transition: transform 0.3s ease;
+  transform: ${(props) => (props.isActive ? "scale(1.1)" : "scale(1)")};
+`;
+
+const AskBtn = styled(Btn)`
+  background: #eaeaea;
+  width: 42px;
+  height: 42px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   img {
     width: 26px;
     height: 26px;
   }
 `;
-const PlusBtn = styled.div`
-  display: flex;
+
+const PlusBtn = styled(Btn)`
   background: #7fa3ff;
   width: 50px;
   height: 50px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  border-radius: 50%;
   img {
     width: 26px;
     height: 26px;

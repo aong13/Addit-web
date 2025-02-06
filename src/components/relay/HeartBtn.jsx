@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import heartOn from "../../assets/icons/heart_on.svg";
 import heartOff from "../../assets/icons/heart_off.svg";
 import styled, { keyframes } from "styled-components";
@@ -7,6 +7,10 @@ const HeartBtn = ({ likeCount }) => {
   const [likes, setLikes] = useState(likeCount);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  useEffect(() => {
+    setLikes(likeCount);
+  }, [likeCount]);
+
   const handleClick = () => {
     if (!isAnimating) {
       setIsAnimating(true);
@@ -14,7 +18,7 @@ const HeartBtn = ({ likeCount }) => {
 
       setTimeout(() => {
         setIsAnimating(false);
-      }, 500);
+      }, 300);
     }
   };
 
@@ -31,7 +35,7 @@ const HeartBtn = ({ likeCount }) => {
 
 const heartPop = keyframes`
   0% { transform: scale(1); opacity: 0; }
-  50% { transform: scale(1.3); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 1; }
   100% { transform: scale(1); opacity: 0; }
 `;
 
@@ -57,15 +61,15 @@ const HeartOff = styled.img`
   width: 100%;
   height: 100%;
   opacity: ${(props) => (props.isHidden ? 0.3 : 1)};
-  transition: opacity 0.3s ease;
-  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5)); /* ✅ 그림자 추가 */
+  transition: opacity 0.2s ease;
+  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
 `;
 
 const HeartOn = styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
-  animation: ${heartPop} 0.5s ease-in-out;
+  animation: ${heartPop} ${0.5}s ease-in-out;
 `;
 
 const Text = styled.span`
