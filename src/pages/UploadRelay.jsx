@@ -2,25 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
-
-const TagInput = ({ value, onChange }) => {
-  return (
-    <TagContainer>
-      <Input
-        type="text"
-        placeholder="#태그 입력 최대 3개"
-        value={value}
-        onChange={onChange}
-      />
-    </TagContainer>
-  );
-};
+import TagInput from "../components/TagInput";
 
 const UploadRelay = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [intro, setIntro] = useState("");
-  const [tags, setTags] = useState("");
+  const [tags, setTags] = useState([]); // 태그 초기값을 빈 배열로 설정
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value.slice(0, 40)); // 제목 최대 40자
@@ -30,8 +18,8 @@ const UploadRelay = () => {
     setIntro(e.target.value);
   };
 
-  const handleTagsChange = (e) => {
-    setTags(e.target.value);
+  const handleTagsChange = (newTags) => {
+    setTags(newTags); // 태그 배열을 직접 업데이트
   };
 
   const handleNext = () => {
@@ -58,7 +46,7 @@ const UploadRelay = () => {
           value={intro}
           onChange={handleIntroChange}
         />
-        <TagInput value={tags} onChange={handleTagsChange} />
+        <TagInput tags={tags} onChange={handleTagsChange} />
       </FormContainer>
     </Container>
   );
@@ -100,12 +88,6 @@ const TextArea = styled.textarea`
   outline: none;
   resize: none;
   min-height: 100px;
-`;
-
-const TagContainer = styled.div`
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
 `;
 
 export default UploadRelay;

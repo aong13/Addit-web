@@ -4,19 +4,7 @@ import Header from "../components/layout/Header";
 import styled from "styled-components";
 import cameraIcon from "../assets/icons/camera.svg";
 import deleteIcon from "../assets/icons/x_icon.svg"; // X 아이콘 추가
-
-const TagInput = ({ value }) => {
-  return (
-    <TagContainer>
-      <Input
-        type="text"
-        placeholder="태그가 없습니다."
-        value={value}
-        readOnly
-      />
-    </TagContainer>
-  );
-};
+import TagInput from "../components/TagInput";
 
 const UploadTickle = () => {
   const location = useLocation();
@@ -64,7 +52,7 @@ const UploadTickle = () => {
             onChange={handleFileChange}
           />
         </TitleInputWrapper>
-        <TagInput value={tags} />
+        <TagInput tags={tags} editMode={false} />
         <ContentContainer>
           {image && (
             <ImageWrapper>
@@ -123,12 +111,6 @@ const TextArea = styled.textarea`
   outline: none;
   resize: none;
   min-height: 100px;
-`;
-
-const TagContainer = styled.div`
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
 `;
 
 const TitleInputWrapper = styled.div`
