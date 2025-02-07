@@ -17,7 +17,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/upload");
+    navigate("/upload/relay");
   };
 
   const handleImageSelect = (tickleId) => {

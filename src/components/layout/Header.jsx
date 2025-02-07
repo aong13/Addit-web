@@ -3,13 +3,15 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as BackIcon } from "../../assets/icons/arrow_back_black.svg"; // 아이콘 변경
 
-const Header = ({ title, onNext, onComplete, buttonText }) => {
+const Header = ({ title, onClickBtn, buttonText }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate(-1);
   };
-
+  const handleNext = () => {
+    navigate("/relayTickle"); // relayTickle 페이지로 이동
+  };
   return (
     <HeaderContainer>
       <BackButton onClick={handleBack}>
@@ -17,12 +19,12 @@ const Header = ({ title, onNext, onComplete, buttonText }) => {
       </BackButton>
       <Title>{title}</Title>
       {buttonText && ( // 버튼 텍스트가 있을 경우에만 버튼을 렌더링
-        <RightBtn
-          onClick={buttonText === "완료" ? onComplete : onNext}
+        <HeaderBtn
+          onClick={onClickBtn}
           buttonType={buttonText} // buttonText를 props로 전달
         >
           {buttonText}
-        </RightBtn>
+        </HeaderBtn>
       )}
     </HeaderContainer>
   );
@@ -58,9 +60,9 @@ const Title = styled.h1`
   margin: 0;
 `;
 
-const RightBtn = styled.button`
+const HeaderBtn = styled.button`
   background-color: ${({ buttonType }) =>
-    buttonType === "완료" ? "#7fa3ff" : "#d1d1d1"};
+    buttonType === "완료" ? "#7fa3ff" : "#6E6E6E"};
   color: white;
   border: none;
   padding: 8px 16px;
@@ -71,7 +73,7 @@ const RightBtn = styled.button`
 
   &:hover {
     background-color: ${({ buttonType }) =>
-      buttonType === "완료" ? "#5d87d8" : "#b3b3b3"}; /* hover 시 색상 변경 */
+      buttonType === "완료" ? "#5d87d8" : "#494949"}; /* hover 시 색상 변경 */
   }
 
   &:active {
