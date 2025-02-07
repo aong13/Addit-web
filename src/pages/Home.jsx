@@ -51,7 +51,7 @@ const Home = () => {
       <Tabbar>실시간</Tabbar>
       <Title>
         인기 태그
-        <Highlight> #{currentRelay.tag}</Highlight>
+        <strong> #{currentRelay.tag}</strong>
         <br />
         릴레이에 동참해보세요
       </Title>
@@ -71,8 +71,7 @@ const Home = () => {
             data={currentRelay?.tickles}
             onImageSelect={handleImageSelect}
           />
-          <Text1>현재 릴레이 참여중인 컨텐츠</Text1>
-          <Text2>더 많은 컨텐츠를 확인하려면?</Text2>
+          <Text>새롭게 릴레이를 추가해보세요!</Text>
 
           <Button text="릴레이 만들기" icon={plusIcon} />
         </BottomSection>
@@ -112,58 +111,44 @@ const Logo = styled.div`
   }
 `;
 
-const Tabbar = styled.div`
+const Tabbar = styled.h1`
   display: inline-block;
   border-bottom: 2px solid #4574ec;
   color: #222;
   font-size: 16px;
-  font-weight: bold;
   padding: 10px;
   margin: 16px 0;
 `;
 
-const Title = styled.span`
+const Title = styled.h1`
   color: #222222;
   font-size: 16px;
-  font-weight: 600;
   text-align: center;
   margin: 16px 0 30px;
+  strong {
+    color: #4574ec;
+  }
 `;
 
-const Highlight = styled.span`
-  color: #4574ec;
-  font-weight: bold;
-`;
-
-const ContentTitle = styled.p`
+const ContentTitle = styled.h1`
   width: 200px;
   color: #545454;
   font-size: 16px;
-  font-weight: 600;
   text-align: center;
   margin: 14px 0;
 `;
 
-const Text1 = styled.p`
+const Text = styled.p`
   margin-top: 20px;
-  color: #545454;
+  color: #7fa3ff;
   font-size: 14px;
   font-weight: 600;
-  text-align: center;
-`;
-
-const Text2 = styled.p`
-  margin-top: 6px;
-  color: #545454;
-  font-size: 10px;
-  font-weight: 400;
   text-align: center;
 `;
 
 const CopyRight = styled.p`
   color: #7fa3ff;
   font-size: 10px;
-  font-weight: 400;
   margin-top: 50px;
   text-align: center;
 `;

@@ -46,7 +46,7 @@ const Title = styled.h1`
   text-align: center;
   color: white;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   margin: 0;
 `;
 

@@ -2,10 +2,12 @@ import React from "react";
 import AppRouter from "./router";
 import styled from "styled-components";
 import "./reset.css";
+import GlobalStyle from "./styles/fonts/globalStyle"; // 경로에 맞게 수정
 
 function App() {
   return (
     <AppContainer>
+      <GlobalStyle />
       <AppRouter />
     </AppContainer>
   );
