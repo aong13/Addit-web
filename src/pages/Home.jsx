@@ -5,22 +5,21 @@ import { response_hot } from "../assets/DummyData_home";
 import Collaborators from "../components/Collaborators";
 import logo from "../assets/logo.svg";
 import ImageRowGrid from "../components/ImageRowGrid";
-
 import plusIcon from "../assets/icons/plus_blue.svg";
-
-const Button = ({ text, icon }) => {
-  return (
-    <StyledButton>
-      {text}
-      <Icon src={icon} />
-    </StyledButton>
-  );
-};
+import { useNavigate } from "react-router-dom";
+import { Button } from "../components/Button";
 
 const Home = () => {
   const [data, setData] = useState([]);
   const [focusedRelayId, setFocusedRelayId] = useState(null);
   const [selectedTickleId, setSelectedTickleId] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/upload");
+  };
+
   const handleImageSelect = (tickleId) => {
     setSelectedTickleId(tickleId);
   };
@@ -40,7 +39,7 @@ const Home = () => {
     : null;
 
   if (!currentRelay) {
-    return <div>Loading</div>;
+    return <div></div>; //추후 로딩처리
   }
 
   return (
@@ -66,15 +65,13 @@ const Home = () => {
         images={currentRelay.memberImages}
       />
       <BottomSection>
-        <BottomSection>
-          <ImageRowGrid
-            data={currentRelay?.tickles}
-            onImageSelect={handleImageSelect}
-          />
-          <Text>새롭게 릴레이를 추가해보세요!</Text>
+        <ImageRowGrid
+          data={currentRelay?.tickles}
+          onImageSelect={handleImageSelect}
+        />
+        <Text>새롭게 릴레이를 추가해보세요!</Text>
 
-          <Button text="릴레이 만들기" icon={plusIcon} />
-        </BottomSection>
+        <Button text="릴레이 만들기" icon={plusIcon} onClick={handleClick} />
 
         <CopyRight>copyright 2025. Addit. All rights reserved Pozzle</CopyRight>
       </BottomSection>
@@ -83,7 +80,6 @@ const Home = () => {
 };
 
 export default Home;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -151,33 +147,4 @@ const CopyRight = styled.p`
   font-size: 10px;
   margin-top: 50px;
   text-align: center;
-`;
-
-const StyledButton = styled.button`
-  margin-top: 20px;
-  display: flex;
-  color: #7fa3ff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 10px 0;
-  background-color: transparent;
-  border: 1px solid #7fa3ff;
-  border-radius: 24px;
-
-  justify-content: center;
-  align-items: center;
-
-  cursor: pointer;
-  width: 100%;
-  max-width: 200px;
-
-  &:hover {
-    background-color: #ffffff20;
-  }
-`;
-
-const Icon = styled.img`
-  margin-left: 10px;
-  width: 20px;
-  height: 20px;
 `;
