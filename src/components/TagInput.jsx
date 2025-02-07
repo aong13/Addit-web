@@ -5,7 +5,7 @@ const TagInput = ({ tags = [], onChange, editMode = true }) => {
   const [inputValue, setInputValue] = useState("");
 
   const addTag = (value) => {
-    const trimmedValue = value.trim();
+    const trimmedValue = value.trim().replace(/^#/, ""); // # 제거
     if (
       trimmedValue.length > 0 && // 빈 값 제외
       tags.length < 3 && // 태그 최대 3개
@@ -62,7 +62,7 @@ const TagInput = ({ tags = [], onChange, editMode = true }) => {
 const TagContainer = styled.div`
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
-  padding: 10px;
+  padding: 12px 20px;
 `;
 
 const TagInputWrapper = styled.div`
@@ -77,7 +77,7 @@ const Tag = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 6px 12px;
-  background-color: #e0e0e0;
+  background-color: #e7edff;
   border-radius: 20px;
   font-size: 14px;
   color: #333;
