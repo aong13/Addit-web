@@ -1,64 +1,45 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
 
-// TagInput 컴포넌트
-const TagInput = ({ value, onChange }) => {
+const TagInput = ({ value }) => {
   return (
     <TagContainer>
       <Input
         type="text"
-        placeholder="#태그 입력 최대 3개"
+        placeholder="태그가 없습니다."
         value={value}
-        onChange={onChange}
+        readOnly
       />
     </TagContainer>
   );
 };
 
-const Upload = () => {
-  // 각 필드별 상태를 분리하여 관리
-  const [title, setTitle] = useState(""); // 제목
-  const [intro, setIntro] = useState(""); // 소개
-  const [tags, setTags] = useState(""); // 태그
+const UploadTickle = () => {
+  const location = useLocation();
+  const { title, tags, intro } = location.state || {}; //이전에서 받아옴
+  const [content, setContent] = useState("");
 
-  // 포커스 상태 관리
-  const [focusedTitle, setFocusedTitle] = useState(false);
-  const [focusedIntro, setFocusedIntro] = useState(false);
-
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value.slice(0, 100)); // 제목은 최대 100자
-  };
-
-  const handleIntroChange = (e) => {
-    setIntro(e.target.value);
-  };
-
-  const handleTagsChange = (e) => {
-    setTags(e.target.value);
+  //로그로 일단 확인
+  const submit = () => {
+    console.log("제목:", title);
+    console.log("태그:", tags);
+    console.log("소개:", content);
+    console.log("내용:", intro);
   };
 
   return (
     <Container>
-      <Header title={"사진 업로드"} buttonText="완료" />
+      <Header title={"사진 업로드"} buttonText="완료" onBtnClick={submit} />
       <FormContainer>
-        <Input
-          type="text"
-          placeholder="제목 생성하기"
-          value={title}
-          onChange={handleTitleChange}
-          onFocus={() => setFocusedTitle(true)}
-          focused={focusedTitle}
-          titleStyle
-        />
+        <Input type="text" value={title} readOnly titleStyle />
+        <TagInput value={tags} />
         <TextArea
-          placeholder="릴레이를 소개해보세요"
-          value={intro}
-          onChange={handleIntroChange}
-          onFocus={() => setFocusedIntro(true)}
-          focused={focusedIntro}
+          value={content}
+          placeholder="비하인드 스토리 사진을 공유해보세요!"
+          onChange={(e) => setContent(e.target.value)}
         />
-        <TagInput value={tags} onChange={handleTagsChange} />
       </FormContainer>
     </Container>
   );
@@ -98,13 +79,8 @@ const TextArea = styled.textarea`
   font-size: 16px;
   border: none;
   outline: none;
-  resize: none; /* 크기 조절 안되게 */
-  min-height: 100px; /* 최소 높이 */
-  ${({ focused }) =>
-    focused &&
-    `
-    min-height: 150px; /* 포커스 시 최소 높이를 늘려줌 */
-  `}
+  resize: none;
+  min-height: 100px;
 `;
 
 const TagContainer = styled.div`
@@ -113,4 +89,4 @@ const TagContainer = styled.div`
   padding: 10px;
 `;
 
-export default Upload;
+export default UploadTickle;

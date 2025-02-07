@@ -3,15 +3,13 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as BackIcon } from "../../assets/icons/arrow_back_black.svg"; // 아이콘 변경
 
-const Header = ({ title, onClickBtn, buttonText }) => {
+const Header = ({ title, onBtnClick, buttonText }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate(-1);
   };
-  const handleNext = () => {
-    navigate("/relayTickle"); // relayTickle 페이지로 이동
-  };
+
   return (
     <HeaderContainer>
       <BackButton onClick={handleBack}>
@@ -20,7 +18,7 @@ const Header = ({ title, onClickBtn, buttonText }) => {
       <Title>{title}</Title>
       {buttonText && ( // 버튼 텍스트가 있을 경우에만 버튼을 렌더링
         <HeaderBtn
-          onClick={onClickBtn}
+          onClick={onBtnClick}
           buttonType={buttonText} // buttonText를 props로 전달
         >
           {buttonText}

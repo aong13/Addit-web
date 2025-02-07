@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 // TagInput 컴포넌트
 const TagInput = ({ value, onChange }) => {
@@ -17,21 +17,11 @@ const TagInput = ({ value, onChange }) => {
   );
 };
 
-const Upload = () => {
-  const navigate = useNavigate();
-
-  const handleNext = () => {
-    navigate("/upload/tickle"); // relayTickle 페이지로 이동
-  };
-
-  // 각 필드별 상태를 분리하여 관리
+const UploadRelay = () => {
+  const navigate = useNavigate(); // useNavigate 훅
   const [title, setTitle] = useState(""); // 제목
   const [intro, setIntro] = useState(""); // 소개
   const [tags, setTags] = useState(""); // 태그
-
-  // 포커스 상태 관리
-  const [focusedTitle, setFocusedTitle] = useState(false);
-  const [focusedIntro, setFocusedIntro] = useState(false);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value.slice(0, 100)); // 제목은 최대 100자
@@ -45,12 +35,16 @@ const Upload = () => {
     setTags(e.target.value);
   };
 
+  const handleNext = () => {
+    navigate("/upload/tickle", { state: { title, tags, intro } });
+  };
+
   return (
     <Container>
       <Header
         title={"릴레이 만들기"}
         buttonText="다음"
-        onClickBtn={handleNext}
+        onBtnClick={handleNext}
       />
       <FormContainer>
         <Input
@@ -58,16 +52,12 @@ const Upload = () => {
           placeholder="제목 생성하기"
           value={title}
           onChange={handleTitleChange}
-          onFocus={() => setFocusedTitle(true)}
-          focused={focusedTitle}
           titleStyle
         />
         <TextArea
           placeholder="릴레이를 소개해보세요"
           value={intro}
           onChange={handleIntroChange}
-          onFocus={() => setFocusedIntro(true)}
-          focused={focusedIntro}
         />
         <TagInput value={tags} onChange={handleTagsChange} />
       </FormContainer>
@@ -109,13 +99,8 @@ const TextArea = styled.textarea`
   font-size: 16px;
   border: none;
   outline: none;
-  resize: none; /* 크기 조절 안되게 */
-  min-height: 100px; /* 최소 높이 */
-  ${({ focused }) =>
-    focused &&
-    `
-    min-height: 150px; /* 포커스 시 최소 높이를 늘려줌 */
-  `}
+  resize: none;
+  min-height: 100px;
 `;
 
 const TagContainer = styled.div`
@@ -124,4 +109,4 @@ const TagContainer = styled.div`
   padding: 10px;
 `;
 
-export default Upload;
+export default UploadRelay;

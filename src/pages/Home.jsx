@@ -94,7 +94,7 @@ const BottomSection = styled.div`
   box-sizing: border-box;
   width: 100%;
   background-color: #e7edff;
-  padding: 0px 10px; // 화면 가장자리 패딩
+  padding: 20px 10px; // 화면 가장자리 패딩
   display: flex;
   flex-direction: column;
   align-items: center;
