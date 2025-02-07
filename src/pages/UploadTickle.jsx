@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
+import cameraIcon from "../assets/icons/camera.svg";
+import deleteIcon from "../assets/icons/x_icon.svg"; // X 아이콘 추가
 
 const TagInput = ({ value }) => {
   return (
@@ -18,28 +20,68 @@ const TagInput = ({ value }) => {
 
 const UploadTickle = () => {
   const location = useLocation();
-  const { title, tags, intro } = location.state || {}; //이전에서 받아옴
+  const { title, tags, intro } = location.state || {};
   const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
+  const fileInputRef = useRef(null);
 
-  //로그로 일단 확인
-  const submit = () => {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(URL.createObjectURL(file));
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleSubmit = () => {
     console.log("제목:", title);
     console.log("태그:", tags);
     console.log("소개:", content);
     console.log("내용:", intro);
+    console.log("이미지:", image);
   };
 
   return (
     <Container>
-      <Header title={"사진 업로드"} buttonText="완료" onBtnClick={submit} />
+      <Header title="사진 업로드" buttonText="완료" onBtnClick={handleSubmit} />
       <FormContainer>
-        <Input type="text" value={title} readOnly titleStyle />
+        <TitleInputWrapper>
+          <Input type="text" value={title} readOnly titleStyle />
+          <label htmlFor="fileUpload">
+            <CameraBtn src={cameraIcon} alt="카메라 버튼" />
+          </label>
+          <HiddenFileInput
+            ref={fileInputRef}
+            id="fileUpload"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+        </TitleInputWrapper>
         <TagInput value={tags} />
-        <TextArea
-          value={content}
-          placeholder="비하인드 스토리 사진을 공유해보세요!"
-          onChange={(e) => setContent(e.target.value)}
-        />
+        <ContentContainer>
+          {image && (
+            <ImageWrapper>
+              <PreviewImage src={image} alt="미리보기 이미지" />
+              <RemoveButton
+                src={deleteIcon}
+                alt="delete"
+                onClick={handleRemoveImage}
+              />
+            </ImageWrapper>
+          )}
+          <TextArea
+            value={content}
+            placeholder="비하인드 스토리 사진을 공유해보세요!"
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </ContentContainer>
       </FormContainer>
     </Container>
   );
@@ -60,11 +102,12 @@ const FormContainer = styled.div`
 `;
 
 const Input = styled.input`
-  margin: 0 20px;
+  margin-left: 20px;
   padding: 10px;
   font-size: 16px;
   border: none;
   outline: none;
+  flex: 1;
   ${({ titleStyle }) =>
     titleStyle &&
     `
@@ -74,7 +117,6 @@ const Input = styled.input`
 `;
 
 const TextArea = styled.textarea`
-  margin: 0 20px;
   padding: 10px;
   font-size: 16px;
   border: none;
@@ -87,6 +129,55 @@ const TagContainer = styled.div`
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   padding: 10px;
+`;
+
+const TitleInputWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+`;
+
+const CameraBtn = styled.img`
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const HiddenFileInput = styled.input`
+  display: none;
+`;
+
+const ContentContainer = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ImageWrapper = styled.div`
+  margin: 10px;
+  position: relative;
+  display: inline-block;
+  width: 30%;
+  aspect-ratio: 9 / 16;
+`;
+
+const PreviewImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const RemoveButton = styled.img`
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background: #ffffff80;
 `;
 
 export default UploadTickle;

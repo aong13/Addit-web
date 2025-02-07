@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
 
-// TagInput 컴포넌트
 const TagInput = ({ value, onChange }) => {
   return (
     <TagContainer>
@@ -18,13 +17,13 @@ const TagInput = ({ value, onChange }) => {
 };
 
 const UploadRelay = () => {
-  const navigate = useNavigate(); // useNavigate 훅
-  const [title, setTitle] = useState(""); // 제목
-  const [intro, setIntro] = useState(""); // 소개
-  const [tags, setTags] = useState(""); // 태그
+  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [intro, setIntro] = useState("");
+  const [tags, setTags] = useState("");
 
   const handleTitleChange = (e) => {
-    setTitle(e.target.value.slice(0, 100)); // 제목은 최대 100자
+    setTitle(e.target.value.slice(0, 40)); // 제목 최대 40자
   };
 
   const handleIntroChange = (e) => {
