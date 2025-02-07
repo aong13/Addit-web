@@ -28,19 +28,16 @@ const TagInput = ({ tags = [], onChange, editMode = true }) => {
     }
   };
 
+  const removeTag = (tag) => {
+    onChange(tags.filter((t) => t !== tag));
+  };
   return (
     <TagContainer>
       <TagInputWrapper>
         {tags.map((tag, index) => (
-          <Tag key={index}>
+          <Tag key={index} onClick={() => removeTag(tag)}>
             <p>{`#${tag}`}</p>
-            {editMode && (
-              <RemoveButton
-                onClick={() => onChange(tags.filter((t) => t !== tag))}
-              >
-                x
-              </RemoveButton>
-            )}
+            {editMode && <RemoveButton>x</RemoveButton>}
           </Tag>
         ))}
         {editMode && tags.length < 3 && (
@@ -103,7 +100,7 @@ const Input = styled.input`
   min-width: 80px;
 `;
 
-const PlaceholderText = styled.p`
+const PlaceholderText = styled.span`
   color: #aaa;
   font-size: 14px;
 `;
