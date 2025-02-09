@@ -8,7 +8,7 @@ const UploadRelay = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [intro, setIntro] = useState("");
-  const [tags, setTags] = useState([]); // 태그 초기값을 빈 배열로 설정
+  const [tags, setTags] = useState([]);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value.slice(0, 40)); // 제목 최대 40자
@@ -23,7 +23,9 @@ const UploadRelay = () => {
   };
 
   const handleNext = () => {
-    navigate("/upload/tickle", { state: { title, tags, intro } });
+    navigate("/upload/tickle", {
+      state: { title, tags, intro, fromNewRelay: true },
+    });
   };
 
   return (

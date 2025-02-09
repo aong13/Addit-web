@@ -5,7 +5,6 @@ import { ReactComponent as BackIcon } from "../../assets/icons/arrow_back_black.
 
 const Header = ({ title, onBtnClick, buttonText }) => {
   const navigate = useNavigate();
-
   const handleBack = () => {
     navigate(-1);
   };
@@ -60,7 +59,7 @@ const Title = styled.h1`
 
 const HeaderBtn = styled.button`
   background-color: ${({ buttonType }) =>
-    buttonType === "완료" ? "#7fa3ff" : "#6E6E6E"};
+    buttonType === "생성" ? "#7fa3ff" : "#6E6E6E"};
   color: white;
   border: none;
   padding: 8px 16px;
@@ -71,7 +70,7 @@ const HeaderBtn = styled.button`
 
   &:hover {
     background-color: ${({ buttonType }) =>
-      buttonType === "완료" ? "#5d87d8" : "#494949"}; /* hover 시 색상 변경 */
+      buttonType === "생성" ? "#5d87d8" : "#494949"}; /* hover 시 색상 변경 */
   }
 
   &:active {

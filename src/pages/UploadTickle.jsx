@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import Header from "../components/layout/Header";
 import styled from "styled-components";
 import cameraIcon from "../assets/icons/camera.svg";
@@ -8,6 +9,7 @@ import TagInput from "../components/TagInput";
 
 const UploadTickle = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { title, tags, intro } = location.state || {};
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
@@ -30,14 +32,20 @@ const UploadTickle = () => {
   const handleSubmit = () => {
     console.log("제목:", title);
     console.log("태그:", tags);
-    console.log("소개:", content);
-    console.log("내용:", intro);
+    console.log("소개:", intro);
+    console.log("내용:", content);
     console.log("이미지:", image);
+    let relayId = 102; // 서버 응답으로 받음
+
+    navigate(`/relay/${relayId}`, {
+      replace: true,
+      state: location.state?.fromNewRelay ? { fromNewRelay: true } : undefined, // RelayHeader에서 stack 관리
+    });
   };
 
   return (
     <Container>
-      <Header title="사진 업로드" buttonText="완료" onBtnClick={handleSubmit} />
+      <Header title="사진 업로드" buttonText="생성" onBtnClick={handleSubmit} />
       <FormContainer>
         <TitleInputWrapper>
           <Input type="text" value={title} readOnly titleStyle />
