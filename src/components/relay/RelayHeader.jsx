@@ -1,13 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import backIcon from "../../assets/icons/arrow_back.svg";
+import { useNavigate, useLocation } from "react-router-dom";
+import backIcon from "../../assets/icons/arrow_back_white.svg";
 
 const RelayHeader = ({ title }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleBack = () => {
-    navigate(-1);
+    if (location.state?.fromNewRelay) {
+      navigate(-2); // 릴레이 업로드의 경우 uploadRelay, uploadTickle 스택 두개 삭제
+    } else {
+      navigate(-1);
+    }
   };
 
   return (
