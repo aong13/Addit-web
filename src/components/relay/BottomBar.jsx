@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import HeartBtn from "./HeartBtn";
 import askIcon from "../../assets/icons/bubble.svg";
 import plusIcon from "../../assets/icons/plus.svg";
 
 const BottomBar = ({ relayData }) => {
+  const navigate = useNavigate();
   const [isPlusBtnActive, setIsPlusBtnActive] = useState(false);
   const [isAskBtnActive, setIsAskBtnActive] = useState(false);
 
-  const handlePlusClick = () => {};
+  const handlePlusClick = () => {
+    navigate(`/upload/tickle`);
+  };
 
   const handleAskClick = () => {};
 

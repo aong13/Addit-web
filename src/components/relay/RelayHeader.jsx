@@ -6,11 +6,10 @@ import backIcon from "../../assets/icons/arrow_back_white.svg";
 const RelayHeader = ({ title }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("nav:", location.state?.fromNewRelay);
 
   const handleBack = () => {
     if (location.state?.fromNewRelay) {
-      navigate(-2); // uploadRelay, uploadTickle 스택 두개 삭제
+      navigate(-2); // 릴레이 업로드의 경우 uploadRelay, uploadTickle 스택 두개 삭제
     } else {
       navigate(-1);
     }

@@ -97,6 +97,6 @@ const ClickArea = styled.div`
   height: 100%;
   top: 0;
   cursor: pointer;
-  z-index: 10;
+  z-index: 2;
   ${({ left }) => (left ? "left: 0;" : "right: 0;")}
 `;
