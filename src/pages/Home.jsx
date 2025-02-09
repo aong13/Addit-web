@@ -1,20 +1,43 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Carousel from "../components/Carousel";
-import { response_hot } from "../assets/DummyData_home";
 import Collaborators from "../components/Collaborators";
-import logo from "../assets/logo.svg";
 import ImageRowGrid from "../components/ImageRowGrid";
-import plusIcon from "../assets/icons/plus_blue.svg";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
+import { fetchHomeData } from "../apis/homeApi";
+import logo from "../assets/logo.svg";
+import plusIcon from "../assets/icons/plus_blue.svg";
 
 const Home = () => {
   const [data, setData] = useState([]);
   const [focusedRelayId, setFocusedRelayId] = useState(null);
   const [selectedTickleId, setSelectedTickleId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const response = await fetchHomeData(5);
+        setData(response.relays);
+        if (response.relays.length > 0) {
+          setFocusedRelayId(response.relays[0].relayId);
+        }
+      } catch (error) {
+        console.error("fetchHomeData Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  if (loading) {
+    return <div></div>;
+  }
 
   const handleClick = () => {
     navigate("/upload/relay");
@@ -24,23 +47,9 @@ const Home = () => {
     setSelectedTickleId(tickleId);
   };
 
-  useEffect(() => {
-    setData(response_hot.data.relays);
-  }, []);
-
-  useEffect(() => {
-    if (data.length > 0 && !focusedRelayId) {
-      setFocusedRelayId(data[0]?.relayId);
-    }
-  }, [data, focusedRelayId]);
-
   const currentRelay = focusedRelayId
     ? data.find((relay) => relay.relayId === focusedRelayId)
     : null;
-
-  if (!currentRelay) {
-    return <div></div>; //추후 로딩처리
-  }
 
   return (
     <Container>
@@ -50,7 +59,7 @@ const Home = () => {
       <Tabbar>실시간</Tabbar>
       <Title>
         인기 태그
-        <strong> #{currentRelay.tag}</strong>
+        <strong> #{currentRelay?.tag}</strong>
         <br />
         릴레이에 동참해보세요
       </Title>
@@ -59,10 +68,10 @@ const Home = () => {
         onFocusChange={setFocusedRelayId}
         selectedTickleId={selectedTickleId}
       />
-      <ContentTitle>{currentRelay.relayTitle}</ContentTitle>
+      <ContentTitle>{currentRelay?.relayTitle}</ContentTitle>
       <Collaborators
-        count={currentRelay.memberCount}
-        images={currentRelay.memberImages}
+        count={currentRelay?.memberCount}
+        images={currentRelay?.memberImages}
       />
       <BottomSection>
         <ImageRowGrid
@@ -70,9 +79,7 @@ const Home = () => {
           onImageSelect={handleImageSelect}
         />
         <Text>새롭게 릴레이를 추가해보세요!</Text>
-
         <Button text="릴레이 만들기" icon={plusIcon} onClick={handleClick} />
-
         <CopyRight>copyright 2025. Addit. All rights reserved Pozzle</CopyRight>
       </BottomSection>
     </Container>
@@ -80,6 +87,7 @@ const Home = () => {
 };
 
 export default Home;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -88,18 +96,16 @@ const Container = styled.div`
   width: 100%;
   min-height: 100vh;
 `;
-
 const BottomSection = styled.div`
   margin-top: 20px;
-  box-sizing: border-box;
   width: 100%;
   background-color: #e7edff;
-  padding: 20px 10px; // 화면 가장자리 패딩
+  padding: 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 1;
 `;
+
 const Logo = styled.div`
   img {
     height: 26px;

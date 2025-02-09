@@ -3,7 +3,6 @@ import styled from "styled-components";
 import defaultProfileImg from "../assets/default_profile_temp.png";
 
 const Collaborators = ({ images, count }) => {
-  console.log(images);
   return (
     <Container>
       <Wrapper>
