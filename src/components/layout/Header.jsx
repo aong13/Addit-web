@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as BackIcon } from "../../assets/icons/arrow_back_black.svg"; // 아이콘 변경
+import { ReactComponent as BackIcon } from "../../assets/icons/arrow_back_black.svg";
 
 const Header = ({ title, onBtnClick, buttonText }) => {
   const navigate = useNavigate();
@@ -15,11 +15,8 @@ const Header = ({ title, onBtnClick, buttonText }) => {
         <BackIcon />
       </BackButton>
       <Title>{title}</Title>
-      {buttonText && ( // 버튼 텍스트가 있을 경우에만 버튼을 렌더링
-        <HeaderBtn
-          onClick={onBtnClick}
-          buttonType={buttonText} // buttonText를 props로 전달
-        >
+      {buttonText && (
+        <HeaderBtn onClick={onBtnClick} buttonType={buttonText}>
           {buttonText}
         </HeaderBtn>
       )}
@@ -70,7 +67,7 @@ const HeaderBtn = styled.button`
 
   &:hover {
     background-color: ${({ buttonType }) =>
-      buttonType === "생성" ? "#5d87d8" : "#494949"}; /* hover 시 색상 변경 */
+      buttonType === "생성" ? "#5d87d8" : "#494949"};
   }
 
   &:active {

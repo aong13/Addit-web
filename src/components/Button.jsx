@@ -24,17 +24,6 @@ const StyledButton = styled.button`
   cursor: pointer;
   width: 100%;
   max-width: 200px;
-
-  //추후수정
-  /* &:hover {
-    border-width: 2px;
-  }
-
-  &:active {
-    transform: scale(0.98);
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-    border-width: 2px;
-  } */
 `;
 
 const Icon = styled.img`
