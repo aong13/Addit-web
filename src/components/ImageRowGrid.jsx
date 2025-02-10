@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const SelectableImageGrid = ({ data, onImageSelect }) => {
-  console.log("img:", data);
-  const [imgSrc, setImgSrc] = useState(null); //에러시 기본이미지
+  const [imgSrc, setImgSrc] = useState(null); // 기본 이미지 없음
 
   const renderItem = (item) => (
-    <ImageItem onClick={() => onImageSelect(item.tickleId)}>
-      <img src={item.tickleImage || imgSrc} alt="relayImg" isError={!imgSrc} />
+    <ImageItem onClick={() => onImageSelect(item.tickleId)} isError={!imgSrc}>
+      <img src={item.tickleImage || imgSrc} alt="relayImg" />
     </ImageItem>
   );
 
@@ -27,7 +26,10 @@ const ImageItem = styled.div`
   cursor: pointer;
   width: calc(20% - 6px); /* 최대 5개 */
   position: relative;
-  background-color: ${(props) => (props.isError ? "#d3d3d3" : "transparent")};
+  background-color: ${(props) =>
+    props.isError
+      ? "#d3d3d3"
+      : "transparent"}; /* 이미지를 불러오지 못했을 때 회색 배경 */
   border-radius: 8px;
   display: flex;
   justify-content: center;
