@@ -10,10 +10,12 @@ const BottomBar = ({ relayData }) => {
   const navigate = useNavigate();
   const [isPlusBtnActive, setIsPlusBtnActive] = useState(false);
   const [isAskBtnActive, setIsAskBtnActive] = useState(false);
-  const handlePlusClick = () => {
-    navigate(`/upload/tickle`);
-  };
 
+  const handlePlusClick = () => {
+    navigate(`/upload/tickle`, {
+      state: { relayId: relayData.relayId, tickleId: relayData.tickleId },
+    });
+  };
   const handleAskClick = () => {};
 
   return (

@@ -36,16 +36,15 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
     afterChange: () => setIsSliding(false),
   };
 
-  // 클릭 시 포커스된 캐러셀만 이동
+  // 포커스된 캐러셀만 클릭 시 이동
   const handleItemClick = (relayId, tickleId) => {
     if (!isSliding && relayId === focusedRelayId) {
       navigate(`/relay/${relayId}/tickle/${tickleId}`);
     }
   };
 
-  // 아이템 렌더링
   const renderItem = (item) => {
-    // 선택된 tickleId를 찾고, 없으면 첫 번째 tickle로 설정
+    // 선택된 tickleId or 첫 번째 tickle
     const selectedTickle =
       item.tickle.find((tickle) => tickle.tickleId === selectedTickleId) ||
       item.tickle[0];
@@ -81,7 +80,6 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
 
 export default Carousel;
 
-// 스타일 정의
 const CarouselContainer = styled.div`
   width: 100%;
 `;

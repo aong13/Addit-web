@@ -35,20 +35,13 @@ const UploadTickle = () => {
     console.log("소개:", intro);
     console.log("내용:", content);
     console.log("이미지:", image);
-
-    let relayId = 102; // 서버 응답으로 받음
-
-    if (location.state?.fromNewRelay) {
-      //relay 업로드
-      navigate(`/relay/${relayId}`, {
-        replace: true,
-        state: { fromNewRelay: true }, // RelayHeader에서 stack 관리
-      });
-    } else {
-      //tickle 추가
-      navigate(-1);
-    }
+    const { tickleId, relayId } = location.state || {};
+    navigate(`/relay/${relayId}/tickle/${tickleId}`, {
+      replace: true,
+      state: { fromNewRelay: true },
+    });
   };
+
   return (
     <Container>
       <Header title="사진 업로드" buttonText="생성" onBtnClick={handleSubmit} />

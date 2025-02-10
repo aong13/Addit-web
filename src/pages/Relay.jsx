@@ -40,7 +40,7 @@ const Relay = () => {
     <RelayContainer>
       <RelayHeader title={tickle.relayTitle} />
       <TickleImage src={tickle.tickleImage} alt="Tickle" />
-      <BottomBar relayData={tickle} /> {/* relayData 전달 */}
+      <BottomBar relayData={tickle} />
       <NavButtons>
         <button
           onClick={() =>
