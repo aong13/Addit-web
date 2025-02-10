@@ -30,10 +30,10 @@ const UploadTickle = () => {
     }
   };
   const handleSubmit = async () => {
-    const fromUploadRelay = location.state?.fromUploadRelay;
+    const fromNewRelay = location.state?.fromNewRelay;
 
     try {
-      if (fromUploadRelay) {
+      if (fromNewRelay) {
         const requestData = {
           title,
           tags,

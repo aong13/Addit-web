@@ -43,6 +43,7 @@ const BackButton = styled.button`
   img {
     width: 20px;
     height: 20px;
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
   }
 `;
 

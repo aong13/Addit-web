@@ -10,14 +10,14 @@ const HeartBtn = ({ likeCount, tickleId }) => {
 
   useEffect(() => {
     setLikes(likeCount);
-  }, [likeCount]);
+  }, [tickleId]); //티클바뀌면 set
 
   const handleClick = async () => {
     if (!isAnimating) {
       setIsAnimating(true);
       try {
         await postLikes(tickleId);
-        setLikes((prev) => prev + 1); // 좋아요 수 증가
+        setLikes((prev) => prev + 1);
       } catch (error) {
         console.error("좋아요 추가 실패:", error);
       }
