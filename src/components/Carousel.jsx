@@ -6,15 +6,17 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import defaultProfileImg from "../assets/default_profile_temp.png";
 
-const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
+const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
   const [isSliding, setIsSliding] = useState(false);
   const [focusedRelayId, setFocusedRelayId] = useState(null);
+  const [imgSrc, setImgSrc] = useState(null); //에러시 기본이미지
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data[0]?.relayId) {
-      setFocusedRelayId(data[0].relayId);
-      onFocusChange(data[0].relayId); //부모에게 전달
+    if (data.length > 0 && data[0]?.relay?.relayId) {
+      setFocusedRelayId(data[0].relay.relayId);
+      onFocusChange(data[0].relay.relayId);
     }
   }, [data, onFocusChange]);
 
@@ -27,12 +29,12 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
     centerPadding: "0px",
     focusOnSelect: true,
     beforeChange: (_, next) => {
-      setIsSliding(true); //슬라이드 시작
-      onFocusChange(data[next]?.relayId);
+      setIsSliding(true);
+      onFocusChange(data[next]?.relay?.relayId);
     },
     afterChange: (current) => {
-      setIsSliding(false); //슬라이드 끝
-      setFocusedRelayId(data[current]?.relayId);
+      setIsSliding(false);
+      setFocusedRelayId(data[current]?.relay?.relayId);
     },
   };
 
@@ -44,24 +46,25 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
 
   const renderItem = (item) => {
     const selectedTickle =
-      item.tickles.find((tickle) => tickle.tickleId === selectedTickleId) ||
-      item.tickles[0];
+      item.tickle.find((tickle) => tickle.tickleId === selectedTickleId) ||
+      item.tickle[0];
 
     return (
       <ImageWrapper
         key={selectedTickle.tickleId}
-        onClick={() => handleItemClick(item.relayId)}
+        onClick={() => handleItemClick(item.relay.relayId)}
       >
         <Thumbnail
-          src={selectedTickle.thumbnail}
-          alt={`Slide ${selectedTickle.tickleId}`}
+          src={selectedTickle.tickleImage || imgSrc}
+          alt="thumbnail"
+          isError={!imgSrc}
         />
         <Overlay>
           <ProfileImg
-            src={selectedTickle.profileImage || defaultProfileImg}
+            src={selectedTickle.authorImage || defaultProfileImg}
             alt="Profile Img"
           />
-          <Nickname>{selectedTickle.nickname || "No Name"}</Nickname>
+          <Nickname>{selectedTickle.authorNickname || "No Name"}</Nickname>
         </Overlay>
       </ImageWrapper>
     );
@@ -69,7 +72,9 @@ const Carousel = ({ data, onFocusChange, selectedTickleId }) => {
 
   return (
     <CarouselContainer>
-      <Slider {...settings}>{data.map((relay) => renderItem(relay))}</Slider>
+      <Slider {...settings}>
+        {Array.isArray(data) && data.map((relay) => renderItem(relay))}
+      </Slider>
     </CarouselContainer>
   );
 };
@@ -87,15 +92,16 @@ const ImageWrapper = styled.div`
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  opacity: 0.8;
+  opacity: 1;
   outline: none;
 
   .slick-slide:not(.slick-center) & {
     transform: scale(0.8);
+    opacity: 0.9;
   }
 
   &:hover img {
-    filter: brightness(0.9);
+    filter: brightness(0.8);
     transition: filter 0.3s ease;
   }
 `;
@@ -113,10 +119,12 @@ const Overlay = styled.div`
 
 const Thumbnail = styled.img`
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 15px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
   margin: 8px 0px;
+  aspect-ratio: 9 / 16;
+  background-color: ${({ isError }) => (isError ? "#d3d3d3" : "transparent")};
 `;
 
 const ProfileImg = styled.img`

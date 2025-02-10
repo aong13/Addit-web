@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const SelectableImageGrid = ({ data, onImageSelect }) => {
+  console.log("img:", data);
+  const [imgSrc, setImgSrc] = useState(null); //에러시 기본이미지
+
   const renderItem = (item) => (
     <ImageItem onClick={() => onImageSelect(item.tickleId)}>
-      <img src={item.thumbnail} alt="relayImg" />
+      <img src={item.tickleImage || imgSrc} alt="relayImg" isError={!imgSrc} />
     </ImageItem>
   );
 
@@ -14,6 +17,7 @@ const SelectableImageGrid = ({ data, onImageSelect }) => {
 export default SelectableImageGrid;
 
 const GridWrapper = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   gap: 6px;
@@ -21,8 +25,13 @@ const GridWrapper = styled.div`
 
 const ImageItem = styled.div`
   cursor: pointer;
-  width: calc(20% - 6px); /* 최대 5개*/
+  width: calc(20% - 6px); /* 최대 5개 */
   position: relative;
+  background-color: ${(props) => (props.isError ? "#d3d3d3" : "transparent")};
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   img {
     border-radius: 8px;

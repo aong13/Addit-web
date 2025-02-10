@@ -21,10 +21,8 @@ const Home = () => {
     const loadData = async () => {
       try {
         const response = await fetchHomeData(5);
-        setData(response.relays);
-        if (response.relays.length > 0) {
-          setFocusedRelayId(response.relays[0].relayId);
-        }
+        setData(response.data.relaysWithTickles || []);
+        setFocusedRelayId(response.data.relaysWithTickles[0].relay.relayId);
       } catch (error) {
         console.error("fetchHomeData Error:", error);
       } finally {
@@ -48,7 +46,7 @@ const Home = () => {
   };
 
   const currentRelay = focusedRelayId
-    ? data.find((relay) => relay.relayId === focusedRelayId)
+    ? data.find((relay) => relay.relay.relayId === focusedRelayId)
     : null;
 
   return (
@@ -59,7 +57,7 @@ const Home = () => {
       <Tabbar>실시간</Tabbar>
       <Title>
         인기 태그
-        <strong> #{currentRelay?.tag}</strong>
+        <strong> #{currentRelay?.relay.tags[0]}</strong>
         <br />
         릴레이에 동참해보세요
       </Title>
@@ -70,12 +68,12 @@ const Home = () => {
       />
       <ContentTitle>{currentRelay?.relayTitle}</ContentTitle>
       <Collaborators
-        count={currentRelay?.memberCount}
-        images={currentRelay?.memberImages}
+        count={currentRelay?.relay.totalTickleCount}
+        images={currentRelay?.relay.contributorImages}
       />
       <BottomSection>
         <ImageRowGrid
-          data={currentRelay?.tickles}
+          data={currentRelay?.tickle}
           onImageSelect={handleImageSelect}
         />
         <Text>새롭게 릴레이를 추가해보세요!</Text>
