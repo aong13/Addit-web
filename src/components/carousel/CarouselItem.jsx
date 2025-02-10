@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import defaultProfileImg from "../assets/default_profile_temp.png";
+import defaultProfileImg from "../../assets/default_profile_temp.png";
 
 const CarouselItem = ({
   item,

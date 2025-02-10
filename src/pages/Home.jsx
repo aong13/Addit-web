@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Carousel from "../components/Carousel";
+import Carousel from "../components/carousel/Carousel";
 import Collaborators from "../components/Collaborators";
 import ImageRowGrid from "../components/ImageRowGrid";
 import { useNavigate } from "react-router-dom";
