@@ -40,7 +40,7 @@ const Relay = () => {
     <RelayContainer>
       <RelayHeader title={tickle.relayTitle} />
       <TickleImage src={tickle.tickleImage} alt="Tickle" />
-      <BottomBar relayData={tickle} />
+      <BottomBar relayData={tickle} /> {/* relayData 전달 */}
       <NavButtons>
         <button
           onClick={() =>
@@ -69,18 +69,8 @@ const RelayContainer = styled.div`
 
 const TickleImage = styled.img`
   width: 100%;
-  height: 100%; /* 사진이 화면을 꽉 채우도록 수정 */
+  height: 100%;
   object-fit: cover;
-`;
-
-const LoadingContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 20px;
-  text-align: center;
 `;
 
 const NavButtons = styled.div`

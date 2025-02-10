@@ -6,10 +6,10 @@ import askIcon from "../../assets/icons/bubble.svg";
 import plusIcon from "../../assets/icons/plus.svg";
 
 const BottomBar = ({ relayData }) => {
+  console.log("Btm:", relayData);
   const navigate = useNavigate();
   const [isPlusBtnActive, setIsPlusBtnActive] = useState(false);
   const [isAskBtnActive, setIsAskBtnActive] = useState(false);
-
   const handlePlusClick = () => {
     navigate(`/upload/tickle`);
   };
@@ -18,8 +18,10 @@ const BottomBar = ({ relayData }) => {
 
   return (
     <BottomContainer>
-      <HeartBtn likeCount={relayData?.like} />
-
+      <HeartBtn
+        likeCount={relayData?.tickleLikes}
+        tickleId={relayData?.tickleId}
+      />
       <PlusBtn
         onClick={handlePlusClick}
         isActive={isPlusBtnActive}
@@ -29,7 +31,6 @@ const BottomBar = ({ relayData }) => {
       >
         <img src={plusIcon} alt="plusIcon" />
       </PlusBtn>
-
       <AskBtn
         onClick={handleAskClick}
         isActive={isAskBtnActive}

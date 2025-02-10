@@ -57,7 +57,17 @@ export const getAllRelay = async (relayId) => {
     );
     return response.data;
   } catch (error) {
-    console.error("실패:", error);
+    console.error("릴레이 전체 조회 실패 :", error);
+    throw error;
+  }
+};
+
+export const postLikes = async (tickleId) => {
+  try {
+    const response = await api.get(`/api/mvp/tickles/${tickleId}/like`);
+    return response.data;
+  } catch (error) {
+    console.error("좋아요 추가 실패:", error);
     throw error;
   }
 };

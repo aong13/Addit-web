@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import heartOn from "../../assets/icons/heart_on.svg";
 import heartOff from "../../assets/icons/heart_off.svg";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
+import { postLikes } from "../../apis/relayApi";
 
-const HeartBtn = ({ likeCount }) => {
+const HeartBtn = ({ likeCount, tickleId }) => {
   const [likes, setLikes] = useState(likeCount);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -11,22 +12,31 @@ const HeartBtn = ({ likeCount }) => {
     setLikes(likeCount);
   }, [likeCount]);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!isAnimating) {
       setIsAnimating(true);
-      setLikes((prev) => prev + 1);
-
-      setTimeout(() => {
-        setIsAnimating(false);
-      }, 300);
+      try {
+        await postLikes(tickleId);
+        setLikes((prev) => prev + 1); // 좋아요 수 증가
+      } catch (error) {
+        console.error("좋아요 추가 실패:", error);
+      }
     }
+  };
+
+  const handleAnimationEnd = () => {
+    setIsAnimating(false);
   };
 
   return (
     <IconContainer onClick={handleClick}>
       <HeartWrapper>
         <HeartOff src={heartOff} isHidden={isAnimating} />
-        {isAnimating && <HeartOn src={heartOn} />}
+        <HeartOn
+          src={heartOn}
+          isAnimating={isAnimating}
+          onAnimationEnd={handleAnimationEnd}
+        />
       </HeartWrapper>
       <Text>{likes}</Text>
     </IconContainer>
@@ -35,8 +45,8 @@ const HeartBtn = ({ likeCount }) => {
 
 const heartPop = keyframes`
   0% { transform: scale(1); opacity: 0; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 0; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.5; }
 `;
 
 const IconContainer = styled.div`
@@ -61,15 +71,19 @@ const HeartOff = styled.img`
   width: 100%;
   height: 100%;
   opacity: ${(props) => (props.isHidden ? 0.3 : 1)};
-  transition: opacity 0.2s ease;
-  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
 `;
 
 const HeartOn = styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
-  animation: ${heartPop} ${0.5}s ease-in-out;
+  animation: ${(props) =>
+    props.isAnimating
+      ? css`
+          ${heartPop} 0.4s ease-out
+        `
+      : "none"};
+  visibility: ${(props) => (props.isAnimating ? "visible" : "hidden")};
 `;
 
 const Text = styled.span`
