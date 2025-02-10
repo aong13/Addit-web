@@ -26,7 +26,7 @@ const RelayLayout = () => {
 
   return (
     <Container>
-      <RelayHeader title={relayData.relayTitle} />
+      <RelayHeader title={relayData?.relayTitle} />
       <Outlet context={{ relayData }} />
       <BottomBar relayData={relayData} />
     </Container>
