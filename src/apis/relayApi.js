@@ -11,38 +11,56 @@ export const getTicklesData = async (tickleId) => {
 };
 
 /**
- * 티클 추가 api
+ * 티클 추가 API
  * @param {Object} tickleData - 서버에 전송할 티클 데이터 객체
- * @param {string} tickleData.relayId - 티클이 속한 릴레이의 ID
- * @param {string} tickleData.tickleDescription - 티클의 설명
- * @param {string} tickleData.userImage - 사용자의 이미지 URL
- * @param {string} tickleData.userName - 사용자의 이름
  * @returns {Promise<Object>} 서버 응답 데이터
  */
 export const addTickleData = async (tickleData) => {
+  const formData = new FormData();
+
+  const requestData = {
+    relayId: tickleData.relayId,
+    tickleDescription: tickleData.tickleDescription,
+    userImage: tickleData.userImage,
+    userName: tickleData.userName,
+  };
+
+  formData.append("request", JSON.stringify(requestData));
+
+  if (tickleData.file) {
+    formData.append("file", tickleData.file);
+  }
+
   try {
-    const response = await api.post("/api/tickles", tickleData);
+    const response = await api.post("/api/mvp/tickles", formData);
     return response.data;
   } catch (error) {
-    console.error("티클 추가 실패:", error);
+    console.error(" 티클 추가 실패:", error);
     throw error;
   }
 };
-
 /**
- * 릴레이 추가 api
+ * 릴레이 추가 API
  * @param {Object} relayData - 서버에 전송할 릴레이 데이터 객체
- * @param {string} relayData.title - 릴레이의 제목
- * @param {Array<string>} relayData.tags - 릴레이의 태그들
- * @param {string} relayData.relayDescription - 릴레이의 설명
- * @param {string} relayData.tickleDescription - 티클의 설명
- * @param {string} relayData.userImage - 사용자의 이미지 URL
- * @param {string} relayData.userName - 사용자의 이름
  * @returns {Promise<Object>} 서버 응답 데이터
  */
 export const postRelayData = async (relayData) => {
+  const formData = new FormData();
+
+  const requestData = {
+    title: relayData.title,
+    tags: relayData.tags,
+    relayDescription: relayData.relayDescription,
+    tickleDescription: relayData.tickleDescription,
+    userImage: relayData.userImage,
+    userName: relayData.userName,
+  };
+  formData.append("request", JSON.stringify(requestData));
+  if (relayData.file) {
+    formData.append("file", relayData.file);
+  }
   try {
-    const response = await api.post("/api/mvp/relays", relayData);
+    const response = await api.post("/api/mvp/relays", formData);
     return response.data;
   } catch (error) {
     console.error("릴레이 작성 실패:", error);

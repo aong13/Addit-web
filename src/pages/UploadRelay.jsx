@@ -24,7 +24,7 @@ const UploadRelay = () => {
 
   const handleNext = () => {
     navigate("/upload/tickle", {
-      state: { title, tags, intro, fromNewRelay: true },
+      state: { title, tags, intro, fromNewRelay: true, fromUploadRelay: true },
     });
   };
 

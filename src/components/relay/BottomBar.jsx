@@ -6,14 +6,18 @@ import askIcon from "../../assets/icons/bubble.svg";
 import plusIcon from "../../assets/icons/plus.svg";
 
 const BottomBar = ({ relayData }) => {
-  console.log("Btm:", relayData);
   const navigate = useNavigate();
   const [isPlusBtnActive, setIsPlusBtnActive] = useState(false);
   const [isAskBtnActive, setIsAskBtnActive] = useState(false);
 
   const handlePlusClick = () => {
     navigate(`/upload/tickle`, {
-      state: { relayId: relayData.relayId, tickleId: relayData.tickleId },
+      state: {
+        relayId: relayData.relayId,
+        tickleId: relayData.tickleId,
+        title: relayData.relayTitle,
+        tags: relayData.tags,
+      },
     });
   };
   const handleAskClick = () => {};

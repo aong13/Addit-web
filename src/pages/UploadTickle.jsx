@@ -1,16 +1,17 @@
 import React, { useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import Header from "../components/layout/Header";
 import styled from "styled-components";
 import cameraIcon from "../assets/icons/camera.svg";
-import deleteIcon from "../assets/icons/x_icon.svg"; // X 아이콘 추가
+import deleteIcon from "../assets/icons/x_icon.svg";
 import TagInput from "../components/TagInput";
+import { addTickleData, postRelayData } from "../apis/relayApi";
 
 const UploadTickle = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { title, tags, intro } = location.state || {};
+  const { title, tags, intro, relayId } = location.state || {};
+  const userImage = "https://storage.googleapis.com/addit-prod/user_bear.jpg"; //임시
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
@@ -18,7 +19,7 @@ const UploadTickle = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(URL.createObjectURL(file));
+      setImage(file); //파일저장
     }
   };
 
@@ -28,18 +29,54 @@ const UploadTickle = () => {
       fileInputRef.current.value = "";
     }
   };
+  const handleSubmit = async () => {
+    const fromUploadRelay = location.state?.fromUploadRelay;
 
-  const handleSubmit = () => {
-    console.log("제목:", title);
-    console.log("태그:", tags);
-    console.log("소개:", intro);
-    console.log("내용:", content);
-    console.log("이미지:", image);
-    const { tickleId, relayId } = location.state || {};
-    navigate(`/relay/${relayId}/tickle/${tickleId}`, {
-      replace: true,
-      state: { fromNewRelay: true },
-    });
+    try {
+      if (fromUploadRelay) {
+        const requestData = {
+          title,
+          tags,
+          relayDescription: intro,
+          tickleDescription: content,
+          userImage,
+          file: image,
+          userName: "미연결",
+        };
+
+        const response = await postRelayData(requestData);
+        console.log("릴레이 데이터 생성 성공:", response);
+
+        navigate(
+          `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
+          {
+            replace: true,
+            state: { fromUpload: true },
+          }
+        );
+      } else {
+        const tickleData = {
+          relayId,
+          tickleDescription: content,
+          userImage,
+          file: image,
+          userName: "미연결",
+        };
+
+        const response = await addTickleData(tickleData);
+        console.log("티클 추가 성공:", response);
+
+        navigate(
+          `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
+          {
+            replace: true,
+            state: { fromUpload: true },
+          }
+        );
+      }
+    } catch (error) {
+      console.error("데이터 전송 실패:", error);
+    }
   };
 
   return (
@@ -63,7 +100,10 @@ const UploadTickle = () => {
         <ContentContainer>
           {image && (
             <ImageWrapper>
-              <PreviewImage src={image} alt="미리보기 이미지" />
+              <PreviewImage
+                src={URL.createObjectURL(image)}
+                alt="미리보기 이미지"
+              />
               <RemoveButton
                 src={deleteIcon}
                 alt="delete"

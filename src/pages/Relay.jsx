@@ -38,8 +38,8 @@ const Relay = () => {
 
   return (
     <RelayContainer>
-      <RelayHeader title={tickle.relayTitle} />
-      <TickleImage src={tickle.tickleImage} alt="Tickle" />
+      <RelayHeader title={tickle?.relayTitle} />
+      <TickleImage src={tickle?.tickleImage} alt="Tickle" />
       <BottomBar relayData={tickle} />
       <NavButtons>
         <button
