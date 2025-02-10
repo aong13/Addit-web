@@ -9,14 +9,13 @@ import defaultProfileImg from "../assets/default_profile_temp.png";
 const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
   const [isSliding, setIsSliding] = useState(false);
   const [focusedRelayId, setFocusedRelayId] = useState(null);
-  const [imgSrc, setImgSrc] = useState(null); //에러시 기본이미지
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data.length > 0 && data[0]?.relay?.relayId) {
-      setFocusedRelayId(data[0].relay.relayId);
-      onFocusChange(data[0].relay.relayId);
+    if (data.length > 0) {
+      const initialRelayId = data[0]?.relay?.relayId;
+      setFocusedRelayId(initialRelayId);
+      onFocusChange(initialRelayId);
     }
   }, [data, onFocusChange]);
 
@@ -30,21 +29,23 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
     focusOnSelect: true,
     beforeChange: (_, next) => {
       setIsSliding(true);
-      onFocusChange(data[next]?.relay?.relayId);
+      const nextRelayId = data[next]?.relay?.relayId;
+      setFocusedRelayId(nextRelayId);
+      onFocusChange(nextRelayId);
     },
-    afterChange: (current) => {
-      setIsSliding(false);
-      setFocusedRelayId(data[current]?.relay?.relayId);
-    },
+    afterChange: () => setIsSliding(false),
   };
 
-  const handleItemClick = (relayId) => {
+  // 클릭 시 포커스된 캐러셀만 이동
+  const handleItemClick = (relayId, tickleId) => {
     if (!isSliding && relayId === focusedRelayId) {
-      navigate(`/relay/${relayId}`);
+      navigate(`/relay/${relayId}/tickle/${tickleId}`);
     }
   };
 
+  // 아이템 렌더링
   const renderItem = (item) => {
+    // 선택된 tickleId를 찾고, 없으면 첫 번째 tickle로 설정
     const selectedTickle =
       item.tickle.find((tickle) => tickle.tickleId === selectedTickleId) ||
       item.tickle[0];
@@ -52,12 +53,13 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
     return (
       <ImageWrapper
         key={selectedTickle.tickleId}
-        onClick={() => handleItemClick(item.relay.relayId)}
+        onClick={() =>
+          handleItemClick(item.relay.relayId, selectedTickle.tickleId)
+        }
       >
         <Thumbnail
-          src={selectedTickle.tickleImage || imgSrc}
+          src={selectedTickle.tickleImage || defaultProfileImg}
           alt="thumbnail"
-          isError={!imgSrc}
         />
         <Overlay>
           <ProfileImg
@@ -72,15 +74,14 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
 
   return (
     <CarouselContainer>
-      <Slider {...settings}>
-        {Array.isArray(data) && data.map((relay) => renderItem(relay))}
-      </Slider>
+      <Slider {...settings}>{data.map((relay) => renderItem(relay))}</Slider>
     </CarouselContainer>
   );
 };
 
 export default Carousel;
 
+// 스타일 정의
 const CarouselContainer = styled.div`
   width: 100%;
 `;
@@ -124,7 +125,6 @@ const Thumbnail = styled.img`
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
   margin: 8px 0px;
   aspect-ratio: 9 / 16;
-  background-color: ${({ isError }) => (isError ? "#d3d3d3" : "transparent")};
 `;
 
 const ProfileImg = styled.img`

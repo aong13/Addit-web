@@ -1,66 +1,56 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { relayData } from "../assets/dummy_relay"; // 더미 데이터 임포트
+import { getAllRelay, getTicklesData } from "../apis/relayApi";
 import RelayHeader from "../components/relay/RelayHeader";
 import BottomBar from "../components/relay/BottomBar";
-import { useParams } from "react-router-dom";
-
-import { handleNext, handlePrev } from "../utils/slideHandler";
+import { goToPreviousTickle, goToNextTickle } from "../utils/slideHandler";
 
 const Relay = () => {
-  const { id } = useParams();
+  const [tickle, setTickle] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { relayId, tickleId } = useParams();
+  const navigate = useNavigate();
+  const [allRelay, setAllRelay] = useState([]);
 
-  // 이미지 저장
-  const [images, setImages] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [translateX, setTranslateX] = useState(0);
-
-  const totalImages = images.length;
-
-  //추후 API로 변경
-  const fetchRelayData = () => {
-    const fetchedImages = relayData.data?.map((item) => item.image) || [];
-    setImages(fetchedImages);
+  const fetchRelayData = async (relayId, tickleId) => {
+    try {
+      const response = await getTicklesData(tickleId);
+      const allRelayData = await getAllRelay(relayId);
+      setTickle(response.data);
+      setAllRelay(allRelayData.data.tickleThumbnails);
+    } catch (error) {
+      console.error("Error fetching data", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    fetchRelayData();
-  }, []); //마운트시
-
-  //다음꺼 하나씩 렌더링
-  useEffect(() => {
-    if (totalImages > 1) {
-      const nextIndex = (currentIndex + 1) % totalImages;
-      const img = new window.Image();
-      img.src = images[nextIndex];
+    if (tickleId) {
+      fetchRelayData(relayId, tickleId);
     }
-  }, [currentIndex, images, totalImages]);
+  }, [relayId, tickleId]);
 
-  const handleClick = (direction) => {
-    if (direction === "prev") {
-      handlePrev(currentIndex, setCurrentIndex, setTranslateX);
-    } else if (direction === "next") {
-      handleNext(currentIndex, setCurrentIndex, setTranslateX, totalImages);
-    }
-  };
+  if (loading) {
+    return <div></div>; //로딩처리
+  }
 
   return (
     <RelayContainer>
-      <RelayHeader title={relayData.data[currentIndex]?.relayTitle} />
-      <SlideWrapper translateX={translateX}>
-        {images.map((src, index) => (
-          <Slide key={index} src={src} alt={`Slide ${index + 1}`} />
-        ))}
-      </SlideWrapper>
-      <BottomBar
-        relayData={relayData.data[currentIndex] || { reactions: [] }}
-      />
-      {totalImages > 1 && (
-        <>
-          <ClickArea left onClick={() => handleClick("prev")} />
-          <ClickArea onClick={() => handleClick("next")} />
-        </>
-      )}
+      <RelayHeader title={tickle.relayTitle} />
+      <TickleImage src={tickle.tickleImage} alt="Tickle" />
+      <BottomBar relayData={tickle} />
+      <NavButtons>
+        <button
+          onClick={() =>
+            goToPreviousTickle(allRelay, tickleId, relayId, navigate)
+          }
+        ></button>
+        <button
+          onClick={() => goToNextTickle(allRelay, tickleId, relayId, navigate)}
+        ></button>
+      </NavButtons>
     </RelayContainer>
   );
 };
@@ -71,32 +61,41 @@ const RelayContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: black;
 `;
 
-const SlideWrapper = styled.div`
-  display: flex;
+const TickleImage = styled.img`
   width: 100%;
-  height: 100%;
-  transform: translateX(${(props) => props.translateX}%);
-  transition: transform 0.5s ease-in-out;
-`;
-
-const Slide = styled.img`
-  width: 100%;
-  height: 100%;
+  height: 100%; /* 사진이 화면을 꽉 채우도록 수정 */
   object-fit: cover;
-  flex-shrink: 0;
 `;
 
-const ClickArea = styled.div`
+const LoadingContainer = styled.div`
   position: absolute;
-  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 20px;
+  text-align: center;
+`;
+
+const NavButtons = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   height: 100%;
-  top: 0;
-  cursor: pointer;
-  z-index: 2;
-  ${({ left }) => (left ? "left: 0;" : "right: 0;")}
+
+  button {
+    background-color: transparent;
+    border: none;
+    width: 50%;
+    padding: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
 `;

@@ -17,19 +17,19 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetchHomeData(5);
-        setData(response.data.relaysWithTickles || []);
-        setFocusedRelayId(response.data.relaysWithTickles[0].relay.relayId);
-      } catch (error) {
-        console.error("fetchHomeData Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadData = async () => {
+    try {
+      const response = await fetchHomeData(5);
+      setData(response.data.relaysWithTickles || []);
+      setFocusedRelayId(response.data.relaysWithTickles[0].relay.relayId);
+    } catch (error) {
+      console.error("fetchHomeData Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadData();
   }, []);
 
@@ -48,7 +48,6 @@ const Home = () => {
   const currentRelay = focusedRelayId
     ? data.find((relay) => relay.relay.relayId === focusedRelayId)
     : null;
-
   return (
     <Container>
       <Logo>

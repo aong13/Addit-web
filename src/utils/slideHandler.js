@@ -1,22 +1,15 @@
-export const handleNext = (
-  currentIndex,
-  setCurrentIndex,
-  setTranslateX,
-  imagesLength
-) => {
-  if (currentIndex < imagesLength - 1) {
-    setCurrentIndex((prev) => prev + 1);
-    setTranslateX((prev) => prev - 100);
-  } else {
-    console.log("마지막");
+export const goToPreviousTickle = (allRelay, tickleId, relayId, navigate) => {
+  const currentIndex = allRelay.findIndex((item) => item.tickleId === tickleId);
+  if (currentIndex > 0) {
+    const previousTickleId = allRelay[currentIndex - 1].tickleId;
+    navigate(`/relay/${relayId}/tickle/${previousTickleId}`);
   }
 };
 
-export const handlePrev = (currentIndex, setCurrentIndex, setTranslateX) => {
-  if (currentIndex > 0) {
-    setCurrentIndex((prev) => prev - 1);
-    setTranslateX((prev) => prev + 100);
-  } else {
-    console.log("첫 번째");
+export const goToNextTickle = (allRelay, tickleId, relayId, navigate) => {
+  const currentIndex = allRelay.findIndex((item) => item.tickleId === tickleId);
+  if (currentIndex < allRelay.length - 1) {
+    const nextTickleId = allRelay[currentIndex + 1].tickleId;
+    navigate(`/relay/${relayId}/tickle/${nextTickleId}`);
   }
 };

@@ -17,7 +17,7 @@ const AppRouter = () => {
         <Route path="/upload/tickle" element={<UploadTickle />} />
         <Route path="/alarm" element={<Alarm />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/relay/:id" element={<Relay />} />
+        <Route path="/relay/:relayId/tickle/:tickleId" element={<Relay />} />
       </Routes>
     </Router>
   );

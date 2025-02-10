@@ -2,9 +2,7 @@ import api from "./api";
 
 export const getTicklesData = async (tickleId) => {
   try {
-    const response = await api.get(`/api/mvp/tickles`, {
-      params: { tickleId },
-    });
+    const response = await api.get(`/api/mvp/tickles/${tickleId}`); // 경로에 tickleId 포함
     return response.data;
   } catch (error) {
     console.error("티클 데이터 불러오기 실패:", error);
@@ -48,6 +46,18 @@ export const postRelayData = async (relayData) => {
     return response.data;
   } catch (error) {
     console.error("릴레이 작성 실패:", error);
+    throw error;
+  }
+};
+
+export const getAllRelay = async (relayId) => {
+  try {
+    const response = await api.get(
+      `/api/mvp/relays/${relayId}/tickles/thumbnail`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("실패:", error);
     throw error;
   }
 };
