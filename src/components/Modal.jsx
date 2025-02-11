@@ -1,12 +1,34 @@
+import React from "react";
 import styled, { keyframes } from "styled-components";
 import useModalStore from "../store/useModalStore";
 import logo from "../assets/logo_white.svg";
 import goIcon from "../assets/icons/arrow_box.svg";
+import useToastStore from "../store/useToastStore";
+
+const Menu = ({ content, color, onClick }) => {
+  return (
+    <MenuContainer color={color} onClick={onClick}>
+      {content}
+      <img src={goIcon} alt="icon" />
+    </MenuContainer>
+  );
+};
 
 const Modal = () => {
   const { isOpen, closeModal } = useModalStore();
+  const addToast = useToastStore((state) => state.addToast);
 
   if (!isOpen) return null;
+
+  const copyToClipboard = (url) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = url;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    addToast("URL이 클립보드에 복사되었습니다!"); // 버튼 클릭 시에만 Toast 뜸
+  };
 
   return (
     <Overlay onClick={closeModal}>
@@ -29,21 +51,16 @@ const Modal = () => {
 
       <Menu content="설문 참여해주기" color="#7FA3FF" />
       <Menu content="사전예약 신청하기" color="#C8D8FF" />
-      <Menu content="친구에게 공유해주기" color="#FFF08F" />
+      <Menu
+        content="공유링크 복사하기"
+        color="#FFF08F"
+        onClick={() => copyToClipboard(window.location.href)}
+      />
     </Overlay>
   );
 };
 
 export default Modal;
-
-const Menu = ({ content, color, onClick }) => {
-  return (
-    <MenuContainer color={color} onClick={onClick}>
-      {content}
-      <img src={goIcon} alt="icon" />
-    </MenuContainer>
-  );
-};
 
 // 애니메이션
 const fadeIn = keyframes`
@@ -69,7 +86,7 @@ const Overlay = styled.div`
   justify-content: center;
   gap: 10px;
   z-index: 1000;
-  animation: ${fadeIn} 0.8s ease-out;
+  animation: ${fadeIn} 0.5s ease-out;
 `;
 
 const MenuContainer = styled.div`
