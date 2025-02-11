@@ -1,29 +1,72 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import logoIcon from "../assets/logo_white.svg";
+import { Button } from "../components/Button";
+import RandomProfile from "../components/RandomProfile";
+import { NickNameInput } from "../components/NicknameInput";
 
-const GuestLogin = () => {
+const Guest = () => {
   const navigate = useNavigate();
+  const [nickName, setNickName] = useState("");
+  const [profileImage, setProfileImage] = useState("");
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("userToken");
+    const isLoggedIn = sessionStorage.getItem("userToken");
+
     if (isLoggedIn) {
-      navigate("/home"); // 로그인 상태라면 홈으로 이동
+      navigate("/home");
     }
-  }, []);
+  }, [navigate]);
+
+  const putData = () => {
+    sessionStorage.setItem("userToken", "guest");
+
+    if (nickName) {
+      sessionStorage.setItem("nickName", nickName);
+    }
+
+    if (profileImage) {
+      sessionStorage.setItem("profileImage", profileImage);
+    }
+
+    navigate("/home");
+  };
 
   return (
-    <div>
-      <h1>게스트 로그인 화면</h1>
-      <button
-        onClick={() => {
-          localStorage.setItem("userToken", "guest"); // 로그인 정보 저장
-          navigate("/home");
-        }}
-      >
-        게스트 로그인
-      </button>
-    </div>
+    <Container>
+      <Logo src={logoIcon} alt="logo" />
+      <H1>프로필 설정하기</H1>
+      <RandomProfile onImageChange={setProfileImage} />
+      <NickNameInput onTextChange={setNickName} />
+      <Button
+        text="생성하기"
+        onClick={putData}
+        bgColor="#ffffff50"
+        borderColor="#fff"
+        textColor="#fff"
+      />
+    </Container>
   );
 };
 
-export default GuestLogin;
+export default Guest;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #7fa3ff;
+  min-height: 100vh;
+  gap: 20px;
+`;
+
+const Logo = styled.img`
+  height: 30px;
+`;
+
+const H1 = styled.h1`
+  color: white;
+  font-size: 16px;
+`;
