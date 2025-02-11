@@ -10,7 +10,7 @@ import { addTickleData, postRelayData } from "../apis/relayApi";
 const UploadTickle = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { title, tags, intro, relayId, tickleId } = location.state;
+  const { title, tags, intro, relayId, tickleId } = location.state || {};
 
   const userImage = sessionStorage.getItem("userImage");
   const userName = sessionStorage.getItem("userName");
@@ -19,13 +19,17 @@ const UploadTickle = () => {
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
   useEffect(() => {
+    console.log(window.location.href); // 현재 페이지의 전체 URL을 출력
     if (!userImage || !userName) {
       navigate("/guest-login", {
         state: {
           fromUpload: true,
           relayId,
           tickleId,
+          title,
+          tags,
         },
+        replace: true,
       });
     }
   }, []);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useParams } from "react-router-dom";
-import RelayHeader from "./RelayHeader";
-import BottomBar from "./BottomBar";
+import RelayHeader from "../../components/relay/RelayHeader";
+import BottomBar from "../../components/relay/BottomBar";
 import styled from "styled-components";
 import { getTicklesData } from "../../apis/relayApi";
 

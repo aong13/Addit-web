@@ -17,8 +17,9 @@ const UploadRelay = () => {
     if (!userImage || !userName) {
       navigate("/guest-login", {
         state: {
-          fromUpload: true,
+          fromNewRelay: true,
         },
+        replace: true,
       });
     }
   }, []);

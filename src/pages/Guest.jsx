@@ -12,7 +12,8 @@ import TermAccordion from "../components/TermAccordion";
 const Guest = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { relayId, tickleId, fromUpload } = location.state || {};
+  const { title, tags, relayId, tickleId, fromUpload, fromNewRelay } =
+    location.state || {};
 
   const [userName, setUserName] = useState("");
   const [userImage, setuserImage] = useState("");
@@ -23,12 +24,7 @@ const Guest = () => {
   };
 
   useEffect(() => {
-    const isLoggedIn = sessionStorage.getItem("userName");
-    if (isLoggedIn) {
-      navigate("/home");
-    } else {
-      setUserName(generateRandomName());
-    }
+    setUserName(generateRandomName());
   }, []);
 
   const putData = () => {
@@ -44,16 +40,21 @@ const Guest = () => {
     sessionStorage.setItem("userName", userName);
     sessionStorage.setItem("userImage", userImage);
     if (fromUpload) {
-      navigate(`/relay/${relayId}/tickle/${tickleId}`);
+      navigate("/upload/tickle", {
+        state: { fromUpload, relayId, tickleId, title, tags },
+        replace: true,
+      });
+    } else if (fromNewRelay) {
+      navigate("/upload/relay", { replace: true });
     } else {
-      navigate("/home");
+      navigate("/home", { replace: true });
     }
   };
 
   return (
     <Container>
-      {fromUpload && (
-        <BackButton onClick={() => navigate(-3)}>
+      {(fromUpload || fromNewRelay) && (
+        <BackButton onClick={() => navigate(-1)}>
           <img src={BackIcon} alt="backbtn" />
         </BackButton>
       )}
