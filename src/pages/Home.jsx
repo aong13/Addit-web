@@ -96,7 +96,6 @@ const Container = styled.div`
 `;
 const BottomSection = styled.div`
   margin-top: 20px;
-  width: 100%;
   background-color: #e7edff;
   padding: 20px 10px;
   display: flex;
