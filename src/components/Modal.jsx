@@ -4,6 +4,7 @@ import useModalStore from "../store/useModalStore";
 import logo from "../assets/logo_white.svg";
 import goIcon from "../assets/icons/arrow_box.svg";
 import useToastStore from "../store/useToastStore";
+import { handleRedirect } from "../utils/redirect";
 
 const Menu = ({ content, color, onClick }) => {
   return (
@@ -27,7 +28,7 @@ const Modal = () => {
     textArea.select();
     document.execCommand("copy");
     document.body.removeChild(textArea);
-    addToast("URL이 클립보드에 복사되었습니다!"); // 버튼 클릭 시에만 Toast 뜸
+    addToast("URL이 클립보드에 복사되었습니다!");
   };
 
   return (
@@ -49,7 +50,15 @@ const Modal = () => {
       </div>
       <TextGray>여러분들의 소중한 의견이 필요합니다.</TextGray>
 
-      <Menu content="설문 참여해주기" color="#7FA3FF" />
+      <Menu
+        content="설문 참여해주기"
+        color="#7FA3FF"
+        onClick={() =>
+          handleRedirect(
+            "https://docs.google.com/forms/d/15_bHgcSYlwX-Ea7J7EjP6YErvB1S2H9PJSxOC2hrikg/"
+          )
+        }
+      />
       <Menu content="사전예약 신청하기" color="#C8D8FF" />
       <Menu
         content="공유링크 복사하기"
@@ -62,7 +71,6 @@ const Modal = () => {
 
 export default Modal;
 
-// 애니메이션
 const fadeIn = keyframes`
   0% {
     opacity: 0;
