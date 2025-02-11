@@ -14,8 +14,6 @@ const Home = () => {
   const [focusedRelayId, setFocusedRelayId] = useState(null);
   const [selectedTickleId, setSelectedTickleId] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log(data);
-
   const navigate = useNavigate();
 
   const loadData = async () => {

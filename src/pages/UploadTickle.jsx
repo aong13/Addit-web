@@ -45,7 +45,6 @@ const UploadTickle = () => {
         };
 
         const response = await postRelayData(requestData);
-        console.log("릴레이 데이터 생성 성공:", response);
 
         navigate(
           `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
@@ -64,7 +63,6 @@ const UploadTickle = () => {
         };
 
         const response = await addTickleData(tickleData);
-        console.log("티클 추가 성공:", response);
 
         navigate(
           `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
