@@ -3,7 +3,7 @@ import styled from "styled-components";
 import xIcon from "../assets/icons/x_grey.svg";
 
 export const NickNameInput = ({ onTextChange, defaultValue }) => {
-  const [text, setText] = useState(defaultValue || ""); // Initialize with defaultValue
+  const [text, setText] = useState(defaultValue || "");
   const handleTextChange = (event) => {
     const newText = event.target.value;
     setText(newText);
@@ -15,9 +15,9 @@ export const NickNameInput = ({ onTextChange, defaultValue }) => {
     onTextChange("");
   };
 
-  //포커스시 초기화
   const handleFocus = () => {
     setText("");
+    onTextChange("");
   };
 
   useEffect(() => {
