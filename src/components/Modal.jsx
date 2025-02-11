@@ -3,7 +3,7 @@ import useModalStore from "../store/useModalStore";
 import logo from "../assets/logo_white.svg";
 import goIcon from "../assets/icons/arrow_box.svg";
 const Modal = () => {
-  const { isOpen, modalContent, closeModal } = useModalStore();
+  const { isOpen, closeModal } = useModalStore();
 
   if (!isOpen) return null;
 
