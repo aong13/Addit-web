@@ -15,7 +15,11 @@ const UploadRelay = () => {
 
   useEffect(() => {
     if (!userImage || !userName) {
-      navigate("/guest-login");
+      navigate("/guest-login", {
+        state: {
+          fromUpload: true,
+        },
+      });
     }
   }, []);
 

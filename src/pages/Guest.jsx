@@ -44,7 +44,7 @@ const Guest = () => {
     sessionStorage.setItem("userName", userName);
     sessionStorage.setItem("userImage", userImage);
     if (fromUpload) {
-      navigate(`/relay/${relayId}/tickle/${tickleId}`, { replace: true });
+      navigate(`/relay/${relayId}/tickle/${tickleId}`);
     } else {
       navigate("/home");
     }
@@ -53,7 +53,7 @@ const Guest = () => {
   return (
     <Container>
       {fromUpload && (
-        <BackButton onClick={() => navigate(-1)}>
+        <BackButton onClick={() => navigate(-3)}>
           <img src={BackIcon} alt="backbtn" />
         </BackButton>
       )}

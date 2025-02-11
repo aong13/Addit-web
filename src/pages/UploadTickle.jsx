@@ -64,7 +64,6 @@ const UploadTickle = () => {
         navigate(
           `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
           {
-            replace: true,
             state: { fromUpload: true },
           }
         );
@@ -82,7 +81,6 @@ const UploadTickle = () => {
         navigate(
           `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
           {
-            replace: true,
             state: { fromUpload: true },
           }
         );

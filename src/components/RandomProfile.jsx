@@ -68,6 +68,5 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   width: 30px;
-  height: 30px;
   padding: 6px;
 `;
