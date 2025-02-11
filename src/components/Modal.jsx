@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import useModalStore from "../store/useModalStore";
 import logo from "../assets/logo_white.svg";
 import goIcon from "../assets/icons/arrow_box.svg";
+
 const Modal = () => {
   const { isOpen, closeModal } = useModalStore();
 
@@ -44,6 +45,17 @@ const Menu = ({ content, color, onClick }) => {
   );
 };
 
+// 애니메이션
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -57,6 +69,7 @@ const Overlay = styled.div`
   justify-content: center;
   gap: 10px;
   z-index: 1000;
+  animation: ${fadeIn} 0.8s ease-out;
 `;
 
 const MenuContainer = styled.div`
@@ -83,6 +96,7 @@ const MenuContainer = styled.div`
 const Text = styled.h1`
   color: white;
 `;
+
 const TextGray = styled.p`
   color: #cacaca;
   font-size: 10px;
