@@ -1,8 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import reloadIcon from "../assets/icons/reload.svg";
 
-// 이미지 배열
 const images = [
   "https://storage.googleapis.com/addit-prod/user_bear.jpg",
   "https://storage.googleapis.com/addit-prod/user_dog.jpg",
@@ -15,38 +14,35 @@ const images = [
 ];
 
 const RandomProfile = ({ onImageChange }) => {
-  const [image, setImage] = useState(images[0]); // 초기 이미지 설정
+  const getRandomImage = () =>
+    images[Math.floor(Math.random() * images.length)];
 
-  // 랜덤 이미지 변경 함수
-  const getRandomImage = useCallback(() => {
-    const randomIndex = Math.floor(Math.random() * images.length);
-    const newImage = images[randomIndex];
+  const [image, setImage] = useState(getRandomImage);
+
+  useEffect(() => {
+    onImageChange(image);
+  }, [image, onImageChange]);
+
+  const changeRandomImage = useCallback(() => {
+    const newImage = getRandomImage();
     setImage(newImage);
-    onImageChange(newImage); // 부모 컴포넌트로 변경된 이미지 전달
+    onImageChange(newImage);
   }, [onImageChange]);
 
   return (
-    <Wrapper>
-      <ProfileCircleWrapper>
-        <ProfileCircle image={image} />
-        <Button onClick={getRandomImage}>
-          <img src={reloadIcon} alt="reload icon" />
-        </Button>
-      </ProfileCircleWrapper>
-    </Wrapper>
+    <ProfileCircleWrapper>
+      <ProfileCircle image={image} />
+      <Button onClick={changeRandomImage}>
+        <img src={reloadIcon} alt="reload icon" />
+      </Button>
+    </ProfileCircleWrapper>
   );
 };
 
 export default RandomProfile;
 
-// ✅ 스타일 컴포넌트
-const Wrapper = styled.div`
-  text-align: center;
-`;
-
 const ProfileCircleWrapper = styled.div`
   position: relative;
-  display: inline-block;
 `;
 
 const ProfileCircle = styled.div`
@@ -65,14 +61,13 @@ const Button = styled.button`
   top: 0;
   right: 0;
   background-color: #4574ec;
-  color: white;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 16px;
-  padding: 4px;
-
-  img {
-    height: 16px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 6px;
 `;

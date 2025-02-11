@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import xIcon from "../assets/icons/x_grey.svg";
-export const NickNameInput = ({ onTextChange }) => {
-  const [text, setText] = useState(""); // 입력된 텍스트 상태 관리
 
+export const NickNameInput = ({ onTextChange, defaultValue }) => {
+  const [text, setText] = useState(defaultValue || ""); // Initialize with defaultValue
   const handleTextChange = (event) => {
     const newText = event.target.value;
     setText(newText);
@@ -15,6 +15,15 @@ export const NickNameInput = ({ onTextChange }) => {
     onTextChange("");
   };
 
+  //포커스시 초기화
+  const handleFocus = () => {
+    setText("");
+  };
+
+  useEffect(() => {
+    setText(defaultValue || "");
+  }, [defaultValue]);
+
   return (
     <Container>
       <InputContainer>
@@ -22,7 +31,8 @@ export const NickNameInput = ({ onTextChange }) => {
           type="text"
           value={text}
           onChange={handleTextChange}
-          maxLength={20} // 최대 20자
+          onFocus={handleFocus}
+          maxLength={20}
         />
         <DeleteButton onClick={handleDelete}>
           <img src={xIcon} alt="deleteIcon" />
@@ -36,7 +46,7 @@ export const NickNameInput = ({ onTextChange }) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   align-items: end;
 `;
 

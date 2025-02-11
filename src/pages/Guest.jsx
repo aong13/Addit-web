@@ -5,6 +5,7 @@ import logoIcon from "../assets/logo_white.svg";
 import { Button } from "../components/Button";
 import RandomProfile from "../components/RandomProfile";
 import { NickNameInput } from "../components/NicknameInput";
+import { generateRandomName } from "../utils/nickname";
 
 const Guest = () => {
   const navigate = useNavigate();
@@ -12,24 +13,18 @@ const Guest = () => {
   const [profileImage, setProfileImage] = useState("");
 
   useEffect(() => {
-    const isLoggedIn = sessionStorage.getItem("userToken");
-
+    const isLoggedIn = sessionStorage.getItem("nickName");
     if (isLoggedIn) {
       navigate("/home");
+    } else {
+      // 기본 닉네임과 프로필 이미지를 설정
+      setNickName(generateRandomName());
     }
   }, [navigate]);
 
   const putData = () => {
-    sessionStorage.setItem("userToken", "guest");
-
-    if (nickName) {
-      sessionStorage.setItem("nickName", nickName);
-    }
-
-    if (profileImage) {
-      sessionStorage.setItem("profileImage", profileImage);
-    }
-
+    sessionStorage.setItem("nickName", nickName);
+    sessionStorage.setItem("profileImage", profileImage);
     navigate("/home");
   };
 
@@ -38,7 +33,8 @@ const Guest = () => {
       <Logo src={logoIcon} alt="logo" />
       <H1>프로필 설정하기</H1>
       <RandomProfile onImageChange={setProfileImage} />
-      <NickNameInput onTextChange={setNickName} />
+      <div />
+      <NickNameInput onTextChange={setNickName} defaultValue={nickName} />
       <Button
         text="생성하기"
         onClick={putData}
@@ -69,4 +65,5 @@ const Logo = styled.img`
 const H1 = styled.h1`
   color: white;
   font-size: 16px;
+  margin-bottom: 20px;
 `;
