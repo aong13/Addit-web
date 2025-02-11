@@ -3,12 +3,14 @@ import AppRouter from "./router";
 import styled from "styled-components";
 import "./reset.css";
 import GlobalStyle from "./styles/fonts/globalStyle"; // 경로에 맞게 수정
+import Modal from "./components/Modal";
 
 function App() {
   return (
     <AppContainer>
       <GlobalStyle />
       <AppRouter />
+      <Modal />
     </AppContainer>
   );
 }
