@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import logoIcon from "../assets/logo_white.svg";
 import { Button } from "../components/Button";
@@ -9,32 +9,38 @@ import { generateRandomName } from "../utils/nickname";
 
 const Guest = () => {
   const navigate = useNavigate();
-  const [nickName, setNickName] = useState("");
-  const [profileImage, setProfileImage] = useState("");
+  const location = useLocation();
+  const { relayId, tickleId, fromUpload } = location.state || {};
+
+  const [userName, setUserName] = useState("");
+  const [userImage, setuserImage] = useState("");
 
   useEffect(() => {
-    const isLoggedIn = sessionStorage.getItem("nickName");
+    const isLoggedIn = sessionStorage.getItem("userName");
     if (isLoggedIn) {
       navigate("/home");
     } else {
-      // 기본 닉네임과 프로필 이미지를 설정
-      setNickName(generateRandomName());
+      setUserName(generateRandomName());
     }
   }, [navigate]);
 
   const putData = () => {
-    sessionStorage.setItem("nickName", nickName);
-    sessionStorage.setItem("profileImage", profileImage);
-    navigate("/home");
+    sessionStorage.setItem("userName", userName);
+    sessionStorage.setItem("userImage", userImage);
+    if (fromUpload) {
+      navigate(`/relay/${relayId}/tickle/${tickleId}`, { replace: true });
+    } else {
+      navigate("/home");
+    }
   };
 
   return (
     <Container>
       <Logo src={logoIcon} alt="logo" />
       <H1>프로필 설정하기</H1>
-      <RandomProfile onImageChange={setProfileImage} />
+      <RandomProfile onImageChange={setuserImage} />
       <div />
-      <NickNameInput onTextChange={setNickName} defaultValue={nickName} />
+      <NickNameInput onTextChange={setUserName} defaultValue={userName} />
       <Button
         text="생성하기"
         onClick={putData}

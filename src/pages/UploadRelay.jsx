@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
@@ -9,6 +9,15 @@ const UploadRelay = () => {
   const [title, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [tags, setTags] = useState([]);
+
+  const userImage = sessionStorage.getItem("userImage");
+  const userName = sessionStorage.getItem("userName");
+
+  useEffect(() => {
+    if (!userImage || !userName) {
+      navigate("/guest-login");
+    }
+  }, []);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value.slice(0, 40)); // 제목 최대 40자
@@ -53,7 +62,6 @@ const UploadRelay = () => {
     </Container>
   );
 };
-
 const Container = styled.div`
   position: relative;
   width: 100%;
