@@ -14,6 +14,7 @@ const Home = () => {
   const [focusedRelayId, setFocusedRelayId] = useState(null);
   const [selectedTickleId, setSelectedTickleId] = useState(null);
   const [loading, setLoading] = useState(true);
+  console.log(data);
 
   const navigate = useNavigate();
 
@@ -65,7 +66,7 @@ const Home = () => {
         onFocusChange={setFocusedRelayId}
         selectedTickleId={selectedTickleId}
       />
-      <ContentTitle>{currentRelay?.relayTitle}</ContentTitle>
+      <ContentTitle>{currentRelay?.relay.title}</ContentTitle>
       <Collaborators
         count={currentRelay?.relay.totalTickleCount}
         images={currentRelay?.relay.contributorImages}
@@ -95,7 +96,6 @@ const Container = styled.div`
 `;
 const BottomSection = styled.div`
   margin-top: 20px;
-  width: 100%;
   background-color: #e7edff;
   padding: 20px 10px;
   display: flex;
@@ -134,7 +134,7 @@ const ContentTitle = styled.h1`
   color: #545454;
   font-size: 16px;
   text-align: center;
-  margin: 14px 0;
+  margin: 18px 0;
 `;
 
 const Text = styled.p`
