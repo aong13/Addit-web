@@ -11,15 +11,23 @@ const BottomBar = ({ relayData }) => {
   const [isAskBtnActive, setIsAskBtnActive] = useState(false);
 
   const handlePlusClick = () => {
-    navigate(`/upload/tickle`);
+    navigate(`/upload/tickle`, {
+      state: {
+        relayId: relayData.relayId,
+        tickleId: relayData.tickleId,
+        title: relayData.relayTitle,
+        tags: relayData.tags,
+      },
+    });
   };
-
   const handleAskClick = () => {};
 
   return (
     <BottomContainer>
-      <HeartBtn likeCount={relayData?.like} />
-
+      <HeartBtn
+        likeCount={relayData?.tickleLikes}
+        tickleId={relayData?.tickleId}
+      />
       <PlusBtn
         onClick={handlePlusClick}
         isActive={isPlusBtnActive}
@@ -29,7 +37,6 @@ const BottomBar = ({ relayData }) => {
       >
         <img src={plusIcon} alt="plusIcon" />
       </PlusBtn>
-
       <AskBtn
         onClick={handleAskClick}
         isActive={isAskBtnActive}

@@ -8,8 +8,8 @@ const RelayHeader = ({ title }) => {
   const location = useLocation();
 
   const handleBack = () => {
-    if (location.state?.fromNewRelay) {
-      navigate(-2); // 릴레이 업로드의 경우 uploadRelay, uploadTickle 스택 두개 삭제
+    if (location.state?.fromUpload) {
+      navigate(-2); // 업로드의 경우 스택 두개 삭제
     } else {
       navigate(-1);
     }
@@ -43,6 +43,7 @@ const BackButton = styled.button`
   img {
     width: 20px;
     height: 20px;
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
   }
 `;
 
@@ -53,6 +54,7 @@ const Title = styled.h1`
   font-size: 16px;
   font-weight: 600;
   margin: 0;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
 `;
 
 export default RelayHeader;

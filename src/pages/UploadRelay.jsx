@@ -19,12 +19,12 @@ const UploadRelay = () => {
   };
 
   const handleTagsChange = (newTags) => {
-    setTags(newTags); // 태그 배열을 직접 업데이트
+    setTags(newTags);
   };
 
   const handleNext = () => {
     navigate("/upload/tickle", {
-      state: { title, tags, intro, fromNewRelay: true },
+      state: { title, tags, intro, fromNewRelay: true, fromUpload: true },
     });
   };
 
