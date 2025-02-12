@@ -4,22 +4,26 @@ import styled from "styled-components";
 import HeartBtn from "./HeartBtn";
 import askIcon from "../../assets/icons/bubble.svg";
 import plusIcon from "../../assets/icons/plus.svg";
+import useRelayStore from "../../store/useRelayStore"; // zustand store import
 
 const BottomBar = ({ relayData }) => {
   const navigate = useNavigate();
   const [isPlusBtnActive, setIsPlusBtnActive] = useState(false);
   const [isAskBtnActive, setIsAskBtnActive] = useState(false);
+  const setRelayData = useRelayStore((state) => state.setRelayData);
 
   const handlePlusClick = () => {
-    navigate(`/upload/tickle`, {
-      state: {
-        relayId: relayData.relayId,
-        tickleId: relayData.tickleId,
-        title: relayData.relayTitle,
-        tags: relayData.tags,
-      },
-    });
+    useRelayStore.getState().resetAll();
+    setRelayData(
+      relayData.relayId,
+      relayData.tickleId,
+      relayData.relayTitle,
+      relayData.tags
+    );
+
+    navigate(`/upload/tickle`, {});
   };
+
   const handleAskClick = () => {};
 
   return (

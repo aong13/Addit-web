@@ -8,6 +8,7 @@ import { Button } from "../components/Button";
 import { fetchHomeData } from "../apis/homeApi";
 import logo from "../assets/logo.svg";
 import plusIcon from "../assets/icons/plus_blue.svg";
+import useRelayStore from "../store/useRelayStore";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -38,6 +39,7 @@ const Home = () => {
 
   const handleClick = () => {
     navigate("/upload/relay");
+    useRelayStore.getState().resetAll();
   };
 
   const handleImageSelect = (tickleId) => {

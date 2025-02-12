@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
 import TagInput from "../components/Input/TagInput";
 import useToastStore from "../store/useToastStore";
+import useRelayStore from "../store/useRelayStore";
 
 const UploadRelay = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [intro, setIntro] = useState("");
-  const [tags, setTags] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState(false); // 버튼 중복 클릭 방지
   const addToast = useToastStore((state) => state.addToast);
+
+  const { title, intro, tags, setTitle, setIntro, setTags } = useRelayStore();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const userImage = sessionStorage.getItem("userImage");
   const userName = sessionStorage.getItem("userName");
 
+  // 뒤로가기 시 상태 초기화
   useEffect(() => {
     if (!userImage || !userName) {
       navigate("/guest-login", {
@@ -25,7 +27,7 @@ const UploadRelay = () => {
         replace: true,
       });
     }
-  }, []);
+  }, [userImage, userName, navigate, setTitle, setIntro, setTags]);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value.slice(0, 40)); // 제목 최대 40자
@@ -42,11 +44,10 @@ const UploadRelay = () => {
   const handleNext = () => {
     if (isSubmitting) return;
 
-    setTimeout(() => {
-      setIsSubmitting(false); // 1.5초 후해제
-    }, 1500);
-
     setIsSubmitting(true); // 버튼 클릭 시, 제출 중 상태로 변경
+    setTimeout(() => {
+      setIsSubmitting(false); // 1.5초 후 해제
+    }, 1500);
 
     if (!title.trim()) {
       addToast("제목을 입력해주세요.");
@@ -60,9 +61,10 @@ const UploadRelay = () => {
 
     // 다음 페이지로 이동
     navigate("/upload/tickle", {
-      state: { title, tags, intro, fromNewRelay: true, fromUpload: true },
+      state: { fromNewRelay: true, fromUpload: true },
     });
   };
+
   return (
     <Container>
       <Header
@@ -122,6 +124,7 @@ const TextArea = styled.textarea`
   margin: 0 20px;
   padding: 10px;
   font-size: 16px;
+  font-family: Pretendard;
   border: none;
   outline: none;
   resize: none;

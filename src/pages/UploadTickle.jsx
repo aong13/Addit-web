@@ -7,19 +7,28 @@ import deleteIcon from "../assets/icons/x_icon.svg";
 import TagInput from "../components/Input/TagInput";
 import { addTickleData, postRelayData } from "../apis/relayApi";
 import useToastStore from "../store/useToastStore";
+import useRelayStore from "../store/useRelayStore";
 
 const UploadTickle = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { title, tags, intro, relayId, tickleId } = location.state || {};
+  const { relayId, tickleId } = location.state || {};
 
   const userImage = sessionStorage.getItem("userImage");
   const userName = sessionStorage.getItem("userName");
 
-  const [content, setContent] = useState("");
-  const [image, setImage] = useState(null);
-  const fileInputRef = useRef(null);
+  const {
+    intro,
+    title,
+    content,
+    image,
+    tags,
+    setContent,
+    setImage,
+    removeImage,
+  } = useRelayStore();
 
+  const fileInputRef = useRef(null);
   const addToast = useToastStore((state) => state.addToast);
 
   useEffect(() => {
@@ -40,12 +49,12 @@ const UploadTickle = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(file);
+      setImage(file); // useRelayStore 상태 업데이트
     }
   };
 
   const handleRemoveImage = () => {
-    setImage(null);
+    removeImage(); // useRelayStore 상태 업데이트
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -60,7 +69,7 @@ const UploadTickle = () => {
     if (!image) {
       addToast("사진을 필수로 업로드해주세요!");
       setTimeout(() => {
-        setIsSubmitting(false); // 1.5초 후해제
+        setIsSubmitting(false); // 1.5초 후 해제
       }, 1500);
       return;
     }
@@ -103,9 +112,9 @@ const UploadTickle = () => {
       console.error("데이터 전송 실패:", error);
     } finally {
       setIsSubmitting(false); // 버튼 활성화
+      useRelayStore.getState().resetAll(); // 상태 초기화
     }
   };
-
   return (
     <Container>
       <Header
@@ -146,7 +155,7 @@ const UploadTickle = () => {
           <TextArea
             value={content}
             placeholder="비하인드 스토리 사진을 공유해보세요!"
-            onChange={(e) => setContent(e.target.value)}
+            onChange={(e) => setContent(e.target.value)} // useRelayStore 상태 업데이트
           />
         </ContentContainer>
       </FormContainer>
@@ -186,6 +195,7 @@ const Input = styled.input`
 const TextArea = styled.textarea`
   padding: 10px;
   font-size: 16px;
+  font-family: Pretendard;
   border: none;
   outline: none;
   resize: none;
