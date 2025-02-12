@@ -22,7 +22,7 @@ const TagInput = ({ tags = [], onChange, editMode = true }) => {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter" || e.key === " ") {
-      addTag(inputValue);
+      addTag(inputValue.trim()); // 공백을 제거하고 태그 추가
     } else if (e.key === "Backspace" && !inputValue) {
       onChange(tags.slice(0, -1)); // 마지막 태그 삭제
     }
