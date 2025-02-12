@@ -46,7 +46,7 @@ const Relay = () => {
   return (
     <Container>
       <ImageWrapper>
-        <TickleImage src={tickle.tickleImage} alt="Tickle" />
+        <TickleImage src={tickle?.tickleImage} alt="Tickle" />
       </ImageWrapper>
       <NavButtons>
         <button

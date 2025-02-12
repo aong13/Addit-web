@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import logoIcon from "../assets/logo_white.svg";
-import BackIcon from "../assets/icons/arrow_back_white.svg"; // SVG 아이콘 불러오기
+import logoIcon from "../assets/icons/logo_white.svg";
+import BackIcon from "../assets/icons/arrow_back_white.svg";
 import { Button } from "../components/Button";
 import RandomProfile from "../components/RandomProfile";
 import { NickNameInput } from "../components/Input/NicknameInput";
 import { generateRandomName } from "../utils/nickname";
 import TermAccordion from "../components/TermAccordion";
+import useToastStore from "../store/useToastStore";
 
 const Guest = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { title, tags, relayId, tickleId, fromUpload, fromNewRelay } =
     location.state || {};
+  const addToast = useToastStore((state) => state.addToast);
 
   const [userName, setUserName] = useState("");
   const [userImage, setuserImage] = useState("");
@@ -28,17 +30,18 @@ const Guest = () => {
   }, []);
 
   const putData = () => {
-    if (!isAgreed) {
-      // TODO: 토스트 메시지 추가
+    if (!userName.trim()) {
+      addToast("닉네임을 설정해주세요.");
       return;
     }
-    if (!userName.trim()) {
-      // TODO: 토스트 메시지 추가
+    if (!isAgreed) {
+      addToast("개인정보 수집 및 이용에 동의해주세요!");
       return;
     }
 
     sessionStorage.setItem("userName", userName);
     sessionStorage.setItem("userImage", userImage);
+
     if (fromUpload) {
       navigate("/upload/tickle", {
         state: { fromUpload, relayId, tickleId, title, tags },

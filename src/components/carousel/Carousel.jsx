@@ -46,7 +46,7 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
   return (
     <CarouselContainer>
       <Slider {...settings}>
-        {data.map((relay) => (
+        {data?.map((relay) => (
           <CarouselItem
             key={relay.relay.relayId}
             item={relay}
