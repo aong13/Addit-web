@@ -12,7 +12,6 @@ import useRelayStore from "../store/useRelayStore";
 const UploadTickle = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { relayId, tickleId } = location.state || {};
 
   const userImage = sessionStorage.getItem("userImage");
   const userName = sessionStorage.getItem("userName");
@@ -23,6 +22,8 @@ const UploadTickle = () => {
     content,
     image,
     tags,
+    tickleId,
+    relayId,
     setContent,
     setImage,
     removeImage,
@@ -34,13 +35,6 @@ const UploadTickle = () => {
   useEffect(() => {
     if (!userImage || !userName) {
       navigate("/guest-login", {
-        state: {
-          fromUpload: true,
-          relayId,
-          tickleId,
-          title,
-          tags,
-        },
         replace: true,
       });
     }
@@ -49,12 +43,12 @@ const UploadTickle = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(file); // useRelayStore 상태 업데이트
+      setImage(file);
     }
   };
 
   const handleRemoveImage = () => {
-    removeImage(); // useRelayStore 상태 업데이트
+    removeImage();
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -108,11 +102,11 @@ const UploadTickle = () => {
           { state: { fromUpload: true } }
         );
       }
+      useRelayStore.getState().resetAll(); // 상태 초기화
     } catch (error) {
       console.error("데이터 전송 실패:", error);
     } finally {
       setIsSubmitting(false); // 버튼 활성화
-      useRelayStore.getState().resetAll(); // 상태 초기화
     }
   };
   return (
