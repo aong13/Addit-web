@@ -49,6 +49,7 @@ const BackButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 0;
+  margin-right: 36px;
 `;
 
 const Title = styled.h1`

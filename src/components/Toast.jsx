@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import useToastStore from "../store/useToastStore";
 
 const Toast = ({ message, id }) => {
   const removeToast = useToastStore((state) => state.removeToast);
-  const [isVisible, setIsVisible] = React.useState(true);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,13 +51,11 @@ const fadeOut = keyframes`
     transform: translateY(-50px);
   }
 `;
-
 const Container = styled.div`
   position: fixed;
   top: 60px;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -29,13 +29,25 @@ const Guest = () => {
     setUserName(generateRandomName());
   }, []);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const putData = () => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true); // 요청 시작 시 비활성화
+
+    setTimeout(() => {
+      setIsSubmitting(false); // 1.5초 후 해제
+    }, 1500);
+
     if (!userName.trim()) {
       addToast("닉네임을 설정해주세요.");
+      // setIsSubmitting(false);
       return;
     }
     if (!isAgreed) {
       addToast("개인정보 수집 및 이용에 동의해주세요!");
+      // setIsSubmitting(false);
       return;
     }
 
@@ -72,6 +84,7 @@ const Guest = () => {
         bgColor="#ffffff50"
         borderColor="#fff"
         textColor="#fff"
+        disabled={isSubmitting}
       />
     </Container>
   );
