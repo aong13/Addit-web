@@ -6,6 +6,7 @@ import cameraIcon from "../assets/icons/camera.svg";
 import deleteIcon from "../assets/icons/x_icon.svg";
 import TagInput from "../components/Input/TagInput";
 import { addTickleData, postRelayData } from "../apis/relayApi";
+import useToastStore from "../store/useToastStore";
 
 const UploadTickle = () => {
   const location = useLocation();
@@ -18,6 +19,9 @@ const UploadTickle = () => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
+
+  const addToast = useToastStore((state) => state.addToast);
+
   useEffect(() => {
     if (!userImage || !userName) {
       navigate("/guest-login", {
@@ -47,10 +51,23 @@ const UploadTickle = () => {
     }
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async () => {
-    const fromNewRelay = location.state?.fromNewRelay;
+    if (isSubmitting) return; // 중복 클릭 방지
+
+    setIsSubmitting(true);
+    if (!image) {
+      addToast("사진을 필수로 업로드해주세요!");
+      setTimeout(() => {
+        setIsSubmitting(false); // 1.5초 후해제
+      }, 1500);
+      return;
+    }
 
     try {
+      const fromNewRelay = location.state?.fromNewRelay;
+
       if (fromNewRelay) {
         const requestData = {
           title,
@@ -63,12 +80,9 @@ const UploadTickle = () => {
         };
 
         const response = await postRelayData(requestData);
-
         navigate(
           `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
-          {
-            state: { fromUpload: true },
-          }
+          { state: { fromUpload: true } }
         );
       } else {
         const tickleData = {
@@ -80,22 +94,26 @@ const UploadTickle = () => {
         };
 
         const response = await addTickleData(tickleData);
-
         navigate(
           `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
-          {
-            state: { fromUpload: true },
-          }
+          { state: { fromUpload: true } }
         );
       }
     } catch (error) {
       console.error("데이터 전송 실패:", error);
+    } finally {
+      setIsSubmitting(false); // 버튼 활성화
     }
   };
 
   return (
     <Container>
-      <Header title="사진 업로드" buttonText="생성" onBtnClick={handleSubmit} />
+      <Header
+        title="사진 업로드"
+        buttonText="생성"
+        onBtnClick={handleSubmit}
+        disabled={isSubmitting}
+      />
       <FormContainer>
         <TitleInputWrapper>
           <Input type="text" value={title} readOnly titleStyle />

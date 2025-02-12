@@ -28,7 +28,7 @@ const CarouselItem = ({
           src={selectedTickle?.authorImage || defaultProfileImg}
           alt="Profile Img"
         />
-        <Nickname>{selectedTickle?.authorNickname || "No Name"}</Nickname>
+        <Nickname>{selectedTickle?.authorNickname}</Nickname>
       </Overlay>
     </ImageWrapper>
   );
