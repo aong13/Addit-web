@@ -3,12 +3,22 @@ import AppRouter from "./router";
 import styled from "styled-components";
 import "./reset.css";
 import GlobalStyle from "./styles/fonts/globalStyle"; // 경로에 맞게 수정
+import Modal from "./components/Modal";
+import Toast from "./components/Toast";
+import useToastStore from "./store/useToastStore";
 
 function App() {
+  const toasts = useToastStore((state) => state.toasts);
+
   return (
     <AppContainer>
       <GlobalStyle />
       <AppRouter />
+      <Modal />
+
+      {toasts.map((toast) => (
+        <Toast key={toast.id} id={toast.id} message={toast.message} />
+      ))}
     </AppContainer>
   );
 }

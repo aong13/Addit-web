@@ -3,10 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getAllRelay, getTicklesData } from "../apis/relayApi";
 import { handlePrevious, handleNext } from "../utils/slideHandler";
+import useModalStore from "../store/useModalStore";
 
 const Relay = () => {
   const [tickle, setTickle] = useState(null);
   const [allRelay, setAllRelay] = useState([]);
+  const { openModal } = useModalStore();
   const { relayId, tickleId } = useParams();
   const navigate = useNavigate();
 
@@ -25,10 +27,20 @@ const Relay = () => {
     if (relayId && tickleId) {
       fetchRelayData();
     }
+
+    //모달관리
+    let count = parseInt(localStorage.getItem("visitCount")) || 0;
+    count += 1;
+    localStorage.setItem("visitCount", count);
+
+    if (count >= 10) {
+      openModal();
+      localStorage.setItem("visitCount", 0);
+    }
   }, [relayId, tickleId]);
 
   if (!tickle) {
-    return <LoadingContainer>로딩 중...</LoadingContainer>;
+    return <></>;
   }
 
   return (
@@ -89,11 +101,4 @@ const NavButtons = styled.div`
     cursor: pointer;
     z-index: 2;
   }
-`;
-
-const LoadingContainer = styled.div`
-  color: white;
-  text-align: center;
-  font-size: 18px;
-  padding-top: 20px;
 `;
