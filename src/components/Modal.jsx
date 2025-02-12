@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import useModalStore from "../store/useModalStore";
-import logo from "../assets/icons/logo_white.svg";
+import logo from "../assets/logo_white.svg";
 import goIcon from "../assets/icons/arrow_box.svg";
 import useToastStore from "../store/useToastStore";
 import { handleRedirect } from "../utils/redirect";

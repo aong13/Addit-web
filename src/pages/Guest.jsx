@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import logoIcon from "../assets/icons/logo_white.svg";
+import logoIcon from "../assets/logo_white.svg";
 import BackIcon from "../assets/icons/arrow_back_white.svg";
 import { Button } from "../components/Button";
 import RandomProfile from "../components/RandomProfile";
