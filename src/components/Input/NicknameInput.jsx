@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import xIcon from "../assets/icons/x_grey.svg";
+import xIcon from "../../assets/icons/x_grey.svg";
 
 export const NickNameInput = ({ onTextChange, defaultValue }) => {
   const [text, setText] = useState(defaultValue || "");

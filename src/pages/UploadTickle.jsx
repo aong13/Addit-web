@@ -4,7 +4,7 @@ import Header from "../components/layout/Header";
 import styled from "styled-components";
 import cameraIcon from "../assets/icons/camera.svg";
 import deleteIcon from "../assets/icons/x_icon.svg";
-import TagInput from "../components/TagInput";
+import TagInput from "../components/Input/TagInput";
 import { addTickleData, postRelayData } from "../apis/relayApi";
 
 const UploadTickle = () => {

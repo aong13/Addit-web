@@ -5,7 +5,7 @@ import logoIcon from "../assets/logo_white.svg";
 import BackIcon from "../assets/icons/arrow_back_white.svg"; // SVG 아이콘 불러오기
 import { Button } from "../components/Button";
 import RandomProfile from "../components/RandomProfile";
-import { NickNameInput } from "../components/NicknameInput";
+import { NickNameInput } from "../components/Input/NicknameInput";
 import { generateRandomName } from "../utils/nickname";
 import TermAccordion from "../components/TermAccordion";
 

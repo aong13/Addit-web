@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
-import TagInput from "../components/TagInput";
+import TagInput from "../components/Input/TagInput";
 
 const UploadRelay = () => {
   const navigate = useNavigate();
