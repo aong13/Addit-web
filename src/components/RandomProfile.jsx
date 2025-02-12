@@ -30,18 +30,18 @@ const RandomProfile = ({ onImageChange }) => {
   }, [onImageChange]);
 
   return (
-    <ProfileCircleWrapper>
+    <ProfileWrapper>
       <ProfileCircle image={image} />
       <Button onClick={changeRandomImage}>
         <img src={reloadIcon} alt="reload icon" />
       </Button>
-    </ProfileCircleWrapper>
+    </ProfileWrapper>
   );
 };
 
 export default RandomProfile;
 
-const ProfileCircleWrapper = styled.div`
+const ProfileWrapper = styled.div`
   position: relative;
 `;
 

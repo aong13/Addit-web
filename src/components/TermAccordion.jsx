@@ -17,11 +17,11 @@ const TermAccordion = ({ onAgreeChange }) => {
   };
 
   return (
-    <ModalContainer>
-      <TitleContainer onClick={toggleAccordion}>
+    <AccordionContainer>
+      <TitleWrapper onClick={toggleAccordion}>
         <Title>🔒 개인정보 수집 및 이용 동의</Title>
         <DownIcon src={downIcon} alt="down icon" isOpen={isOpen} />
-      </TitleContainer>
+      </TitleWrapper>
 
       <ContentWrapper isOpen={isOpen}>
         <ul>
@@ -49,17 +49,17 @@ const TermAccordion = ({ onAgreeChange }) => {
         />
         <label htmlFor="agreeCheckbox">동의합니다.</label>
       </CheckboxWrapper>
-    </ModalContainer>
+    </AccordionContainer>
   );
 };
 
-const ModalContainer = styled.div`
+const AccordionContainer = styled.div`
   max-width: 600px;
   margin: 20px auto;
   width: 80%;
 `;
 
-const TitleContainer = styled.div`
+const TitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,8 +67,7 @@ const TitleContainer = styled.div`
   margin: 0px auto 20px;
 `;
 
-const Title = styled.p`
-  font-weight: bold;
+const Title = styled.h1`
   color: white;
   margin: 0;
 `;

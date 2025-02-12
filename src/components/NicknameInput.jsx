@@ -34,11 +34,11 @@ export const NickNameInput = ({ onTextChange, defaultValue }) => {
           onFocus={handleFocus}
           maxLength={20}
         />
-        <DeleteButton onClick={handleDelete}>
+        <DeleteBtn onClick={handleDelete}>
           <img src={xIcon} alt="deleteIcon" />
-        </DeleteButton>
+        </DeleteBtn>
       </InputContainer>
-      <CharacterCount>({text.length}/20)</CharacterCount>
+      <CharCount>({text.length}/20)</CharCount>
     </Container>
   );
 };
@@ -71,14 +71,14 @@ const StyledInput = styled.input`
   font-weight: 600;
 `;
 
-const CharacterCount = styled.div`
+const CharCount = styled.div`
   font-size: 12px;
   color: #666;
   margin-top: 5px;
   color: white;
 `;
 
-const DeleteButton = styled.button`
+const DeleteBtn = styled.button`
   min-width: 24px;
   height: 24px;
   background-color: #c8d8ff;

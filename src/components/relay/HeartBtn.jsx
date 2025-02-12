@@ -29,17 +29,17 @@ const HeartBtn = ({ likeCount, tickleId }) => {
   };
 
   return (
-    <IconContainer onClick={handleClick}>
-      <HeartWrapper>
+    <Container onClick={handleClick}>
+      <IconWrapper>
         <HeartOff src={heartOff} isHidden={isAnimating} />
         <HeartOn
           src={heartOn}
           isAnimating={isAnimating}
           onAnimationEnd={handleAnimationEnd}
         />
-      </HeartWrapper>
+      </IconWrapper>
       <Text>{likes}</Text>
-    </IconContainer>
+    </Container>
   );
 };
 
@@ -49,7 +49,7 @@ const heartPop = keyframes`
   100% { transform: scale(1); opacity: 0.5; }
 `;
 
-const IconContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -60,7 +60,7 @@ const IconContainer = styled.div`
   cursor: pointer;
 `;
 
-const HeartWrapper = styled.div`
+const IconWrapper = styled.div`
   position: relative;
   width: 24px;
   height: 24px;

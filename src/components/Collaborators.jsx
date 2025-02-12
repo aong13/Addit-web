@@ -5,11 +5,11 @@ import defaultProfileImg from "../assets/default_profile_temp.png";
 const Collaborators = ({ images = [], count }) => {
   return (
     <Container>
-      <Wrapper hasSingleImage={images.length === 1}>
+      <ProfileWrapper hasSingleImage={images.length === 1}>
         {images.map((image, index) => (
           <ProfileCircle key={index} imageUrl={image} isFirst={index === 0} />
         ))}
-      </Wrapper>
+      </ProfileWrapper>
       {count > 0 ? (
         <Text>
           <TextBold>+{count}</TextBold>
@@ -46,7 +46,7 @@ const Container = styled.div`
   gap: 6px;
 `;
 
-const Wrapper = styled.div`
+const ProfileWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: ${({ hasSingleImage }) =>

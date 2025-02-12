@@ -19,7 +19,6 @@ const UploadTickle = () => {
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
   useEffect(() => {
-    console.log(window.location.href); // 현재 페이지의 전체 URL을 출력
     if (!userImage || !userName) {
       navigate("/guest-login", {
         state: {

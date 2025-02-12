@@ -9,7 +9,7 @@ export const Button = ({
   bgColor,
 }) => {
   return (
-    <StyledButton
+    <CustomBtn
       onClick={onClick}
       textColor={textColor}
       borderColor={borderColor}
@@ -17,11 +17,11 @@ export const Button = ({
     >
       {text}
       {icon && <Icon src={icon} />}
-    </StyledButton>
+    </CustomBtn>
   );
 };
 
-const StyledButton = styled.button`
+const CustomBtn = styled.button`
   margin-top: 20px;
   display: flex;
   color: ${({ textColor }) => textColor || "#7fa3ff"};
