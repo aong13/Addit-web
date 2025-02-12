@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import useModalStore from "../store/useModalStore";
+import useModalStore from "../../store/useModalStore";
 import { getAllRelay, getTicklesData } from "../../apis/relayApi";
 import { handlePrevious, handleNext } from "../../utils/slideHandler";
 
