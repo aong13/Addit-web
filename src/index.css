@@ -32,3 +32,17 @@ img {
   height: auto; /* 비율을 유지하며 크기 변경 */
   max-width: 100%; /* 최대 너비를 100%로 제한 */
 }
+
+/* 버튼 및 클릭 가능한 영역에서 텍스트 선택 방지 */
+button, div {
+  -webkit-user-select: none; /* Chrome, Safari, Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* 최신 브라우저 */
+}
+
+/* 모바일 터치 시 파란색 하이라이트 제거 */
+button,
+a {
+  -webkit-tap-highlight-color: transparent; 
+}

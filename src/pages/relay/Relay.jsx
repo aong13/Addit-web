@@ -100,5 +100,7 @@ const NavButtons = styled.div`
     width: 50%;
     cursor: pointer;
     z-index: 2;
+    outline: none; //모바일 선택효과 제거
+    user-select: none;
   }
 `;
