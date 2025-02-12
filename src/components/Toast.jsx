@@ -54,7 +54,7 @@ const fadeOut = keyframes`
 
 const Container = styled.div`
   position: fixed;
-  top: 10%;
+  top: 60px;
   left: 0;
   width: 100%;
   height: 100%;

@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
 import TagInput from "../components/Input/TagInput";
+import useToastStore from "../store/useToastStore";
 
 const UploadRelay = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [tags, setTags] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false); // 버튼 중복 클릭 방지
+  const addToast = useToastStore((state) => state.addToast);
 
   const userImage = sessionStorage.getItem("userImage");
   const userName = sessionStorage.getItem("userName");
@@ -37,17 +40,36 @@ const UploadRelay = () => {
   };
 
   const handleNext = () => {
+    if (isSubmitting) return;
+
+    setTimeout(() => {
+      setIsSubmitting(false); // 1.5초 후해제
+    }, 1500);
+
+    setIsSubmitting(true); // 버튼 클릭 시, 제출 중 상태로 변경
+
+    if (!title.trim()) {
+      addToast("제목을 입력해주세요.");
+      return;
+    }
+
+    if (tags.length === 0) {
+      addToast("태그를 한 개 이상 입력해주세요.");
+      return;
+    }
+
+    // 다음 페이지로 이동
     navigate("/upload/tickle", {
       state: { title, tags, intro, fromNewRelay: true, fromUpload: true },
     });
   };
-
   return (
     <Container>
       <Header
         title={"릴레이 만들기"}
         buttonText="다음"
         onBtnClick={handleNext}
+        disabled={isSubmitting} // 버튼 비활성화 상태 전달
       />
       <FormContainer>
         <Input
@@ -67,6 +89,7 @@ const UploadRelay = () => {
     </Container>
   );
 };
+
 const Container = styled.div`
   position: relative;
   width: 100%;
