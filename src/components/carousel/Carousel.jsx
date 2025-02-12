@@ -29,13 +29,15 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
     focusOnSelect: true,
     beforeChange: (_, next) => {
       setIsSliding(true);
+      document.body.style.overflow = "hidden"; // 세로 스크롤 막기
       const nextRelayId = data[next]?.relay?.relayId;
       setFocusedRelayId(nextRelayId);
       onFocusChange(nextRelayId);
     },
-    afterChange: () => setIsSliding(false),
-    swipeToSlide: true,
-    touchMove: true,
+    afterChange: () => {
+      setIsSliding(false);
+      document.body.style.overflow = "auto"; // 세로 스크롤 복구
+    },
   };
 
   // 포커스된 캐러셀만 클릭 시 이동
@@ -66,4 +68,5 @@ export default Carousel;
 
 const CarouselContainer = styled.div`
   width: 100%;
+  overflow: hidden;
 `;
