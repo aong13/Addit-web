@@ -60,6 +60,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   z-index: 9999;
+  max-width: 90%;
 `;
 
 const ToastContainer = styled.div`
@@ -72,4 +73,5 @@ const ToastContainer = styled.div`
   animation: ${({ isVisible }) => (isVisible ? fadeIn : fadeOut)} 0.5s ease-out
     forwards;
   transition: opacity 0.5s ease-out;
+  white-space: nowrap;
 `;
