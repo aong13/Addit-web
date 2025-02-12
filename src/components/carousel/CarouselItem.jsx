@@ -9,26 +9,26 @@ const CarouselItem = ({
   handleItemClick,
 }) => {
   const selectedTickle =
-    item.tickle.find((tickle) => tickle.tickleId === selectedTickleId) ||
+    item?.tickle.find((tickle) => tickle.tickleId === selectedTickleId) ||
     item.tickle[0];
 
   return (
     <ImageWrapper
-      key={selectedTickle.tickleId}
+      key={selectedTickle?.tickleId}
       onClick={() =>
         handleItemClick(item.relay.relayId, selectedTickle.tickleId)
       }
     >
       <Thumbnail
-        src={selectedTickle.tickleImage || defaultProfileImg}
+        src={selectedTickle?.tickleImage || defaultProfileImg}
         alt="thumbnail"
       />
       <Overlay>
         <ProfileImg
-          src={selectedTickle.authorImage || defaultProfileImg}
+          src={selectedTickle?.authorImage || defaultProfileImg}
           alt="Profile Img"
         />
-        <Nickname>{selectedTickle.authorNickname || "No Name"}</Nickname>
+        <Nickname>{selectedTickle?.authorNickname || "No Name"}</Nickname>
       </Overlay>
     </ImageWrapper>
   );

@@ -9,7 +9,7 @@ const RelayHeader = ({ title }) => {
 
   const handleBack = () => {
     if (location.state?.fromUpload) {
-      navigate(-2); // 업로드의 경우 스택 두개 삭제
+      navigate(-3); // 업로드의 경우
     } else {
       navigate("/home");
     }
