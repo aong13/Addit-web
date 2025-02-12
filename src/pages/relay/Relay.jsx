@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getAllRelay, getTicklesData } from "../apis/relayApi";
-import { handlePrevious, handleNext } from "../utils/slideHandler";
 import useModalStore from "../store/useModalStore";
+import { getAllRelay, getTicklesData } from "../../apis/relayApi";
+import { handlePrevious, handleNext } from "../../utils/slideHandler";
 
 const Relay = () => {
   const [tickle, setTickle] = useState(null);

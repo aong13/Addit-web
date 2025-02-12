@@ -1,25 +1,42 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
 import cameraIcon from "../assets/icons/camera.svg";
 import deleteIcon from "../assets/icons/x_icon.svg";
-import TagInput from "../components/TagInput";
+import TagInput from "../components/Input/TagInput";
 import { addTickleData, postRelayData } from "../apis/relayApi";
 
 const UploadTickle = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { title, tags, intro, relayId } = location.state || {};
-  const userImage = "https://storage.googleapis.com/addit-prod/user_bear.jpg"; //임시
+  const { title, tags, intro, relayId, tickleId } = location.state || {};
+
+  const userImage = sessionStorage.getItem("userImage");
+  const userName = sessionStorage.getItem("userName");
+
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
+  useEffect(() => {
+    if (!userImage || !userName) {
+      navigate("/guest-login", {
+        state: {
+          fromUpload: true,
+          relayId,
+          tickleId,
+          title,
+          tags,
+        },
+        replace: true,
+      });
+    }
+  }, []);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(file); //파일저장
+      setImage(file);
     }
   };
 
@@ -29,6 +46,7 @@ const UploadTickle = () => {
       fileInputRef.current.value = "";
     }
   };
+
   const handleSubmit = async () => {
     const fromNewRelay = location.state?.fromNewRelay;
 
@@ -41,7 +59,7 @@ const UploadTickle = () => {
           tickleDescription: content,
           userImage,
           file: image,
-          userName: "미연결",
+          userName,
         };
 
         const response = await postRelayData(requestData);
@@ -49,7 +67,6 @@ const UploadTickle = () => {
         navigate(
           `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
           {
-            replace: true,
             state: { fromUpload: true },
           }
         );
@@ -59,7 +76,7 @@ const UploadTickle = () => {
           tickleDescription: content,
           userImage,
           file: image,
-          userName: "미연결",
+          userName,
         };
 
         const response = await addTickleData(tickleData);
@@ -67,7 +84,6 @@ const UploadTickle = () => {
         navigate(
           `/relay/${response.data.relayId}/tickle/${response.data.tickleId}`,
           {
-            replace: true,
             state: { fromUpload: true },
           }
         );

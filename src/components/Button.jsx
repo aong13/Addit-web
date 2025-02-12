@@ -1,29 +1,42 @@
 import styled from "styled-components";
 
-export const Button = ({ text, icon, onClick }) => {
+export const Button = ({
+  text,
+  icon,
+  onClick,
+  textColor,
+  borderColor,
+  bgColor,
+}) => {
   return (
-    <StyledButton onClick={onClick}>
+    <CustomBtn
+      onClick={onClick}
+      textColor={textColor}
+      borderColor={borderColor}
+      bgColor={bgColor}
+    >
       {text}
-      <Icon src={icon} />
-    </StyledButton>
+      {icon && <Icon src={icon} />}
+    </CustomBtn>
   );
 };
 
-const StyledButton = styled.button`
+const CustomBtn = styled.button`
   margin-top: 20px;
   display: flex;
-  color: #7fa3ff;
-  font-size: 12px;
+  color: ${({ textColor }) => textColor || "#7fa3ff"};
+  font-size: 14px;
   font-weight: 600;
-  padding: 10px 0;
-  background-color: transparent;
-  border: 1px solid #7fa3ff;
-  border-radius: 24px;
+  padding: 14px 40px;
+  background-color: ${({ bgColor }) => bgColor || "transparent"};
+
+  border: 1px solid ${({ borderColor }) => borderColor || "#7fa3ff"};
+  border-radius: 30px;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  width: 100%;
-  max-width: 200px;
+  min-width: 140px;
+  max-width: 240px;
 `;
 
 const Icon = styled.img`
