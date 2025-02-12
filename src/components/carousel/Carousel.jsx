@@ -34,6 +34,8 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
       onFocusChange(nextRelayId);
     },
     afterChange: () => setIsSliding(false),
+    swipeToSlide: true,
+    touchMove: true,
   };
 
   // 포커스된 캐러셀만 클릭 시 이동
