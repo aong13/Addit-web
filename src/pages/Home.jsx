@@ -17,25 +17,23 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const loadData = async () => {
-    try {
-      const response = await fetchHomeData(5);
-      setData(response.data.relaysWithTickles || []);
-      setFocusedRelayId(response.data.relaysWithTickles[0].relay.relayId);
-    } catch (error) {
-      console.error("fetchHomeData Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetchHomeData(5);
+        const relays = response.data.relaysWithTickles || [];
+        setData(relays);
+        setFocusedRelayId(relays[0]?.relay.relayId || null);
+      } catch (error) {
+        console.error("fetchHomeData Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadData();
   }, []);
-
-  if (loading) {
-    return <div></div>;
-  }
 
   const handleClick = () => {
     navigate("/upload/relay");
@@ -49,12 +47,14 @@ const Home = () => {
   const currentRelay = focusedRelayId
     ? data.find((relay) => relay.relay.relayId === focusedRelayId)
     : null;
+
   return (
     <Container>
       <Logo>
         <img src={logo} alt="Logo" />
       </Logo>
       <Tabbar>실시간</Tabbar>
+
       <Title>
         인기 태그
         <strong> #{currentRelay?.relay.tags[0]}</strong>
@@ -65,16 +65,25 @@ const Home = () => {
         data={data}
         onFocusChange={setFocusedRelayId}
         selectedTickleId={selectedTickleId}
+        isLoading={loading}
       />
-      <ContentTitle>{currentRelay?.relay.title}</ContentTitle>
-      <Collaborators
-        count={currentRelay?.relay.totalTickleCount}
-        images={currentRelay?.relay.contributorImages}
-      />
+
+      {currentRelay && (
+        <>
+          <ContentTitle>{currentRelay.relay.title}</ContentTitle>
+          <Collaborators
+            count={currentRelay.relay.totalTickleCount}
+            images={currentRelay.relay.contributorImages}
+            isLoading={loading}
+          />
+        </>
+      )}
+
       <BottomSection>
         <ImageRowGrid
-          data={currentRelay?.tickle}
+          data={currentRelay?.tickle || []}
           onImageSelect={handleImageSelect}
+          isLoading={loading}
         />
         <Text>새롭게 릴레이를 추가해보세요!</Text>
         <Button text="릴레이 만들기" icon={plusIcon} onClick={handleClick} />
@@ -93,15 +102,17 @@ const Container = styled.div`
   padding-top: 30px;
   width: 100%;
   min-height: 100vh;
+  position: relative;
 `;
+
 const BottomSection = styled.div`
   width: 100%;
-  margin-top: 20px;
   background-color: #e7edff;
   padding: 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: auto;
 `;
 
 const Logo = styled.div`

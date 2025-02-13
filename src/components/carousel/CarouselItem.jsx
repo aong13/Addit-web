@@ -22,11 +22,13 @@ const CarouselItem = ({
       <Thumbnail
         src={selectedTickle?.tickleImage || defaultProfileImg}
         alt="thumbnail"
+        loading="lazy"
       />
       <Overlay>
         <ProfileImg
           src={selectedTickle?.authorImage || defaultProfileImg}
           alt="Profile Img"
+          loading="lazy"
         />
         <Nickname>{selectedTickle?.authorNickname}</Nickname>
       </Overlay>
