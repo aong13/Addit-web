@@ -50,7 +50,7 @@ const DescriptionText = styled.p`
   left: 50%; /* 화면의 가로 가운데 */
   transform: translateX(-50%); /* 정확한 중앙 위치 */
   padding: 20px;
-  padding-bottom: 30px;
+  padding-bottom: 40px;
   background: #ffffff;
   border-radius: 5px;
   font-size: 12px;
