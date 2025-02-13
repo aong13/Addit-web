@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const SelectableImageGrid = ({ data, onImageSelect }) => {
+const ImageRowGrid = ({ data, onImageSelect }) => {
   const [imgSrc, setImgSrc] = useState(null); // 기본 이미지 없음
 
   const renderItem = (item) => (
@@ -13,7 +13,7 @@ const SelectableImageGrid = ({ data, onImageSelect }) => {
   return <GridWrapper>{data?.map(renderItem)}</GridWrapper>;
 };
 
-export default SelectableImageGrid;
+export default ImageRowGrid;
 
 const GridWrapper = styled.div`
   width: 100%;

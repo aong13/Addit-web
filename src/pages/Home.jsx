@@ -95,6 +95,7 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 const BottomSection = styled.div`
+  width: 100%;
   margin-top: 20px;
   background-color: #e7edff;
   padding: 20px 10px;
