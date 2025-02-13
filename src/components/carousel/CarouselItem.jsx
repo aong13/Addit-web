@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import defaultProfileImg from "../../assets/default_profile_temp.png";
+import defaultThumbnail from "../../assets/icons/error_img.png";
 
 const CarouselItem = ({
   item,
@@ -20,7 +21,7 @@ const CarouselItem = ({
       }
     >
       <Thumbnail
-        src={selectedTickle?.tickleImage || defaultProfileImg}
+        src={selectedTickle?.tickleImage || defaultThumbnail}
         alt="thumbnail"
         loading="lazy"
       />
