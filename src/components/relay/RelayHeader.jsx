@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import backIcon from "../../assets/icons/arrow_back_white.svg";
+import Description from "./Description"
 
-const RelayHeader = ({ title }) => {
+const RelayHeader = ({ title, description }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,6 +22,7 @@ const RelayHeader = ({ title }) => {
         <img src={backIcon} alt="backIcon" />
       </BackButton>
       <Title>{title}</Title>
+      <Description description={description}></Description>
     </HeaderContainer>
   );
 };

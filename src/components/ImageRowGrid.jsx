@@ -10,7 +10,7 @@ const SelectableImageGrid = ({ data, onImageSelect }) => {
     </ImageItem>
   );
 
-  return <GridWrapper>{data.map(renderItem)}</GridWrapper>;
+  return <GridWrapper>{data?.map(renderItem)}</GridWrapper>;
 };
 
 export default SelectableImageGrid;
