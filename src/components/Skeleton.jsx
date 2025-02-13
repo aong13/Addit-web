@@ -1,23 +1,41 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-const SkeletonBox = styled.div`
-  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+// 공통 shimmer 애니메이션 정의
+const shimmerAnimation = keyframes`
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+`;
+
+export const SkeletonBox = styled.div`
+  background-color: #e0e0e0;
+  position: relative;
+  overflow: hidden;
   border-radius: ${(props) => props.radius || "4px"};
   width: ${(props) => props.width || "100%"};
-  height: ${(props) => props.height || "20px"};
+  height: ${(props) => props.height || "auto"};
   aspect-ratio: ${(props) => props.aspectRatio || "9 / 16"};
   margin: 8px 0;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  animation: ${shimmerAnimation} 1.2s infinite linear;
 
-  @keyframes shimmer {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 75%
+    );
+    animation: ${shimmerAnimation} 1.2s infinite linear;
   }
 `;
 

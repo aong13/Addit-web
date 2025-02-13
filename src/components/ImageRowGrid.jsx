@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import styled from "styled-components";
+import { SkeletonBox } from "./Skeleton";
 
-const ImageRowGrid = ({ data, onImageSelect }) => {
-  const [imgSrc, setImgSrc] = useState(null); // 기본 이미지 없음
+const ImageRowGrid = memo(({ data, onImageSelect }) => {
+  const [imgSrc, setImgSrc] = useState(null);
 
   const renderItem = (item) => (
     <ImageItem onClick={() => onImageSelect(item.tickleId)} isError={!imgSrc}>
@@ -10,8 +11,16 @@ const ImageRowGrid = ({ data, onImageSelect }) => {
     </ImageItem>
   );
 
-  return <GridWrapper>{data?.map(renderItem)}</GridWrapper>;
-};
+  return (
+    <GridWrapper>
+      {data?.length === 0
+        ? Array.from({ length: 5 }).map((_, index) => (
+            <SkeletonBox key={index} width="calc(20% - 6px)" />
+          ))
+        : data?.map((item, index) => renderItem(item, index))}
+    </GridWrapper>
+  );
+});
 
 export default ImageRowGrid;
 
@@ -37,7 +46,7 @@ const ImageItem = styled.div`
 
   img {
     border-radius: 8px;
-    aspect-ratio: 9 / 16; /* 이미지 비율 유지 */
+    aspect-ratio: 9 / 16;
     object-fit: cover;
     width: 100%;
     height: auto;
