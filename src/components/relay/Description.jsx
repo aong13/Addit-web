@@ -55,6 +55,7 @@ const DescriptionText = styled.p`
   border-radius: 5px;
   font-size: 12px;
   font-weight: 500;
+  line-height: 1.2;
   color: #5F5959;
   width: 252px; /* 고정 너비 */
   white-space: pre-wrap; /* 텍스트 줄바꿈 허용 */
