@@ -134,6 +134,16 @@ const UploadTickle = () => {
         </TitleInputWrapper>
         <TagInput tags={tags} editMode={false} />
         <ContentContainer>
+          <CharCount>({content.length}/30)</CharCount>
+          <TextArea
+            value={content}
+            placeholder="비하인드 스토리 사진을 공유해보세요!"
+            onChange={(e) => {
+              if (e.target.value.length <= 30) {
+                setContent(e.target.value);
+              }
+            }}
+          />
           {image && (
             <ImageWrapper>
               <ImgWithBlur imageSrc={URL.createObjectURL(image)} />
@@ -145,16 +155,6 @@ const UploadTickle = () => {
               />
             </ImageWrapper>
           )}
-          <CharCount>({content.length}/30)</CharCount>
-          <TextArea
-            value={content}
-            placeholder="비하인드 스토리 사진을 공유해보세요!"
-            onChange={(e) => {
-              if (e.target.value.length <= 30) {
-                setContent(e.target.value);
-              }
-            }}
-          />
         </ContentContainer>
       </FormContainer>
     </Container>
@@ -191,13 +191,12 @@ const Input = styled.input`
 `;
 
 const TextArea = styled.textarea`
-  padding: 10px;
+  min-height: 50px;
   font-size: 16px;
   font-family: Pretendard;
   border: none;
   outline: none;
   resize: none;
-  min-height: 100px;
 `;
 
 const TitleInputWrapper = styled.div`
@@ -235,6 +234,7 @@ const ImageWrapper = styled.div`
 `;
 
 const RemoveButton = styled.img`
+  z-index: 5;
   position: absolute;
   top: 0px;
   right: 0px;
@@ -248,5 +248,6 @@ const CharCount = styled.p`
   font-size: 12px;
   color: #333;
   text-align: right;
+  margin: 0 0 10px;
 `;
 export default UploadTickle;

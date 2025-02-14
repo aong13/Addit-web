@@ -85,7 +85,7 @@ const Home = () => {
           onImageSelect={handleImageSelect}
           isLoading={loading}
         />
-        <Text>새롭게 릴레이를 추가해보세요!</Text>
+        <p>새롭게 릴레이를 추가해보세요!</p>
         <Button text="릴레이 만들기" icon={plusIcon} onClick={handleClick} />
         <CopyRight>copyright 2025. Addit. All rights reserved Pozzle</CopyRight>
       </BottomSection>
@@ -107,12 +107,19 @@ const Container = styled.div`
 
 const BottomSection = styled.div`
   width: 100%;
-  background-color: #e7edff;
+  background-color: rgb(231, 237, 255);
   padding: 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: auto;
+  p {
+    color: #7fa3ff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 50px;
+  }
 `;
 
 const Logo = styled.div`
@@ -149,15 +156,7 @@ const ContentTitle = styled.h1`
   margin: 18px 0;
 `;
 
-const Text = styled.p`
-  margin-top: 20px;
-  color: #7fa3ff;
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-`;
-
-const CopyRight = styled.p`
+const CopyRight = styled.span`
   color: #7fa3ff;
   font-size: 10px;
   margin-top: 50px;

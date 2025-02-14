@@ -7,14 +7,14 @@ import useToastStore from "../store/useToastStore";
 import { handleRedirect } from "../utils/redirect";
 
 const Menu = ({ content, color, onClick, disabled }) => (
-  <MenuContainer
+  <MenuItem
     color={color}
     onClick={disabled ? (e) => e.stopPropagation() : onClick} // 1초 동안 클릭을 막음
     disabled={disabled}
   >
     {content}
     <img src={goIcon} alt="icon" />
-  </MenuContainer>
+  </MenuItem>
 );
 
 const Modal = () => {
@@ -152,11 +152,12 @@ const Logo = styled.img`
   width: 80px;
 `;
 
-const MenuContainer = styled.div`
+const MenuItem = styled.div`
   background: ${({ color }) => color || "white"};
   padding: 16px 20px;
   border-radius: 10px;
-  min-width: 300px;
+  min-width: 190px;
+  max-width: 80%;
   cursor: "pointer";
   font-weight: 600;
   color: #545454;

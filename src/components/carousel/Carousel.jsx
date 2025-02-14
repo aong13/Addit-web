@@ -5,7 +5,7 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CarouselItem from "./CarouselItem";
-import { SkeletonCarouselItem } from "../Skeleton"; // 스켈레톤 컴포넌트 import
+import { SkeletonCarouselItem } from "../Skeleton";
 
 const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
   const [isSliding, setIsSliding] = useState(false);
@@ -50,8 +50,7 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
     <CarouselContainer>
       <Slider {...settings}>
         {data.length === 0
-          ? // 데이터가 없을 때 스켈레톤을 보여줌
-            Array.from({ length: 5 }).map((_, idx) => (
+          ? Array.from({ length: 5 }).map((_, idx) => (
               <SkeletonCarouselItem key={idx} />
             ))
           : data?.map((relay) => (

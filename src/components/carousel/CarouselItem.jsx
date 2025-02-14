@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import defaultProfileImg from "../../assets/default_profile_temp.png";
-
 import ImgWithBlur from "../common/ImgWithBlur";
 
 const CarouselItem = ({ item, selectedTickleId, handleItemClick }) => {
@@ -22,7 +21,6 @@ const CarouselItem = ({ item, selectedTickleId, handleItemClick }) => {
         <ProfileImg
           src={selectedTickle?.authorImage || defaultProfileImg}
           alt="Profile Img"
-          loading="lazy"
         />
         <Nickname>{selectedTickle?.authorNickname}</Nickname>
       </Overlay>

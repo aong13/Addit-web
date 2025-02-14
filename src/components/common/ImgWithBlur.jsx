@@ -13,7 +13,6 @@ const ImgWithBlur = ({ imageSrc }) => {
     }
   }, [imageSrc]);
 
-  //로딩상태
   if (fillBlur === null) {
     return <Thumbnail className="loading" />;
   }
@@ -24,13 +23,13 @@ const ImgWithBlur = ({ imageSrc }) => {
         src={imageSrc}
         alt="thumbnail"
         $fill={fillBlur}
-        loading="lazy"
+        // loading="lazy"
       />
       {!fillBlur && (
         <BlurBackground
           src={imageSrc}
           alt="blurred background"
-          loading="lazy"
+          //   loading="lazy"
         />
       )}
     </>
@@ -41,10 +40,10 @@ export default ImgWithBlur;
 
 const BlurBackground = styled.img`
   position: absolute;
-  width: 120%;
+  width: 150%;
   height: 130%;
   object-fit: cover;
-  filter: blur(14px) brightness(0.7);
+  filter: blur(12px) brightness(0.9);
   overflow: visible;
 `;
 
