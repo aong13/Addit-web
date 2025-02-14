@@ -145,10 +145,15 @@ const UploadTickle = () => {
               />
             </ImageWrapper>
           )}
+          <CharCount>({content.length}/30)</CharCount>
           <TextArea
             value={content}
             placeholder="비하인드 스토리 사진을 공유해보세요!"
-            onChange={(e) => setContent(e.target.value)} // useRelayStore 상태 업데이트
+            onChange={(e) => {
+              if (e.target.value.length <= 30) {
+                setContent(e.target.value);
+              }
+            }}
           />
         </ContentContainer>
       </FormContainer>
@@ -215,7 +220,7 @@ const HiddenFileInput = styled.input`
 `;
 
 const ContentContainer = styled.div`
-  padding: 20px;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
 `;
@@ -239,4 +244,9 @@ const RemoveButton = styled.img`
   background: #ffffff80;
 `;
 
+const CharCount = styled.p`
+  font-size: 12px;
+  color: #333;
+  text-align: right;
+`;
 export default UploadTickle;

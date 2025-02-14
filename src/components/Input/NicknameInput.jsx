@@ -73,7 +73,6 @@ const StyledInput = styled.input`
 
 const CharCount = styled.div`
   font-size: 12px;
-  color: #666;
   margin-top: 5px;
   color: white;
 `;
