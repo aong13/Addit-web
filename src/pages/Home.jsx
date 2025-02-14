@@ -78,7 +78,7 @@ const Home = () => {
           />
         </>
       )}
-
+      <div style={{ height: "20px" }} />
       <BottomSection>
         <ImageRowGrid
           data={currentRelay?.tickle || []}
