@@ -43,6 +43,6 @@ button, div {
 
 /* 모바일 터치 시 파란색 하이라이트 제거 */
 button,
-a {
+a, div{
   -webkit-tap-highlight-color: transparent; 
 }
