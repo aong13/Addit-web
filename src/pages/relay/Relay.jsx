@@ -3,7 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useModalStore from "../../store/useModalStore";
 import { getAllRelay, getTicklesData } from "../../apis/relayApi";
-import { handlePrevious, handleNext } from "../../utils/slideHandler";
+import {
+  handlePrevious,
+  handleNext,
+  calculateImgRatio,
+} from "../../utils/relayUtils";
+import ImgWithBlur from "../../components/common/ImgWithBlur";
 
 const Relay = () => {
   const [tickle, setTickle] = useState(null);
@@ -39,14 +44,10 @@ const Relay = () => {
     }
   }, [relayId, tickleId]);
 
-  if (!tickle) {
-    return <></>;
-  }
-
   return (
     <Container>
       <ImageWrapper>
-        <TickleImage src={tickle?.tickleImage} alt="Tickle" />
+        <ImgWithBlur imageSrc={tickle?.tickleImage} />
       </ImageWrapper>
       <NavButtons>
         <button
@@ -81,12 +82,6 @@ const ImageWrapper = styled.div`
   justify-content: center;
 `;
 
-const TickleImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
 const NavButtons = styled.div`
   position: absolute;
   display: flex;
@@ -100,7 +95,14 @@ const NavButtons = styled.div`
     width: 50%;
     cursor: pointer;
     z-index: 2;
-    outline: none; //모바일 선택효과 제거
     user-select: none;
   }
+`;
+
+const BlurBackground = styled.img`
+  position: absolute;
+  width: 130%;
+  height: 130%;
+  object-fit: cover;
+  filter: blur(10px) brightness(0.7);
 `;

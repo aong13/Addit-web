@@ -4,7 +4,7 @@ import Carousel from "../components/carousel/Carousel";
 import Collaborators from "../components/Collaborators";
 import ImageRowGrid from "../components/ImageRowGrid";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../components/Button";
+import { Button } from "../components/common/Button";
 import { fetchHomeData } from "../apis/homeApi";
 import logo from "../assets/logo.svg";
 import plusIcon from "../assets/icons/plus_blue.svg";

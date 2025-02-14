@@ -30,14 +30,12 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
     focusOnSelect: true,
     beforeChange: (_, next) => {
       setIsSliding(true);
-      document.body.style.overflow = "hidden"; // 세로 스크롤 막기
       const nextRelayId = data[next]?.relay?.relayId;
       setFocusedRelayId(nextRelayId);
       onFocusChange(nextRelayId);
     },
     afterChange: () => {
       setIsSliding(false);
-      document.body.style.overflow = "auto"; // 세로 스크롤 복구
     },
   };
 

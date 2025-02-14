@@ -13,3 +13,12 @@ export const handleNext = (allRelay, tickleId, relayId, navigate) => {
     navigate(`/relay/${relayId}/tickle/${nextTickleId}`);
   }
 };
+
+export const calculateImgRatio = (imageUrl, callback) => {
+  const img = new Image();
+  img.src = imageUrl;
+  img.onload = () => {
+    const ratio = img.width / img.height;
+    callback(ratio);
+  };
+};
