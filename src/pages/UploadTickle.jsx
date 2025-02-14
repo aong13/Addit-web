@@ -224,7 +224,7 @@ const ImageWrapper = styled.div`
   margin: 10px;
   position: relative;
   display: inline-block;
-  width: 4cqb;
+  width: 40%;
   aspect-ratio: 9 / 16;
   overflow: hidden;
 `;
