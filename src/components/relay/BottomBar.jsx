@@ -5,12 +5,15 @@ import HeartBtn from "./HeartBtn";
 import askIcon from "../../assets/icons/bubble.svg";
 import plusIcon from "../../assets/icons/plus.svg";
 import useRelayStore from "../../store/useRelayStore"; // zustand store import
+import { handleRedirect } from "../../utils/redirect";
+import useModalStore from "../../store/useModalStore";
 
 const BottomBar = ({ relayData }) => {
   const navigate = useNavigate();
   const [isPlusBtnActive, setIsPlusBtnActive] = useState(false);
   const [isAskBtnActive, setIsAskBtnActive] = useState(false);
   const setRelayData = useRelayStore((state) => state.setRelayData);
+  const { openModal } = useModalStore();
 
   const handlePlusClick = () => {
     useRelayStore.getState().resetAll();
@@ -24,7 +27,9 @@ const BottomBar = ({ relayData }) => {
     navigate(`/upload/tickle`, {});
   };
 
-  const handleAskClick = () => {};
+  const handleAskClick = () => {
+    openModal();
+  };
 
   return (
     <BottomContainer>

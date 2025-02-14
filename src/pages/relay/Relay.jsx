@@ -3,11 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useModalStore from "../../store/useModalStore";
 import { getAllRelay, getTicklesData } from "../../apis/relayApi";
-import {
-  handlePrevious,
-  handleNext,
-  calculateImgRatio,
-} from "../../utils/relayUtils";
+import { handlePrevious, handleNext } from "../../utils/relayUtils";
 import ImgWithBlur from "../../components/common/ImgWithBlur";
 
 const Relay = () => {

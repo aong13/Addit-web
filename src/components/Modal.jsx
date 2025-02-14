@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import useModalStore from "../store/useModalStore";
 import logo from "../assets/logo_white.svg";
@@ -14,8 +14,17 @@ const Menu = ({ content, color, onClick }) => (
 );
 
 const Modal = () => {
-  const { isOpen, closeModal } = useModalStore();
   const addToast = useToastStore((state) => state.addToast);
+  const { isOpen, closeModal } = useModalStore();
+  const [isModalActive, setIsModalActive] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsModalActive(true);
+      const timer = setTimeout(() => setIsModalActive(false), 1000); //1초
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -42,14 +51,27 @@ const Modal = () => {
         ),
     },
     {
-      content: "공유링크 복사하기",
+      content: "문의하기",
       color: "#FFF08F",
+      onclick: () => handleRedirect("http://pf.kakao.com/_xbxlvsn"),
+    },
+    {
+      content: "공유링크 복사하기",
+      color: "#ffe32c",
       onclick: copyToClipboard,
     },
   ];
 
+  const handleOverlayClick = (e) => {
+    if (isModalActive) {
+      e.stopPropagation();
+    } else {
+      closeModal();
+    }
+  };
+
   return (
-    <Overlay onClick={closeModal}>
+    <Overlay onClick={handleOverlayClick}>
       <Title>★★★★★</Title>
       <TitleWrapper>
         <Logo src={logo} alt="logo" />
