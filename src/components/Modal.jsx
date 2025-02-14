@@ -6,8 +6,12 @@ import goIcon from "../assets/icons/arrow_box.svg";
 import useToastStore from "../store/useToastStore";
 import { handleRedirect } from "../utils/redirect";
 
-const Menu = ({ content, color, onClick }) => (
-  <MenuContainer color={color} onClick={onClick}>
+const Menu = ({ content, color, onClick, disabled }) => (
+  <MenuContainer
+    color={color}
+    onClick={disabled ? (e) => e.stopPropagation() : onClick} // 1초 동안 클릭을 막음
+    disabled={disabled}
+  >
     {content}
     <img src={goIcon} alt="icon" />
   </MenuContainer>
@@ -17,11 +21,17 @@ const Modal = () => {
   const addToast = useToastStore((state) => state.addToast);
   const { isOpen, closeModal } = useModalStore();
   const [isModalActive, setIsModalActive] = useState(false);
+  const [isMenuDisabled, setIsMenuDisabled] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       setIsModalActive(true);
-      const timer = setTimeout(() => setIsModalActive(false), 1000); //1초
+      setIsMenuDisabled(true); // 메뉴 클릭 비활성화
+      const timer = setTimeout(() => {
+        setIsModalActive(false);
+        setIsMenuDisabled(false); // 1초 후 메뉴 클릭 활성화
+      }, 1000); // 1초
+
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
@@ -80,7 +90,13 @@ const Modal = () => {
       <Subtitle>여러분들의 소중한 의견이 필요합니다.</Subtitle>
 
       {menuItems.map(({ content, color, onclick }, index) => (
-        <Menu key={index} content={content} color={color} onClick={onclick} />
+        <Menu
+          key={index}
+          content={content}
+          color={color}
+          onClick={onclick}
+          disabled={isMenuDisabled}
+        />
       ))}
     </Overlay>
   );
@@ -141,7 +157,7 @@ const MenuContainer = styled.div`
   padding: 16px 20px;
   border-radius: 10px;
   min-width: 300px;
-  cursor: pointer;
+  cursor: "pointer";
   font-weight: 600;
   color: #545454;
   display: flex;
@@ -152,6 +168,7 @@ const MenuContainer = styled.div`
     width: 24px;
     height: 24px;
   }
+
   &:hover {
     filter: brightness(0.6);
   }
