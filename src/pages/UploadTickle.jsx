@@ -8,6 +8,7 @@ import TagInput from "../components/Input/TagInput";
 import { addTickleData, postRelayData } from "../apis/relayApi";
 import useToastStore from "../store/useToastStore";
 import useRelayStore from "../store/useRelayStore";
+import ImgWithBlur from "../components/common/ImgWithBlur";
 
 const UploadTickle = () => {
   const location = useLocation();
@@ -135,10 +136,8 @@ const UploadTickle = () => {
         <ContentContainer>
           {image && (
             <ImageWrapper>
-              <PreviewImage
-                src={URL.createObjectURL(image)}
-                alt="미리보기 이미지"
-              />
+              <ImgWithBlur imageSrc={URL.createObjectURL(image)} />
+
               <RemoveButton
                 src={deleteIcon}
                 alt="delete"
@@ -225,14 +224,9 @@ const ImageWrapper = styled.div`
   margin: 10px;
   position: relative;
   display: inline-block;
-  width: 30%;
+  width: 4cqb;
   aspect-ratio: 9 / 16;
-`;
-
-const PreviewImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  overflow: hidden;
 `;
 
 const RemoveButton = styled.img`

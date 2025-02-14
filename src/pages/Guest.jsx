@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import logoIcon from "../assets/logo_white.svg";
 import BackIcon from "../assets/icons/arrow_back_white.svg";
-import { Button } from "../components/Button";
+import { Button } from "../components/common/Button";
 import RandomProfile from "../components/RandomProfile";
 import { NickNameInput } from "../components/Input/NicknameInput";
 import { generateRandomName } from "../utils/nickname";

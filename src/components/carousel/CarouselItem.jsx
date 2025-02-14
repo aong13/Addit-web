@@ -1,14 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import defaultProfileImg from "../../assets/default_profile_temp.png";
-import defaultThumbnail from "../../assets/icons/error_img.png";
 
-const CarouselItem = ({
-  item,
-  selectedTickleId,
-  focusedRelayId,
-  handleItemClick,
-}) => {
+import ImgWithBlur from "../common/ImgWithBlur";
+
+const CarouselItem = ({ item, selectedTickleId, handleItemClick }) => {
   const selectedTickle =
     item?.tickle.find((tickle) => tickle.tickleId === selectedTickleId) ||
     item.tickle[0];
@@ -20,11 +16,8 @@ const CarouselItem = ({
         handleItemClick(item.relay.relayId, selectedTickle.tickleId)
       }
     >
-      <Thumbnail
-        src={selectedTickle?.tickleImage || defaultThumbnail}
-        alt="thumbnail"
-        loading="lazy"
-      />
+      <ImgWithBlur imageSrc={selectedTickle?.tickleImage} />
+
       <Overlay>
         <ProfileImg
           src={selectedTickle?.authorImage || defaultProfileImg}
@@ -40,22 +33,23 @@ const CarouselItem = ({
 export default CarouselItem;
 
 const ImageWrapper = styled.div`
+  margin: 8px 0; //그림자 안가리게
   cursor: pointer;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  opacity: 1;
   outline: none;
-
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
   .slick-slide:not(.slick-center) & {
     transform: scale(0.8);
     opacity: 0.9;
   }
-
-  &:hover img {
-    filter: brightness(0.8);
+  &:hover {
+    filter: brightness(0.6);
     transition: filter 0.3s ease;
   }
 `;
@@ -69,15 +63,7 @@ const Overlay = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-const Thumbnail = styled.img`
-  width: 100%;
-  object-fit: cover;
-  border-radius: 15px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
-  margin: 8px 0px;
-  aspect-ratio: 9 / 16;
+  z-index: 2;
 `;
 
 const ProfileImg = styled.img`
@@ -94,4 +80,5 @@ const Nickname = styled.span`
   font-weight: 600;
   color: #eee;
   text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+  z-index: 2;
 `;

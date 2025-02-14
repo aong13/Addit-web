@@ -25,28 +25,28 @@ const Modal = () => {
   };
 
   const menuItems = [
-  {
-    content: "설문 참여해주기",
-    color: "#7FA3FF",
-    onclick: () =>
-      handleRedirect(
-        "https://docs.google.com/forms/d/15_bHgcSYlwX-Ea7J7EjP6YErvB1S2H9PJSxOC2hrikg/edit"
-      ),
-  },
-  {
-    content: "사전예약 신청하기",
-    color: "#C8D8FF",
-    onclick: () =>
-      handleRedirect(
-        "https://docs.google.com/forms/d/1OtuYbJGoAlU44sendN5Auym8F04VhF0TrBbN6QDeW9U/edit"
-      ),
-  },
-  {
-    content: "공유링크 복사하기",
-    color: "#FFF08F",
-    onclick: copyToClipboard,
-  },
-];
+    {
+      content: "설문 참여해주기",
+      color: "#7FA3FF",
+      onclick: () =>
+        handleRedirect(
+          "https://docs.google.com/forms/d/15_bHgcSYlwX-Ea7J7EjP6YErvB1S2H9PJSxOC2hrikg/edit"
+        ),
+    },
+    {
+      content: "사전예약 신청하기",
+      color: "#C8D8FF",
+      onclick: () =>
+        handleRedirect(
+          "https://docs.google.com/forms/d/1OtuYbJGoAlU44sendN5Auym8F04VhF0TrBbN6QDeW9U/edit"
+        ),
+    },
+    {
+      content: "공유링크 복사하기",
+      color: "#FFF08F",
+      onclick: copyToClipboard,
+    },
+  ];
 
   return (
     <Overlay onClick={closeModal}>
@@ -58,12 +58,7 @@ const Modal = () => {
       <Subtitle>여러분들의 소중한 의견이 필요합니다.</Subtitle>
 
       {menuItems.map(({ content, color, onclick }, index) => (
-        <Menu
-          key={index}
-          content={content}
-          color={color}
-          onClick={() => onclick}
-        />
+        <Menu key={index} content={content} color={color} onClick={onclick} />
       ))}
     </Overlay>
   );

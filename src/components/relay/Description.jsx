@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import descriptionIcon from "../../assets/icons/description.svg";
 import closeIcon from "../../assets/icons/close.svg";
 
@@ -26,6 +26,28 @@ const Description = ({ description }) => {
     </Container>
   );
 };
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+`;
 
 const Container = styled.div`
   display: flex;
@@ -56,7 +78,7 @@ const DescriptionText = styled.p`
   font-size: 12px;
   font-weight: 500;
   line-height: 1.2;
-  color: #5F5959;
+  color: #5f5959;
   width: 252px; /* 고정 너비 */
   white-space: pre-wrap; /* 텍스트 줄바꿈 허용 */
   word-wrap: break-word; /* 긴 단어가 넘치지 않도록 줄바꿈 */
@@ -74,6 +96,5 @@ const CloseButton = styled.button`
   border: none;
   cursor: pointer;
 `;
-
 
 export default Description;
