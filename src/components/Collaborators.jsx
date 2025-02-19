@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import defaultProfileImg from "../assets/default_profile_temp.png";
+import defaultProfileImg from "../assets/default_profile.png";
 
 const Collaborators = ({ images = [], count }) => {
   return (

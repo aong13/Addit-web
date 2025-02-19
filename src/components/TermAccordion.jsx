@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import downIcon from "../assets/icons/arrow_down.svg";
+import downIcon from "../assets/icons/arrow_toggle_down.svg";
 
 const TermAccordion = ({ onAgreeChange }) => {
   const [isOpen, setIsOpen] = useState(false);

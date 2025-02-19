@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
 import cameraIcon from "../assets/icons/camera.svg";
-import deleteIcon from "../assets/icons/x_icon.svg";
+import deleteIcon from "../assets/icons/x_grey.svg";
 import TagInput from "../components/Input/TagInput";
 import { addTickleData, postRelayData } from "../apis/relayApi";
 import useToastStore from "../store/useToastStore";

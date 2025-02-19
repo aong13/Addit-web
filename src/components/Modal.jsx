@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import useModalStore from "../store/useModalStore";
 import logo from "../assets/logo_white.svg";
-import goIcon from "../assets/icons/arrow_box.svg";
+import goIcon from "../assets/icons/arrow_go.svg";
 import useToastStore from "../store/useToastStore";
 import { handleRedirect } from "../utils/redirect";
 

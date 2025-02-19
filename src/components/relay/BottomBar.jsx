@@ -6,7 +6,7 @@ import askIcon from "../../assets/icons/bubble.svg";
 import plusIcon from "../../assets/icons/plus.svg";
 import useRelayStore from "../../store/useRelayStore";
 import useModalStore from "../../store/useModalStore";
-import defaultImg from "../../assets/default_profile_temp.png";
+import defaultImg from "../../assets/default_profile.png";
 const BottomBar = ({ relayData }) => {
   const navigate = useNavigate();
   const [isPlusBtnActive, setIsPlusBtnActive] = useState(false);
