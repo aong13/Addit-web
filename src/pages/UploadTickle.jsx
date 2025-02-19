@@ -106,6 +106,7 @@ const UploadTickle = () => {
       useRelayStore.getState().resetAll(); // 상태 초기화
     } catch (error) {
       console.error("데이터 전송 실패:", error);
+      addToast("업로드에 실패했습니다.");
     } finally {
       setIsSubmitting(false); // 버튼 활성화
     }

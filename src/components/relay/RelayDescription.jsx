@@ -36,19 +36,20 @@ const fadeOut = keyframes`
 `;
 
 const Container = styled.div`
-  width: 60%;
-  position: fixed;
+  position: absolute;
   top: 70px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
-  align-items: right;
+  align-items: center;
   z-index: 9999;
-  visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
+  width: 100%;
 `;
 
 const DescContainer = styled.div`
+  box-sizing: border-box;
+  width: 80%;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
@@ -57,7 +58,8 @@ const DescContainer = styled.div`
   animation: ${({ isVisible }) => (isVisible ? fadeIn : fadeOut)} 0.5s ease-out;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-  white-space: pre-wrap;
+  visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
+  word-break: break-word; /* 긴 단어 자동 줄바꿈 */
 `;
 
 const CloseButton = styled.button`
