@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import styled from "styled-components";
@@ -14,21 +14,24 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
 
   useEffect(() => {
     if (data.length > 0) {
-      const initialRelayId = data[0]?.relay?.relayId;
+      const initialRelayId =
+        data.length === 3 ? data[1]?.relay?.relayId : data[0]?.relay?.relayId;
       setFocusedRelayId(initialRelayId);
       onFocusChange(initialRelayId);
     }
   }, [data, onFocusChange]);
 
   const settings = {
-    infinite: true,
+    infinite: data.length > 3,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: Math.min(3, data.length),
     slidesToScroll: 1,
-    centerMode: true,
+    centerMode: data.length > 3,
     centerPadding: "0px",
     focusOnSelect: true,
     beforeChange: (_, next) => {
+      if (data.length < 3) return;
+
       setIsSliding(true);
       const nextRelayId = data[next]?.relay?.relayId;
       setFocusedRelayId(nextRelayId);
@@ -39,13 +42,11 @@ const Carousel = ({ data = [], onFocusChange, selectedTickleId }) => {
     },
   };
 
-  // 포커스된 캐러셀만 클릭 시 이동
   const handleItemClick = (relayId, tickleId) => {
-    if (!isSliding && relayId === focusedRelayId) {
+    if (!isSliding && (data.length <= 3 || relayId === focusedRelayId)) {
       navigate(`/relay/${relayId}/tickle/${tickleId}`);
     }
   };
-
   return (
     <CarouselContainer>
       <Slider {...settings}>
