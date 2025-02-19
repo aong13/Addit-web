@@ -238,8 +238,9 @@ const RemoveButton = styled.img`
   position: absolute;
   top: 0px;
   right: 0px;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
+  padding: 4px;
   cursor: pointer;
   background: #ffffff80;
 `;

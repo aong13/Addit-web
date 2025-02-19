@@ -40,7 +40,7 @@ export default ImgWithBlur;
 
 const BlurBackground = styled.img`
   position: absolute;
-  width: 150%;
+  width: 130%;
   height: 130%;
   object-fit: cover;
   filter: blur(12px) brightness(0.9);
