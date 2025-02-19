@@ -107,6 +107,8 @@ const UploadTickle = () => {
     } catch (error) {
       console.error("데이터 전송 실패:", error);
       addToast("업로드에 실패했습니다.");
+      alert(error.response);
+      alert(error.message);
     } finally {
       setIsSubmitting(false); // 버튼 활성화
     }
