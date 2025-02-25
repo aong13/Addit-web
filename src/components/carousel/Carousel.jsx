@@ -67,7 +67,7 @@ const Carousel = ({ onFocusChange, selectedTickleId }) => {
     <CarouselContainer>
       <Slider {...settings}>
         {relays.length === 0
-          ? Array.from({ length: 5 }).map((_, idx) => (
+          ? Array.from({ length: 3 }).map((_, idx) => (
               <SkeletonCarouselItem key={idx} />
             ))
           : relays?.map((relay) => (
