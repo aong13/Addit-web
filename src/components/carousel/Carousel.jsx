@@ -22,7 +22,7 @@ const Carousel = ({ onFocusChange, selectedTickleId }) => {
   } = useRelayStore();
 
   useEffect(() => {
-    fetchRelays(); // 초기 데이터 로드
+    fetchRelays();
   }, [fetchRelays]);
 
   useEffect(() => {
@@ -50,9 +50,9 @@ const Carousel = ({ onFocusChange, selectedTickleId }) => {
     },
     afterChange: (current) => {
       setIsSliding(false);
-      // 슬라이드가 마지막에 도달했을 때 데이터를 더 불러오기
+      // 마지막-3일때 데이터 추가 호출
       if (current === relays.length - 3 && !loading) {
-        fetchRelays(); // 다음 데이터를 불러오는 함수 호출
+        fetchRelays();
       }
     },
   };
@@ -80,13 +80,6 @@ const Carousel = ({ onFocusChange, selectedTickleId }) => {
               />
             ))}
       </Slider>
-      <ul>
-        {relayIds.map((id, index) => (
-          <li key={index}>
-            {index}: {id}
-          </li>
-        ))}
-      </ul>
     </CarouselContainer>
   );
 };
