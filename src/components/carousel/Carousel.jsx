@@ -35,7 +35,7 @@ const Carousel = ({ onFocusChange, selectedTickleId }) => {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: Math.min(3, relays.length),
+    slidesToShow: 3,
     slidesToScroll: 1,
     centerMode: relays.length > 3,
     centerPadding: "0px",
@@ -68,7 +68,7 @@ const Carousel = ({ onFocusChange, selectedTickleId }) => {
       <Slider {...settings}>
         {relays.length === 0
           ? Array.from({ length: 3 }).map((_, idx) => (
-              <SkeletonCarouselItem key={idx} />
+              <SkeletonCarouselItem key={idx} item={idx} />
             ))
           : relays?.map((relay) => (
               <CarouselItem
