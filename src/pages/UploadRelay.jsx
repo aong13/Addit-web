@@ -4,13 +4,13 @@ import Header from "../components/layout/Header";
 import styled from "styled-components";
 import TagInput from "../components/Input/TagInput";
 import useToastStore from "../store/useToastStore";
-import useRelayStore from "../store/useRelayStore";
+import useUploadStore from "../store/useUploadStore";
 
 const UploadRelay = () => {
   const navigate = useNavigate();
   const addToast = useToastStore((state) => state.addToast);
 
-  const { title, intro, tags, setTitle, setIntro, setTags } = useRelayStore();
+  const { title, intro, tags, setTitle, setIntro, setTags } = useUploadStore();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 

@@ -1,51 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Carousel from "../components/carousel/Carousel";
 import Collaborators from "../components/Collaborators";
 import ImageRowGrid from "../components/ImageRowGrid";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/common/Button";
-import { fetchHomeData } from "../apis/homeApi";
 import logo from "../assets/logo.svg";
 import plusIcon from "../assets/icons/plus_blue.svg";
 import useRelayStore from "../store/useRelayStore";
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const [focusedRelayId, setFocusedRelayId] = useState(null);
-  const [selectedTickleId, setSelectedTickleId] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { relays, focusedRelayId, setFocusedRelayId } = useRelayStore();
+  const [selectedTickleId, setSelectedTickled] = useState();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetchHomeData(5);
-        const relays = response.data.relaysWithTickles || [];
-        setData(relays);
-        setFocusedRelayId(relays[0]?.relay.relayId || null);
-      } catch (error) {
-        console.error("fetchHomeData Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
 
   const handleClick = () => {
     navigate("/upload/relay");
-    useRelayStore.getState().resetAll();
   };
 
   const handleImageSelect = (tickleId) => {
-    setSelectedTickleId(tickleId);
+    setSelectedTickled(tickleId);
   };
 
   const currentRelay = focusedRelayId
-    ? data.find((relay) => relay.relay.relayId === focusedRelayId)
+    ? relays.find((relay) => relay.relay.relayId === focusedRelayId)
     : null;
 
   return (
@@ -62,10 +40,8 @@ const Home = () => {
         릴레이에 동참해보세요
       </Title>
       <Carousel
-        data={data}
         onFocusChange={setFocusedRelayId}
         selectedTickleId={selectedTickleId}
-        isLoading={loading}
       />
 
       {currentRelay && (
@@ -74,7 +50,6 @@ const Home = () => {
           <Collaborators
             count={currentRelay.relay.totalTickleCount}
             images={currentRelay.relay.contributorImages}
-            isLoading={loading}
           />
         </>
       )}
@@ -83,7 +58,6 @@ const Home = () => {
         <ImageRowGrid
           data={currentRelay?.tickle || []}
           onImageSelect={handleImageSelect}
-          isLoading={loading}
         />
         <p>새롭게 릴레이를 추가해보세요!</p>
         <Button text="릴레이 만들기" icon={plusIcon} onClick={handleClick} />
@@ -130,7 +104,6 @@ const Logo = styled.div`
 `;
 
 const Tabbar = styled.h1`
-  display: inline-block;
   border-bottom: 2px solid #4574ec;
   color: #222;
   font-size: 16px;

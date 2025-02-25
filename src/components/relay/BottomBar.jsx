@@ -4,18 +4,18 @@ import styled from "styled-components";
 import HeartBtn from "./HeartBtn";
 import askIcon from "../../assets/icons/bubble.svg";
 import plusIcon from "../../assets/icons/plus.svg";
-import useRelayStore from "../../store/useRelayStore";
+import useUploadStore from "../../store/useUploadStore";
 import useModalStore from "../../store/useModalStore";
 import defaultImg from "../../assets/default_profile.png";
 const BottomBar = ({ relayData }) => {
   const navigate = useNavigate();
   const [isPlusBtnActive, setIsPlusBtnActive] = useState(false);
   const [isAskBtnActive, setIsAskBtnActive] = useState(false);
-  const setRelayData = useRelayStore((state) => state.setRelayData);
+  const setRelayData = useUploadStore((state) => state.setRelayData);
   const { openModal } = useModalStore();
 
   const handlePlusClick = () => {
-    useRelayStore.getState().resetAll();
+    useUploadStore.getState().resetAll();
     setRelayData(
       relayData.relayId,
       relayData.tickleId,

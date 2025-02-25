@@ -7,7 +7,7 @@ import deleteIcon from "../assets/icons/x_grey.svg";
 import TagInput from "../components/Input/TagInput";
 import { addTickleData, postRelayData } from "../apis/relayApi";
 import useToastStore from "../store/useToastStore";
-import useRelayStore from "../store/useRelayStore";
+import useUploadStore from "../store/useUploadStore";
 import ImgWithBlur from "../components/common/ImgWithBlur";
 
 const UploadTickle = () => {
@@ -28,7 +28,7 @@ const UploadTickle = () => {
     setContent,
     setImage,
     removeImage,
-  } = useRelayStore();
+  } = useUploadStore();
 
   const fileInputRef = useRef(null);
   const addToast = useToastStore((state) => state.addToast);
@@ -103,7 +103,7 @@ const UploadTickle = () => {
           { state: { fromUpload: true } }
         );
       }
-      useRelayStore.getState().resetAll(); // 상태 초기화
+      useUploadStore.getState().resetAll(); // 상태 초기화
     } catch (error) {
       console.error("데이터 전송 실패:", error);
       addToast("업로드에 실패했습니다.");
